@@ -1,0 +1,178 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use App\Editais;
+use App\Candidaturas;
+use App\Status_Inscricao;
+use DB, Log;
+
+class EditaisController extends Controller
+{
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index()
+    {
+    	$editais = Editais::all(); 
+
+    	$data = [
+            'editais' => $editais
+        ];
+
+        return view('editais.editais')->with($data);
+    }
+
+    public function download(Request $request, $id)
+    {
+        //dd($request);
+        $edital = Editais::where('id', $id)->first();
+
+        $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+        $path = $storagePath.$edital->path_anexo;
+
+        return response()->file($path); 
+    }
+
+    /**
+     * Create a new edital instance.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    protected function store(Request $request)
+    {
+        // Validate the request...
+
+        $this->validate($request, [
+            'nome' => 'required|string|max:255',
+        ]);
+
+        //dd($request);
+
+        DB::beginTransaction();
+        try{
+
+            if ($request->hasFile('anexo') && $request->file('anexo')->isValid()){
+                $anexo = $request->file('anexo')->storeAs('editais'.'/'.$request->nome.'/'.$request->numero, 'anexo');
+            }else{
+                $anexo = 0;
+            }
+
+            $edital = Editais::create([
+            'fim_inscricao' => $request->fim_inscricao,
+            'nome' => $request->nome,
+            'numero' => $request->numero,
+            'qtd_bolsas'=> $request->bolsas,
+            'status_edital_id'=> '1',
+            'path_anexo'=> $anexo,
+
+        ]);
+            
+            DB::commit();
+        }
+         catch(\Exception $e) {
+            DB::rollback();
+            Log::error($e);
+            return $this->error($e->getMessage(), 500, $e);
+        }
+          return redirect('/editais');
+    }
+
+    public function details(Request $request, $id)
+    {
+        $edital = Editais::find($id);
+        $candidaturas = Candidaturas::where('edital_id', $id)->get();
+
+        $data = [
+            'edital' => $edital,
+            'candidaturas' => $candidaturas
+        ]; 
+       
+          return view('editais.detalhes')->with($data);
+    }
+
+    public function atualizar(Request $request, $id)
+    {
+        $edital = Editais::where('id', $id)->first();
+
+        $data = [
+            'edital' => $edital
+        ]; 
+       
+          return view('editais.atualizar')->with($data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $edital = Editais::find($id);
+
+        if ($request->hasFile('anexo') && $request->file('anexo')->isValid()){
+
+            Storage::delete($edital->path_anexo);
+
+            $anexo = $request->file('anexo')->storeAs('editais'.'/'.$request->nome.'/'.$request->numero, 'anexo');
+        }
+        else{
+            $anexo = $edital->path_anexo;
+        }
+
+
+        try{
+
+            $edital->nome =  $request->nome;
+            $edital->numero = $request->numero;
+            $edital->qtd_bolsas = $request->bolsas;
+            $edital->fim_inscricao = $request->fim_inscricao;
+            $edital->path_anexo = $anexo;
+            $edital->save();
+
+        }
+        catch(\Exception $e) {
+            DB::rollback();
+            Log::error($e);
+            return $this->error($e->getMessage(), 500, $e);
+        }
+
+        //dd($edital->path_anexo);
+
+
+        return redirect('/home');
+    }
+
+    public function candidatura(Request $request, $id)
+    {
+        $candidatura =  Candidaturas::find($id);
+        $status =  Status_Inscricao::all();
+
+        $data = [
+            'candidatura' => $candidatura,
+            'status' => $status
+        ]; 
+
+        return view('editais.candidatura')->with($data);
+    }
+
+    public function destroy($id)
+    {
+        $candidaturas = Candidaturas::where('edital_id', $id)->get();
+
+         foreach ($candidaturas as $candidatura) {
+             $candidatura->delete();
+         }
+
+        $edital = Editais::find($id);
+        $edital->delete();
+        return redirect('/editais');
+    }
+}
