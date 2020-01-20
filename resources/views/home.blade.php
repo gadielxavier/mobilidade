@@ -52,31 +52,37 @@
                               Visualisar
                           </a>
                         </td>
-                        <td>
-                          {{ $inscrito = false }}
-                          @foreach ($candidaturas as $candidatura)
-                              @if($candidatura->edital_id == $edital->id)
-                                @php 
-                                  $inscrito = true  
-                                @endphp
+                        @if(Auth::user()->privilegio == 1)
+                          <td>
+                            {{ $inscrito = false }}
+                            @foreach ($candidaturas as $candidatura)
+                                @if($candidatura->edital_id == $edital->id)
+                                  @php 
+                                    $inscrito = true  
+                                  @endphp
+                                @endif
+                            @endforeach
+                            @isset($candidato)
+                              @if($inscrito == false)
+                                <a  href="candidaturas/inscricao/{{ $edital->id }}" class="btn btn-primary btn-sm">
+                                  {{ __('Inscrever') }}
+                                </a>
+                              @else
+                                <a  href="candidaturas/atualizacao/{{ $edital->id }}" class="btn btn-secondary btn-sm">
+                                  {{ __('Editar') }}
+                                </a>
                               @endif
-                          @endforeach
-                          @isset($candidato)
-                            @if($inscrito == false)
-                              <a  href="candidaturas/inscricao/{{ $edital->id }}" class="btn btn-primary btn-sm">
-                                {{ __('Inscrever') }}
-                              </a>
                             @else
-                              <a  href="candidaturas/atualizacao/{{ $edital->id }}" class="btn btn-secondary btn-sm">
-                                {{ __('Editar') }}
-                              </a>
+                              <button type="submit" data-toggle="modal" data-target="#editalModal"  class="btn btn-primary btn-sm">
+                                {{ __('Inscrever') }}
+                              </button>
                             @endif
+                          </td>
                           @else
-                            <button type="submit" data-toggle="modal" data-target="#editalModal"  class="btn btn-primary btn-sm">
-                              {{ __('Inscrever') }}
-                            </button>
+                          <td>
+                            <a href="/editais/detalhes/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Detalhes</a>
+                          </td>
                           @endif
-                        </td>
                       </tr>
                     @endforeach
                   </tbody>

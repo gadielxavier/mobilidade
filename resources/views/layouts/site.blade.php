@@ -35,7 +35,7 @@
               <i class="ti-user menu-icon"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
+              <a href="/configuracoes" class="dropdown-item">
                 <i class="ti-settings text-primary"></i>
                 Configurações
               </a>
@@ -101,8 +101,8 @@
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center align-self-center d-block d-sm-inline-block">Copyright © 2018 <a href="https://www.templatewatch.com/" target="_blank">Templatewatch</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+            <span class="text-muted text-center align-self-center d-block d-sm-inline-block">© 2019 - Mobilidade Out - AERI - Todos os direitos reservados.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Feito com <i class="ti-heart text-danger ml-1"></i></span>
           </div>
         </footer>
         <!-- partial -->
