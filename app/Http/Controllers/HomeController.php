@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Editais;
 use App\Candidato;
 use App\Candidaturas;
+use App\User;
 use Auth, DB, Log;
 
 class HomeController extends Controller
@@ -43,5 +44,33 @@ class HomeController extends Controller
     public function configuracoes()
     {
         return view('auth/passwords/reset');
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'email' => 'required|string|max:255',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::find($id);
+
+
+        try{
+
+            $user->name =  $request->email;
+            $user->password = bcrypt($request->password);
+            $user->save();
+
+        }
+        catch(\Exception $e) {
+            DB::rollback();
+            Log::error($e);
+            return $this->error($e->getMessage(), 500, $e);
+        }
+
+
+        return redirect('/home');
     }
 }

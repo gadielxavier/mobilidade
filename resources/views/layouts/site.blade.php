@@ -69,6 +69,13 @@
               <span class="menu-title">Editais</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/equipe">
+             <i class="ti-user menu-icon"></i>
+              <span class="menu-title">Equipe</span>
+            </a>
+          </li>
+
           @endif
           @if(Auth::user()->privilegio == 1)
           <li class="nav-item">

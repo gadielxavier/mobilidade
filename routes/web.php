@@ -20,7 +20,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/configuracoes', 'HomeController@configuracoes')->name('configuracoes');
-
+Route::post('/update/{id}', 'HomeController@update')->name('update');
 
 
 Route::prefix('candidato')->group(function () {
@@ -61,4 +61,11 @@ Route::prefix('candidaturas')->group(function () {
     Route::get('inscricao/{id}', 'CandidaturasController@inscricao');
     Route::get('atualizacao/{id}', 'CandidaturasController@atualizacao');
     Route::get('/', 'CandidaturasController@index')->middleware('candidato');
+});
+
+
+Route::prefix('equipe')->group(function () {
+    Route::post('store', 'EquipeController@store');
+    Route::delete('delete/{id}','EquipeController@destroy');
+    Route::get('/', 'EquipeController@index');
 });
