@@ -98,6 +98,7 @@
 			             </thead>
 			             <tbody>
 			             	@foreach ($candidaturas as $candidatura)
+
 			             		<tr>
 						        	<td>
 						          		@isset($candidatura->candidato->nome)

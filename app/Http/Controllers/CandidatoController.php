@@ -46,7 +46,9 @@ class CandidatoController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string|max:255',
+            'foto_perfil' => 'required|file|max:5000',
         ]);
+
         DB::beginTransaction();
         try{
             $candidato = Candidato::create([
@@ -78,6 +80,7 @@ class CandidatoController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
+            'foto_perfil' => 'file|max:5000',
         ]);
         DB::beginTransaction();
 

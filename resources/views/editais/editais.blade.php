@@ -19,7 +19,7 @@
 	<div class="row table-responsive">
 		<div class="input-group">
                 <button type="submit" data-toggle="modal" data-target="#editalModal" class="btn btn-primary ml-auto">
-                  {{ __('Adicioanar') }}
+                  {{ __('Adicionar') }}
                 </button>
               </div>
 
@@ -30,6 +30,7 @@
                       <th>Número</th>
                       <th>Bolsas</th>
                       <th>Encerramento Inscrição</th>
+                      <th>Status</th>
 				</tr>
 	    </thead>
 	    <tbody>
@@ -51,6 +52,11 @@
 		        <td> 
 		          @isset($edital->fim_inscricao)
 		            {{ $edital->fim_inscricao->format('d/m/Y') }}
+		          @endif
+		        </td>
+		        <td> 
+		          @isset($edital->status->titulo)
+		            {{ $edital->status->titulo }}
 		          @endif
 		        </td>
 		        <td>
@@ -77,7 +83,7 @@
 			<div class="modal-body">
 				<form class="form-horizontal" method="POST" action="editais/store" enctype="multipart/form-data">
 					{{ csrf_field() }}
-					<div class="form-group">
+					<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
 			          <label>Nome</label>
 			          <div class="input-group">
 			            <div class="input-group-prepend bg-transparent">
@@ -91,6 +97,11 @@
 			            <div class="input-group-prepend bg-transparent">
 			            </div>
 			            <input id="numero" name="numero" type="text" class="form-control form-control-lg border-left-0" placeholder="Número do edital" required>
+			            @if ($errors->has('nome'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('nome') }}</strong>
+                            </span>
+                        @endif
 			          </div>
 			        </div>
 			        <div class="form-group">
@@ -107,8 +118,13 @@
 			        </div>
 			        <div class="form-group">
 		                <label>Anexar Edital</label>
-		                <div class="input-group">
+		                <div class="form-group{{ $errors->has('anexo') ? ' has-error' : '' }}">
 		                  <input id="fileinput" name="anexo" type="file" style="display:none;"/ required>
+		                  @if ($errors->has('anexo'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('anexo') }}</strong>
+                            </span>
+                        @endif
 		                  <button class="btn btn-primary" id="falseinput">Escolher arquivo</button>
 		                  <span class="input-group-prepend bg-transparent" id="selected_filename">Nenhum arquivo selecionado</span>
 		                </div>
@@ -163,6 +179,12 @@
     $('#selected_filename').text($('#fileinput')[0].files[0].name);
   });
 
+</script>
+
+<script type="text/javascript">
+	@if (count($errors) > 0)
+	$('#editalModal ').modal('show');
+	@endif
 </script>
 
 @endsection

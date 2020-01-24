@@ -13,9 +13,14 @@
       @isset($candidato)
         <form method="POST" action="{{url('candidato/update')}}" enctype="multipart/form-data">
            {!! csrf_field() !!}
-          <div class="form-group">
+          <div class="form-group{{ $errors->has('foto_perfil') ? ' has-error' : '' }}">
               <label>Foto 3/4</label>
-              <input type="file" id="foto_perfil" name="foto_perfil" class="form-control" required>
+              <input type="file" id="foto_perfil" name="foto_perfil" class="form-control">
+              @if ($errors->has('foto_perfil'))
+              <span class="help-block">
+                <strong>{{ $errors->first('foto_perfil') }}</strong>
+              </span>
+              @endif
           </div>  
           <div class="form-group">
             <label>Nome Completo</label>
@@ -123,11 +128,16 @@
 
       <form method="POST" action="{{url('candidato/store')}}" enctype="multipart/form-data">
         {!! csrf_field() !!}
-        <div class="form-group">
+        <div class="form-group{{ $errors->has('foto_perfil') ? ' has-error' : '' }}">
               <label>Foto 3/4</label>
-              <input type="file" id="foto_perfil" name="foto_perfil" class="form-control" >
+              <input type="file" id="foto_perfil" name="foto_perfil" class="form-control" required autofocus>
+              @if ($errors->has('foto_perfil'))
+              <span class="help-block">
+                <strong>{{ $errors->first('foto_perfil') }}</strong>
+              </span>
+              @endif
         </div> 
-        <div class="form-group">
+        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
           <label>Nome Completo</label>
           <div class="input-group">
             <div class="input-group-prepend bg-transparent">
@@ -136,6 +146,11 @@
               </span>
             </div>
             <input id="name" name="name" type="text" class="form-control form-control-lg border-left-0" placeholder="Seu Nome Completo" required>
+            @if ($errors->has('name'))
+              <span class="help-block">
+                <strong>{{ $errors->first('name') }}</strong>
+              </span>
+              @endif
           </div>
         </div>
         <div class="form-group">

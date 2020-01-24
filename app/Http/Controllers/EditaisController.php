@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Editais;
 use App\Candidaturas;
 use App\Status_Inscricao;
+use App\Status_Edital;
 use DB, Log;
 
 class EditaisController extends Controller
@@ -23,7 +24,7 @@ class EditaisController extends Controller
 
     public function index()
     {
-    	$editais = Editais::all(); 
+    	$editais = Editais::orderBy('id', 'desc')->get();
 
     	$data = [
             'editais' => $editais
@@ -56,9 +57,9 @@ class EditaisController extends Controller
 
         $this->validate($request, [
             'nome' => 'required|string|max:255',
+            'anexo' => 'required|file|max:5000',
         ]);
 
-        //dd($request);
 
         DB::beginTransaction();
         try{
@@ -105,9 +106,11 @@ class EditaisController extends Controller
     public function atualizar(Request $request, $id)
     {
         $edital = Editais::where('id', $id)->first();
+        $status = Status_Edital::all();
 
         $data = [
-            'edital' => $edital
+            'edital' => $edital,
+            'status' => $status
         ]; 
        
           return view('editais.atualizar')->with($data);
@@ -115,6 +118,14 @@ class EditaisController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        // Validate the request...
+
+        $this->validate($request, [
+            'nome' => 'required|string|max:255',
+            'path_anexo' => 'file|max:5000',
+        ]);
+
         $edital = Editais::find($id);
 
         if ($request->hasFile('anexo') && $request->file('anexo')->isValid()){
@@ -134,6 +145,7 @@ class EditaisController extends Controller
             $edital->numero = $request->numero;
             $edital->qtd_bolsas = $request->bolsas;
             $edital->fim_inscricao = $request->fim_inscricao;
+            $edital->status_edital_id = $request->status;
             $edital->path_anexo = $anexo;
             $edital->save();
 
@@ -143,8 +155,6 @@ class EditaisController extends Controller
             Log::error($e);
             return $this->error($e->getMessage(), 500, $e);
         }
-
-        //dd($edital->path_anexo);
 
 
         return redirect('/home');

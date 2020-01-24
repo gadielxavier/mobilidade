@@ -21,7 +21,7 @@ class CandidaturasController extends Controller
     {
         $editais = Editais::all();
         $candidato = Candidato::where('user_id', Auth::user()->id)->first(); 
-        $candidaturas = Candidaturas::where('candidato_id', Auth::user()->id)->get(); 
+        $candidaturas = Candidaturas::where('candidato_id',$candidato->id)->get(); 
 
         $data = [
             'editais'      => $editais,
@@ -251,11 +251,14 @@ class CandidaturasController extends Controller
              $certificado = 0;
         }
 
+        $candidato = Candidato::where('user_id', Auth::user()->id)->first();
+
+
 
         DB::beginTransaction();
         try{
             $candidatura = Candidaturas::create([
-            'candidato_id' => Auth::user()->id,
+            'candidato_id' => $candidato->id,
             'edital_id' => $id,
             'primeira_opcao_universidade'=> $request->opcao1universidade,
             'primeira_opcao_curso' => $request->opcao1curso,

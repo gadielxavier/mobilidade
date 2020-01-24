@@ -22,4 +22,13 @@ class Editais extends Model
      * @var array
      */
     protected $fillable = ['fim_inscricao', 'nome', 'numero', 'qtd_bolsas', 'status_edital_id', 'path_anexo'];
+
+    /**
+     * Get the status record associated with the candidatura.
+     */
+    public function status()
+    {
+        return $this->belongsTo('App\Status_Edital', 'status_edital_id');
+    }
+
 }

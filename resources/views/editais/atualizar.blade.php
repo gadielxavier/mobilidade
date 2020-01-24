@@ -13,6 +13,17 @@
 			<form method="POST" action="update/{{$edital->id}}" enctype="multipart/form-data">
            	{!! csrf_field() !!}
            		<div class="form-group">
+					<label>Status:</label>
+				    <div class="dropdown">
+			    		<select id="status" name="status" class="form-control custom-select">
+			                <option value="{{ $edital->status->id }}" selected>{{ $edital->status->titulo }}</option>
+			                    @foreach($status as $estado)
+			                    	<option value="{{  $estado->id }}">{{ $estado->titulo }}</option>
+			                    @endforeach
+			            </select>
+				    </div>
+			    </div>
+           		<div class="form-group">
 			      	<label>Nome</label>
 			      	<div class="input-group">
 			        	<div class="input-group-prepend bg-transparent">
@@ -37,8 +48,19 @@
 			      	</div>
 			    </div>
 			    <div class="form-group">
+			    	@php
+			    		$day = $edital->fim_inscricao->day;
+			    		$month = $edital->fim_inscricao->month;
+			    		$year = $edital->fim_inscricao->year;
+
+			    		//adicionar 0 na frente do mês se for menor que 10
+			    		if($month < 10){
+			    			$month = '0'.$month;
+			    		}
+
+			    	@endphp
 			      	<label>Fim Inscrição</label>
-			      	<input type="date" id="fim_inscricao" value="{{ $edital->fim_inscricao }}" name="fim_inscricao" class="form-control" v-model="item.dan_data_documento">
+			      	<input type="date" id="fim_inscricao" value="{{$year}}-{{$month}}-{{$day}}" name="fim_inscricao" class="form-control" v-model="item.dan_data_documento">
 			    </div>
 
 			    <div class="form-group">

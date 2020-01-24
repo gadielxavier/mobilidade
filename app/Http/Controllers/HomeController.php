@@ -28,9 +28,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $editais = Editais::all();
-        $candidato = Candidato::where('user_id', Auth::user()->id)->first(); 
-        $candidaturas = Candidaturas::where('candidato_id', Auth::user()->id)->get(); 
+        $editais = Editais::where('status_edital_id', 1)->orderBy('id', 'desc')->get();
+        $candidato = Candidato::where('user_id', Auth::user()->id)->first();
+        if($candidato == null){
+             $candidaturas = null;
+
+        } 
+        else{
+            $candidaturas = Candidaturas::where('candidato_id', $candidato->id)->get();
+        }
 
         $data = [
             'editais'      => $editais,

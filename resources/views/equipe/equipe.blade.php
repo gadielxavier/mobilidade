@@ -16,7 +16,7 @@
 	<div class="row table-responsive">
 		<div class="input-group">
                 <button type="submit" data-toggle="modal" data-target="#funcionarioModal" class="btn btn-primary ml-auto">
-                  {{ __('Adicioanar') }}
+                  {{ __('Adicionar') }}
                 </button>
               </div>
 
@@ -157,3 +157,14 @@
 </div>
 
 @endsection
+
+@section('scripts')
+
+<script type="text/javascript">
+	@if (count($errors) > 0)
+	$('#funcionarioModal ').modal('show');
+	@endif
+</script>
+
+@endsection
+
