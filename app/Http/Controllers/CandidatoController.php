@@ -7,6 +7,7 @@ use App\Cursos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Auth, DB, Log;
 
 class CandidatoController extends Controller
@@ -49,6 +50,26 @@ class CandidatoController extends Controller
             'foto_perfil' => 'required|file|max:5000',
         ]);
 
+        if ($request->hasFile('foto_perfil') && $request->file('foto_perfil')->isValid()){
+
+
+            $avatar = $request->file('foto_perfil');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+
+            $relPath = 'avatars/'.Auth::user()->id;
+            if (!file_exists(public_path($relPath))) {
+                mkdir(public_path($relPath), 666, true);
+            }
+
+            //Image::make($avatar)->save(public_path('avatars/'.$candidato->user_id.'/'.$filename));
+            
+            $request->file('foto_perfil')->storeAs('avatars/'.Auth::user()->id,$filename);
+
+             $foto_perfil = 'avatars/'.Auth::user()->id.'/'.$filename;
+        }
+
+
+
         DB::beginTransaction();
         try{
             $candidato = Candidato::create([
@@ -63,7 +84,7 @@ class CandidatoController extends Controller
             'celular' => $request->phone,
             'user_id' => Auth::user()->id,
             'email' => Auth::user()->email,
-            'foto_perfil' => $request->foto_perfil
+            'foto_perfil' => $foto_perfil
         ]);
             DB::commit();
         }
@@ -99,7 +120,9 @@ class CandidatoController extends Controller
                 mkdir(public_path($relPath), 666, true);
             }
 
-            Image::make($avatar)->resize(300, 300)->save(public_path('avatars/'.$candidato->user_id.'/'.$filename));
+            //Image::make($avatar)->save(public_path('avatars/'.$candidato->user_id.'/'.$filename));
+            $request->file('foto_perfil')->storeAs('avatars/'.$candidato->user_id,$filename);
+
              $foto_perfil = 'avatars/'.$candidato->user_id.'/'.$filename;
         }else{
              $foto_perfil =  $candidato->foto_perfil;
@@ -127,5 +150,16 @@ class CandidatoController extends Controller
             return $this->error($e->getMessage(), 500, $e);
         }
           return redirect('/home');
+    }
+
+    public function foto(Request $request, $id)
+    {
+        $candidato = Candidato::find($id);
+
+        $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+        $path = $storagePath.$candidato->foto_perfil;
+
+        return response()->file($path); 
     }
 }

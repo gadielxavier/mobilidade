@@ -35,14 +35,13 @@ class EquipeController extends Controller
     {
     	 $this->validate($request, [
             'email' => 'required|string|max:255',
-            'password' => 'required|string|min:6|confirmed',
         ]);
 
         User::create([
             'name' => $request['name'],
             'email' => $request['email'],
-            'privilegio' => 2,
-            'password' => bcrypt($request['password']),
+            'privilegio' => $request['tipo_usuario'],
+            'password' => bcrypt('123456'),
         ]);
 
 

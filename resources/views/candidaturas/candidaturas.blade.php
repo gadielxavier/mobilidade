@@ -17,39 +17,43 @@
           <div class="card-body">
             <p class="card-title mb-0">Minhas Inscrições</p>
             <div class="table-responsive">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Número</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach ($candidaturas as $candidatura)
-                  <tr>
-                    <td>  
-                      @isset($candidatura->edital->nome)
-                        {{ $candidatura->edital->nome }}
-                      @endif
-                    </td>
-                    <td>
-                      @isset($candidatura->edital->numero)
-                        {{ $candidatura->edital->numero }}
-                      @endif
-                    </td>
-                    <td>
-                      @isset($candidatura->status->titulo)
-                        {{ $candidatura->status->titulo }}
-                      @endif
-                    </td>
-                    <td>
-                      <a  href="candidaturas/detalhes/{{ $candidatura->id }}" class="btn btn-success btn-sm">
-                          Visualisar
-                      </a>
-                    </td>
-                  </tr>
-                  @endforeach
+              @isset($candidaturas)
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Número</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($candidaturas as $candidatura)
+                    <tr>
+                      <td>  
+                        @isset($candidatura->edital->nome)
+                          {{ $candidatura->edital->nome }}
+                        @endif
+                      </td>
+                      <td>
+                        @isset($candidatura->edital->numero)
+                          {{ $candidatura->edital->numero }}
+                        @endif
+                      </td>
+                      <td>
+                        @isset($candidatura->status->titulo)
+                          {{ $candidatura->status->titulo }}
+                        @endif
+                      </td>
+                      <td>
+                        <a  href="candidaturas/detalhes/{{ $candidatura->id }}" class="btn btn-success btn-sm">
+                            Acompanhar
+                        </a>
+                      </td>
+                    </tr>
+                    @endforeach
+                  @else
+                  <p>Você ainda não se inscreveu em nenhum edital!</p>
+                  @endif
                 </tbody>
               </table>
             </div>

@@ -56,8 +56,9 @@ class EditaisController extends Controller
         // Validate the request...
 
         $this->validate($request, [
+            'fim_inscricao' => 'required|date_format:Y-m-d',
             'nome' => 'required|string|max:255',
-            'anexo' => 'required|file|max:5000',
+            'anexo' => 'required|file|max:5000'
         ]);
 
 
@@ -66,8 +67,6 @@ class EditaisController extends Controller
 
             if ($request->hasFile('anexo') && $request->file('anexo')->isValid()){
                 $anexo = $request->file('anexo')->storeAs('editais'.'/'.$request->nome.'/'.$request->numero, 'anexo');
-            }else{
-                $anexo = 0;
             }
 
             $edital = Editais::create([
@@ -93,7 +92,7 @@ class EditaisController extends Controller
     public function details(Request $request, $id)
     {
         $edital = Editais::find($id);
-        $candidaturas = Candidaturas::where('edital_id', $id)->get();
+        $candidaturas = Candidaturas::where('edital_id', $id)->paginate(10);
 
         $data = [
             'edital' => $edital,
@@ -122,6 +121,7 @@ class EditaisController extends Controller
         // Validate the request...
 
         $this->validate($request, [
+            'fim_inscricao' => 'required|date_format:Y-m-d',
             'nome' => 'required|string|max:255',
             'path_anexo' => 'file|max:5000',
         ]);

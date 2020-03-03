@@ -3,10 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
 use Auth;
 
-class CheckUser
+class CheckAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,7 +16,7 @@ class CheckUser
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->privilegio == 1) {
+        if (Auth::user()->privilegio == 4) {
             return $next($request);
         }
 

@@ -10,8 +10,8 @@
         		Atualizar os  dados do edital
       		</p>
 
-			<form method="POST" action="update/{{$edital->id}}" enctype="multipart/form-data">
-           	{!! csrf_field() !!}
+			<form method="POST" action="{{ route('editais.update', $edital->id) }}" enctype="multipart/form-data">
+            {{ csrf_field() }}
            		<div class="form-group">
 					<label>Status:</label>
 				    <div class="dropdown">
@@ -48,21 +48,9 @@
 			      	</div>
 			    </div>
 			    <div class="form-group">
-			    	@php
-			    		$day = $edital->fim_inscricao->day;
-			    		$month = $edital->fim_inscricao->month;
-			    		$year = $edital->fim_inscricao->year;
-
-			    		//adicionar 0 na frente do mês se for menor que 10
-			    		if($month < 10){
-			    			$month = '0'.$month;
-			    		}
-
-			    	@endphp
 			      	<label>Fim Inscrição</label>
-			      	<input type="date" id="fim_inscricao" value="{{$year}}-{{$month}}-{{$day}}" name="fim_inscricao" class="form-control" v-model="item.dan_data_documento">
+			      	<input type="date" value="{{ $edital->fim_inscricao->format('Y-m-d') }}" id="fim_inscricao" name="fim_inscricao" class="form-control">
 			    </div>
-
 			    <div class="form-group">
 				    <label>Anexar Edital</label>
 				    <input type="file" id="anexo" name="anexo" class="form-control" >
@@ -85,3 +73,4 @@
 </div>
 
 @endsection
+

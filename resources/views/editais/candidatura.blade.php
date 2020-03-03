@@ -10,12 +10,9 @@
 	        <div class="card-body">
 	          <p class="card-title">Dados candidato</p>
 	          <div class="row">
-	            <div class="col-md-3">
-	              <div>
-	              	<img src="../../../{{ $candidatura->candidato->foto_perfil }}" width="150" height="200" alt="profile"/>
-	              </div>  
+	            <div class="col-md-1">
 	            </div>
-	            <div class="col-md-4">
+	            <div class="col-md-5">
 	              <div class="row">
 	                <div>
 	                	<p>
@@ -33,7 +30,7 @@
 	                </div>
 	              </div>
 	            </div>
-	            <div class=" col-md-5">
+	            <div class=" col-md-6">
 	            	<form method="POST" action="atualizar/{{ $candidatura->id }}" enctype="multipart/form-data">
            			{!! csrf_field() !!}
 						<div class="form-group">
@@ -61,6 +58,37 @@
 	</div>
 
 	<div class="row">
+
+		 @if($candidatura->status->id == 6 ||
+		 $candidatura->status->id == 7  )
+		 	<div class="col-md-12 grid-margin stretch-card">
+		 		<div class="card">
+					<div class="card-body">
+						<form method="POST" action="atualizar/certificado/{{ $candidatura->id }}" enctype="multipart/form-data">
+							{!! csrf_field() !!}
+							<div class="form-group{{ $errors->has('foto_perfil') ? ' has-error' : '' }}">
+								<label>Anexar Certificado de Proficiência</label>
+								<input type="file" accept="application/pdf" id="certificado" name="certificado" class="form-control">
+								@if ($errors->has('certificado'))
+								<span class="help-block">
+									<strong>{{ $errors->first('foto_perfil') }}</strong>
+								</span>
+								@endif
+							</div>
+							<div class="mt-3">
+					          <div class="form-group">
+					            <div class="input-group">
+					              <button type="submit" class="btn btn-primary ml-auto">
+					                {{ __('Enviar') }}
+					              </button>
+					            </div>
+					          </div>
+					        </div>
+					    </form>
+					</div>
+				</div>
+			</div>
+		 @endif
 		
 	</div>
 
@@ -79,10 +107,20 @@
 			                <tbody>
 			                	<tr>
 			                    	<td>
+			                    		Foto 3/4
+			                    	</td>
+			                        <td> 
+			                        	<a  href="foto/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
+					                    		Visualizar
+					                    </a>
+			                        </td>
+			                    </tr>
+			                	<tr>
+			                    	<td>
 			                    		Percentual de carga horária concluída
 			                    	</td>
 			                        <td> 
-			                        	<a  href="percentual/{{ $candidatura->id }}" class="btn btn-primary btn-sm">
+			                        	<a  href="percentual/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>
@@ -92,7 +130,7 @@
 			                    		Guia de matrícula
 			                    	</td>
 			                        <td> 
-			                        	<a  href="matricula/{{ $candidatura->id }}" class="btn btn-primary btn-sm">
+			                        	<a  href="matricula/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>
@@ -102,7 +140,7 @@
 			                    		Histórico escolar
 			                    	</td>
 			                        <td> 
-			                        	<a  href="historico/{{ $candidatura->id }}" class="btn btn-primary btn-sm">
+			                        	<a  href="historico/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>
@@ -112,7 +150,7 @@
 			                    		Curriculum no formato completo da Plataforma Lattes/CNPQ
 			                    	</td>
 			                        <td> 
-			                        	<a  href="curriculum/{{ $candidatura->id }}" class="btn btn-primary btn-sm">
+			                        	<a  href="curriculum/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>
@@ -122,7 +160,7 @@
 			                    		Plano de Trabalho 1
 			                    	</td>
 			                        <td> 
-			                        	<a  href="trabalho1/{{ $candidatura->id }}" class="btn btn-primary btn-sm">
+			                        	<a  href="trabalho1/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>
@@ -132,7 +170,7 @@
 			                    		Plano de Trabalho 2
 			                    	</td>
 			                        <td> 
-			                        	<a  href="trabalho2/{{ $candidatura->id }}" class="btn btn-primary btn-sm">
+			                        	<a  href="trabalho2/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>
@@ -142,7 +180,7 @@
 			                    		Plano de Trabalho 3
 			                    	</td>
 			                        <td> 
-			                        	<a  href="trabalho3/{{ $candidatura->id }}" class="btn btn-primary btn-sm">
+			                        	<a  href="trabalho3/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>
@@ -152,7 +190,7 @@
 			                    		Plano de Estudos 1
 			                    	</td>
 			                        <td> 
-			                        	<a  href="estudo1/{{ $candidatura->id }}" class="btn btn-primary btn-sm">
+			                        	<a  href="estudo1/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>
@@ -162,7 +200,7 @@
 			                    		Plano de Estudos 2
 			                    	</td>
 			                        <td> 
-			                        	<a  href="estudo2/{{ $candidatura->id }}" class="btn btn-primary btn-sm">
+			                        	<a  href="estudo2/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>
@@ -172,7 +210,17 @@
 			                    		Plano de Estudos 3
 			                    	</td>
 			                        <td> 
-			                        	<a  href="estudo3/{{ $candidatura->id }}" class="btn btn-primary btn-sm">
+			                        	<a  href="estudo3/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
+			                        		Visualizar
+			                            </a>
+			                        </td>
+			                    </tr>
+			                    <tr>
+			                    	<td>
+			                    		Certificado de Proficiência
+			                    	</td>
+			                        <td> 
+			                        	<a  href="certificado/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>

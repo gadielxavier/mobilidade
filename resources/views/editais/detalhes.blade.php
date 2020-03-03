@@ -43,6 +43,7 @@
 						        <td>
 						          	<a href="/editais/atualizar/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Editar</a>
 						        </td>
+						        <!--
 						        <td>
 						          	<a href="#deleteModal_{{ $edital->id }}" data-toggle="modal" class="btn btn-danger btn-sm"> Excluir</a>
 
@@ -77,6 +78,7 @@
 								      	</div>
 								    </div>
 								</td>
+							-->
 					      	</tr>
 			             </tbody>
 			         </table>
@@ -118,15 +120,12 @@
 							        </td>
 						      	</tr>
 					      @endforeach
-			             	
 			             </tbody>
 			         </table>
+			         {{ $candidaturas->links("pagination::bootstrap-4") }}
       			</div>
       	</div>
      </div>
-
-
-
 </div>
 
 @endsection

@@ -17,6 +17,7 @@
             <div class="card-body">
               <p class="card-title mb-0">Editais Abertos</p>
               <div class="table-responsive">
+              @if(isset($editais[0]))
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -27,6 +28,7 @@
                     </tr>
                   </thead>
                   <tbody>
+                  
                     @foreach ($editais as $edital)
                       <tr>
                         <td>
@@ -48,20 +50,22 @@
                           @endif
                         </td>
                          <td>
-                          <a  href="editais/download/{{ $edital->id }}" class="btn btn-success btn-sm">
-                              Visualisar
+                          <a  href="editais/download/{{ $edital->id }}" class="btn btn-success btn-sm" target="_blank">
+                              Visualizar
                           </a>
                         </td>
                         @if(Auth::user()->privilegio == 1)
                           <td>
                             {{ $inscrito = false }}
-                            @foreach ($candidaturas as $candidatura)
-                                @if($candidatura->edital_id == $edital->id)
-                                  @php 
-                                    $inscrito = true  
-                                  @endphp
-                                @endif
-                            @endforeach
+                            @isset($candidaturas)
+                              @foreach ($candidaturas as $candidatura)
+                                  @if($candidatura->edital_id == $edital->id)
+                                    @php 
+                                      $inscrito = true  
+                                    @endphp
+                                  @endif
+                              @endforeach
+                            @endif
                             @isset($candidato)
                               @if($inscrito == false)
                                 <a  href="candidaturas/inscricao/{{ $edital->id }}" class="btn btn-primary btn-sm">
@@ -85,6 +89,9 @@
                           @endif
                       </tr>
                     @endforeach
+                  @else
+                  <p>Não existe nenhum edital aberto no momento!</p>
+                  @endif
                   </tbody>
                 </table>
               </div>

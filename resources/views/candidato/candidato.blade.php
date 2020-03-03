@@ -15,7 +15,10 @@
            {!! csrf_field() !!}
           <div class="form-group{{ $errors->has('foto_perfil') ? ' has-error' : '' }}">
               <label>Foto 3/4</label>
-              <input type="file" id="foto_perfil" name="foto_perfil" class="form-control">
+              <a  href="candidato/foto/{{ $candidato->id }}" target="_blank">
+                  Visualizar
+              </a>
+              <input type="file" accept="image/*" id="foto_perfil" name="foto_perfil" class="form-control">
               @if ($errors->has('foto_perfil'))
               <span class="help-block">
                 <strong>{{ $errors->first('foto_perfil') }}</strong>
@@ -130,7 +133,7 @@
         {!! csrf_field() !!}
         <div class="form-group{{ $errors->has('foto_perfil') ? ' has-error' : '' }}">
               <label>Foto 3/4</label>
-              <input type="file" id="foto_perfil" name="foto_perfil" class="form-control" required autofocus>
+              <input type="file" accept="image/*" id="foto_perfil" name="foto_perfil" class="form-control" required autofocus>
               @if ($errors->has('foto_perfil'))
               <span class="help-block">
                 <strong>{{ $errors->first('foto_perfil') }}</strong>
@@ -216,7 +219,7 @@
              <select id="curso" name="curso" class="form-control custom-select" placeholder="Selecione seu Curso">
                 <option selected>Selecione seu curso...</option>
                   @foreach($cursos as $curso)
-                      <option value="{{ $curso->codigo }}">{{ $curso->nome }}</option>
+                      <option value="{{ $curso->nome }}">{{ $curso->nome }}</option>
                   @endforeach
             </select>
           </div>
@@ -269,7 +272,7 @@
       });
       $(document).ready(function () { 
           var $rg = $("#rg");
-           $rg.mask('99.999.999-9');
+           $rg.mask('99.999.999-99');
       });
       $(document).ready(function () { 
           var $matricula = $("#matricula");

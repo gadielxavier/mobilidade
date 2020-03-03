@@ -22,8 +22,8 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="../../../theme/images/aeri-logo-black.png" class="brand-logo" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../../theme/images/aeri-logo-black.png" alt="logo"/></a>
+        <a class="navbar-brand brand-logo mr-5" href="/home"><img src="../../../theme/images/aeri-logo-black.png" class="brand-logo" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="/home"><img src="../../../theme/images/aeri-logo-black.png" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -31,6 +31,9 @@
         </button>
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item nav-profile dropdown">
+          	<div class="mr-lg-5">
+          		<span class="menu-title">{{ Auth::user()->name }}</span>
+          	</div>
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <i class="ti-user menu-icon"></i>
             </a>
@@ -62,7 +65,15 @@
               <span class="menu-title">Home</span>
             </a>
           </li>
-          @if(Auth::user()->privilegio == 2)
+          @if(Auth::user()->privilegio == 4)
+          <li class="nav-item">
+            <a class="nav-link" href="/equipe">
+             <i class="ti-user menu-icon"></i>
+              <span class="menu-title">Equipe</span>
+            </a>
+          </li>
+          @endif
+          @if(Auth::user()->privilegio == 2 || Auth::user()->privilegio == 4)
           <li class="nav-item">
             <a class="nav-link" href="/editais">
               <i class="ti-write menu-icon"></i>
@@ -70,12 +81,11 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/equipe">
-             <i class="ti-user menu-icon"></i>
-              <span class="menu-title">Equipe</span>
+            <a class="nav-link" href="/recursos">
+             <i class="ti-comments menu-icon"></i>
+              <span class="menu-title">Recursos</span>
             </a>
           </li>
-
           @endif
           @if(Auth::user()->privilegio == 1)
           <li class="nav-item">
@@ -161,7 +171,7 @@
   <script src="../../../theme/js/todolist.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="../theme/js/dashboard.js"></script>
+  <script src="../../../theme/js/dashboard.js"></script>
 
   @yield('scripts')
 

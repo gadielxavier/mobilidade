@@ -117,27 +117,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password">Senha</label>
-
-                            <div class="input-group">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group">
-                            <label for="password-confirm">Confirmar Senha</label>
-
-                            <div class="input-group">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
+				            <label>Tipo Usuuário</label>
+				            <div class="dropdown">
+				               <select id="tipo_usuario" name="tipo_usuario" class="form-control custom-select">
+				                  <option selected value="2">Servidor Aeri</option>
+				                  <option value="3">Participante CCint</option>
+				              </select>
+				            </div>
+				        </div>
 
 			        <div class="modal-footer">
 				        <div class="mt-3">
