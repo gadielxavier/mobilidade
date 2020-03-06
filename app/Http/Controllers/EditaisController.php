@@ -8,6 +8,8 @@ use App\Editais;
 use App\Candidaturas;
 use App\Status_Inscricao;
 use App\Status_Edital;
+use App\User;
+use App\Avaliacao_Ccint;
 use DB, Log;
 
 class EditaisController extends Controller
@@ -93,10 +95,14 @@ class EditaisController extends Controller
     {
         $edital = Editais::find($id);
         $candidaturas = Candidaturas::where('edital_id', $id)->paginate(10);
+        $status =  Status_Inscricao::all();
+        $avaliadores = User::where('privilegio', 3)->get(); 
 
         $data = [
             'edital' => $edital,
-            'candidaturas' => $candidaturas
+            'candidaturas' => $candidaturas,
+            'status' => $status,
+            'avaliadores' => $avaliadores
         ]; 
        
           return view('editais.detalhes')->with($data);
@@ -157,7 +163,7 @@ class EditaisController extends Controller
         }
 
 
-        return redirect('/home');
+        return redirect('/editais');
     }
 
     public function candidatura(Request $request, $id)
@@ -184,5 +190,45 @@ class EditaisController extends Controller
         $edital = Editais::find($id);
         $edital->delete();
         return redirect('/editais');
+    }
+
+     public function ccint(Request $request)
+    {
+        //dd($request->input('candidato'));
+
+        foreach ($request->input('candidatura') as $candidatura) {
+
+            $avaliacao = Avaliacao_Ccint::where('candidatura_id', $candidatura)->first();
+            if($avaliacao != null){
+
+                $avaliacao->delete();
+            }
+            
+            DB::beginTransaction();
+            try{
+                $edital = Avaliacao_Ccint::create([
+                'candidatura_id' => $candidatura,
+                'avaliador_id' => $request->avaliador,
+                'desempenho_academico' => 0,
+                'plano_trabalho' => 0,
+                'curriculum_lattes' => 0,
+                'participacao' => 0,
+                'representacao_estudantil' => 0,
+                'programa_academico' => 0,
+                'nota_final' => 0,
+                'finalizado' => false,
+            ]);
+                
+                DB::commit();
+            }
+             catch(\Exception $e) {
+                DB::rollback();
+                Log::error($e);
+                return $this->error($e->getMessage(), 500, $e);
+            }
+        }
+
+        return redirect('/editais');
+
     }
 }

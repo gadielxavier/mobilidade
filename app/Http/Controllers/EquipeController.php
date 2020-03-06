@@ -15,7 +15,7 @@ class EquipeController extends Controller
      */
     public function index()
     {
-    	$equipe = User::where('privilegio', 2)->get(); 
+    	$equipe = User::where('privilegio', 2)->orWhere('privilegio', 3)->get(); 
 
     	 $data = [
             'equipe'  => $equipe

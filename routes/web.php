@@ -53,6 +53,7 @@ Route::group(['prefix' => 'editais',  'middleware' => ['auth','staff']], functio
     Route::get('atualizar/{id}', 'EditaisController@atualizar');
     Route::get('download/{id}', 'EditaisController@download');
     Route::post('store', 'EditaisController@store');
+    Route::post('ccint/cadastrar', 'EditaisController@ccint');
     Route::get('/', 'EditaisController@index');
 });
 
@@ -78,6 +79,11 @@ Route::group(['prefix' => 'recursos',  'middleware' => ['auth','staff']], functi
     Route::get('/', 'RecursosController@index');
     Route::get('detalhes/{id}', 'RecursosController@details')->name('recurso.detalhes');
     Route::post('resposta/store/{id}', 'RecursosController@storeResposta')->name('resposta');
+});
+
+Route::group(['prefix' => 'ccint',  'middleware' => ['auth','staff']], function() {
+    Route::get('/', 'CcintController@index');
+    Route::get('detalhes/{id}', 'CcintController@details');
 });
 
 Route::get('/clear-cache', function() {
