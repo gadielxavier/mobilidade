@@ -202,7 +202,8 @@ class CandidaturasController extends Controller
                     try{
                         $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
                         'candidatura_id' => $id,
-                        'arquivo' => $arquivo
+                        'arquivo' => $arquivo,
+                        'comprovacao_lattes_id' => $request->categoria
                     ]);
                         
                         DB::commit();
@@ -499,6 +500,17 @@ class CandidaturasController extends Controller
     }
 
     public function certificado(Request $request, $id)
+    {
+        $candidatura = Candidaturas::where('id', $id)->first();
+
+        $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+        $path = $storagePath.$candidatura->certificado;
+
+        return response()->file($path); 
+    }
+
+    public function comprovacao(Request $request, $id)
     {
         $candidatura = Candidaturas::where('id', $id)->first();
 

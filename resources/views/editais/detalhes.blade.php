@@ -143,9 +143,9 @@
 	     <div class="card">
 	    	<div class="card-body">
 	    		<div class="row">
-	                <div class="col-md-5">
-	                	<div class="row justify-content-center">
-		                	@if($edital->status->id == 3)
+	    			@if($edital->status->id == 3)
+		                <div class="col-md-5">
+		                	<div class="row justify-content-center">
 					          	@isset($candidatura->status->titulo)
 						          	<select id="avaliador" name="avaliador">
 									    @foreach($avaliadores as $avaliador)
@@ -153,22 +153,22 @@
 					                    @endforeach
 									</select>
 								@endif
-							@endif
+							</div>
+		                </div>	
+			            <div class="col-md-5">
+			            	<div class="row justify-content-center">
+			           			<div class="form-group">
+								    <div class="dropdown">
+								        <div class="mt-3">
+								        	<button type="submit" class="btn btn-primary btn-sm">
+							                  {{ __('Cadastrar') }}
+							                </button>
+								        </div>
+								    </div>
+							    </div>			
+							</div>
 						</div>
-	                </div>	
-		            <div class="col-md-5">
-		            	<div class="row justify-content-center">
-		           			<div class="form-group">
-							    <div class="dropdown">
-							        <div class="mt-3">
-							        	<button type="submit" class="btn btn-primary btn-sm">
-						                  {{ __('Cadastrar') }}
-						                </button>
-							        </div>
-							    </div>
-						    </div>			
-						</div>
-					</div>
+					@endif
 		          </div>
 	    	</div>
 	    </div>

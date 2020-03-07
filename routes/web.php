@@ -31,18 +31,19 @@ Route::group(['prefix' => 'candidato',  'middleware' => ['auth','candidato']], f
 
 
 Route::group(['prefix' => 'editais',  'middleware' => ['auth','staff']], function() {
-    Route::get('detalhes/candidatura/matricula/{id}', 'CandidaturasController@matricula');
-    Route::get('detalhes/candidatura/historico/{id}', 'CandidaturasController@historico');
-    Route::get('detalhes/candidatura/percentual/{id}', 'CandidaturasController@percentual');
-    Route::get('detalhes/candidatura/curriculum/{id}', 'CandidaturasController@curriculum');
-    Route::get('detalhes/candidatura/trabalho1/{id}', 'CandidaturasController@trabalho1');
-    Route::get('detalhes/candidatura/trabalho2/{id}', 'CandidaturasController@trabalho2');
-    Route::get('detalhes/candidatura/trabalho3/{id}', 'CandidaturasController@trabalho3');
-    Route::get('detalhes/candidatura/estudo1/{id}', 'CandidaturasController@estudo1');
-    Route::get('detalhes/candidatura/estudo2/{id}', 'CandidaturasController@estudo2');
-    Route::get('detalhes/candidatura/estudo3/{id}', 'CandidaturasController@estudo3');
-    Route::get('detalhes/candidatura/foto/{id}', 'CandidaturasController@foto');
-    Route::get('detalhes/candidatura/certificado/{id}', 'CandidaturasController@certificado');
+    Route::get('detalhes/candidatura/matricula/{id}', 'CandidaturasController@matricula')->name('editais.matricula');
+    Route::get('detalhes/candidatura/historico/{id}', 'CandidaturasController@historico')->name('editais.historico');
+    Route::get('detalhes/candidatura/percentual/{id}', 'CandidaturasController@percentual')->name('editais.percentual');
+    Route::get('detalhes/candidatura/curriculum/{id}', 'CandidaturasController@curriculum')->name('editais.curriculum');
+    Route::get('detalhes/candidatura/trabalho1/{id}', 'CandidaturasController@trabalho1')->name('editais.trabalho1');
+    Route::get('detalhes/candidatura/trabalho2/{id}', 'CandidaturasController@trabalho2')->name('editais.trabalho2');
+    Route::get('detalhes/candidatura/trabalho3/{id}', 'CandidaturasController@trabalho3')->name('editais.trabalho3');
+    Route::get('detalhes/candidatura/estudo1/{id}', 'CandidaturasController@estudo1')->name('editais.estudo1');
+    Route::get('detalhes/candidatura/estudo2/{id}', 'CandidaturasController@estudo2')->name('editais.estudo2');
+    Route::get('detalhes/candidatura/estudo3/{id}', 'CandidaturasController@estudo3')->name('editais.estudo3');
+    Route::get('detalhes/candidatura/foto/{id}', 'CandidaturasController@foto')->name('editais.foto');
+    Route::get('detalhes/candidatura/comprovacao/{id}', 'CandidaturasController@comprovacao')->name('editais.comprovacao');
+    Route::get('detalhes/candidatura/certificado/{id}', 'CandidaturasController@certificado')->name('editais.certificado');
     Route::post('detalhes/candidatura/atualizar/certificado/{id}', 'CandidaturasController@atualizarCertificado');
     Route::post('detalhes/candidatura/atualizar/{id}', 'CandidaturasController@atualizarStatus');
 
@@ -93,3 +94,7 @@ Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('view:clear');
     return 'DONE'; //Return anything
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

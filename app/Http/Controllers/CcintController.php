@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Avaliacao_Ccint;
 use App\Candidaturas;
+use App\Comprovacao_Lattes;
 use App\Comprovacao_Lattes_Arquivos;
 use Auth, DB, Log;
 
@@ -29,12 +30,14 @@ class CcintController extends Controller
 
     public function details(Request $request, $id)
     {
-        $candidatura = Candidaturas::find($id); 
-        $comprovacoes = Comprovacao_Lattes_Arquivos::all(); 
+        $candidatura = Candidaturas::find($id);
+        $comprovacoes =  Comprovacao_Lattes::all(); 
+        $arquivos = Comprovacao_Lattes_Arquivos::where('candidatura_id', $id)->get();
 
         $data = [
             'candidatura' => $candidatura,
-            'comprovacoes' => $comprovacoes
+            'comprovacoes' => $comprovacoes,
+            'arquivos' => $arquivos
         ]; 
        
           return view('ccint.detalhes')->with($data);

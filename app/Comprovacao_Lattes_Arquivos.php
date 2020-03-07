@@ -18,5 +18,14 @@ class Comprovacao_Lattes_Arquivos extends Model
      *
      * @var array
      */
-    protected $fillable = ['candidatura_id', 'arquivo'];
+    protected $fillable = ['candidatura_id', 'arquivo', 'comprovacao_lattes_id'];
+
+    /**
+     * Get the status record associated with the candidatura.
+     */
+    public function comprovacao()
+    {
+        return $this->belongsTo('App\Comprovacao_Lattes', 'comprovacao_lattes_id');
+    }
+
 }
