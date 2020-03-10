@@ -212,9 +212,7 @@ class EditaisController extends Controller
                 'desempenho_academico' => 0,
                 'plano_trabalho' => 0,
                 'curriculum_lattes' => 0,
-                'participacao' => 0,
-                'representacao_estudantil' => 0,
-                'programa_academico' => 0,
+                'carta' => 0,
                 'nota_final' => 0,
                 'finalizado' => false,
             ]);

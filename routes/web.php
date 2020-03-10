@@ -82,9 +82,27 @@ Route::group(['prefix' => 'recursos',  'middleware' => ['auth','staff']], functi
     Route::post('resposta/store/{id}', 'RecursosController@storeResposta')->name('resposta');
 });
 
-Route::group(['prefix' => 'ccint',  'middleware' => ['auth','staff']], function() {
+Route::group(['prefix' => 'ccint',  'middleware' => ['auth','ccint']], function() {
+
+    Route::get('detalhes/candidatura/matricula/{id}', 'CandidaturasController@matricula')->name('ccint.matricula');
+    Route::get('detalhes/candidatura/historico/{id}', 'CandidaturasController@historico')->name('ccint.historico');
+    Route::get('detalhes/candidatura/percentual/{id}', 'CandidaturasController@percentual')->name('ccint.percentual');
+    Route::get('detalhes/candidatura/curriculum/{id}', 'CandidaturasController@curriculum')->name('ccint.curriculum');
+    Route::get('detalhes/candidatura/trabalho1/{id}', 'CandidaturasController@trabalho1')->name('ccint.trabalho1');
+    Route::get('detalhes/candidatura/trabalho2/{id}', 'CandidaturasController@trabalho2')->name('ccint.trabalho2');
+    Route::get('detalhes/candidatura/trabalho3/{id}', 'CandidaturasController@trabalho3')->name('ccint.trabalho3');
+    Route::get('detalhes/candidatura/estudo1/{id}', 'CandidaturasController@estudo1')->name('ccint.estudo1');
+    Route::get('detalhes/candidatura/estudo2/{id}', 'CandidaturasController@estudo2')->name('ccint.estudo2');
+    Route::get('detalhes/candidatura/estudo3/{id}', 'CandidaturasController@estudo3')->name('ccint.estudo3');
+    Route::get('detalhes/candidatura/foto/{id}', 'CandidaturasController@foto')->name('ccint.foto');
+    Route::get('detalhes/candidatura/comprovacao/{id}', 'CandidaturasController@comprovacao')->name('ccint.comprovacao');
+    Route::get('detalhes/candidatura/certificado/{id}', 'CandidaturasController@certificado')->name('ccint.certificado');
+    Route::get('detalhes/candidatura/carta/{id}', 'CandidaturasController@carta')->name('ccint.certificado');
+
+
     Route::get('/', 'CcintController@index');
     Route::get('detalhes/{id}', 'CcintController@details');
+     Route::post('store/{id}', 'CcintController@store');
 });
 
 Route::get('/clear-cache', function() {

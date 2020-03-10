@@ -43,6 +43,10 @@ class HomeController extends Controller
             'candidato'    => $candidato,
             'candidaturas' => $candidaturas
         ];
+
+        if (Auth::user()->privilegio == 3) {
+            return redirect('/ccint');
+        }
         
         return view('home')->with($data);
     }

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class CheckEvaluator
+class CheckCcint
 {
     /**
      * Handle an incoming request.
@@ -21,6 +21,5 @@ class CheckEvaluator
         }
 
         return redirect('home');
-
     }
 }

@@ -66,12 +66,21 @@
 					<div class="card-body">
 						<form method="POST" action="atualizar/certificado/{{ $candidatura->id }}" enctype="multipart/form-data">
 							{!! csrf_field() !!}
-							<div class="form-group{{ $errors->has('foto_perfil') ? ' has-error' : '' }}">
+							<div class="form-group{{ $errors->has('certificado') ? ' has-error' : '' }}">
 								<label>Anexar Certificado de Proficiência</label>
 								<input type="file" accept="application/pdf" id="certificado" name="certificado" class="form-control">
 								@if ($errors->has('certificado'))
 								<span class="help-block">
-									<strong>{{ $errors->first('foto_perfil') }}</strong>
+									<strong>{{ $errors->first('certificado') }}</strong>
+								</span>
+								@endif
+							</div>
+							<div class="form-group{{ $errors->has('carta') ? ' has-error' : '' }}">
+								<label>Anexar Carta de Recomendação</label>
+								<input type="file" accept="application/pdf" id="carta" name="carta" class="form-control">
+								@if ($errors->has('carta'))
+								<span class="help-block">
+									<strong>{{ $errors->first('carta') }}</strong>
 								</span>
 								@endif
 							</div>

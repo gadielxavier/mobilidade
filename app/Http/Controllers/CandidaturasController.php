@@ -198,12 +198,14 @@ class CandidaturasController extends Controller
 
                 $arquivo = $request->file('comprovacao'.$counter)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'comprovacao'.$counter);
 
+                $comprovacao_lattes_id = 'categoria'.$counter;
+
                 DB::beginTransaction();
                     try{
                         $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
                         'candidatura_id' => $id,
                         'arquivo' => $arquivo,
-                        'comprovacao_lattes_id' => $request->categoria
+                        'comprovacao_lattes_id' => $request->$comprovacao_lattes_id
                     ]);
                         
                         DB::commit();
@@ -510,13 +512,24 @@ class CandidaturasController extends Controller
         return response()->file($path); 
     }
 
-    public function comprovacao(Request $request, $id)
+    public function carta(Request $request, $id)
     {
         $candidatura = Candidaturas::where('id', $id)->first();
 
         $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
 
-        $path = $storagePath.$candidatura->certificado;
+        $path = $storagePath.$candidatura->carta;
+
+        return response()->file($path); 
+    }
+
+    public function comprovacao(Request $request, $id)
+    {
+        $comprovacao = Comprovacao_Lattes_Arquivos::where('id', $id)->first();
+
+        $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+        $path = $storagePath.$comprovacao->arquivo;
 
         return response()->file($path); 
     }
@@ -576,6 +589,7 @@ class CandidaturasController extends Controller
 
         $this->validate($request, [
             'certificado' => 'file|max:8000',
+            'carta' => 'file|max:8000',
         ]);
 
         if ($request->hasFile('certificado') && $request->file('certificado')->isValid()){
@@ -584,8 +598,15 @@ class CandidaturasController extends Controller
              $certificado =  $candidaturas->certificado;
         }
 
+        if ($request->hasFile('carta') && $request->file('carta')->isValid()){
+            $carta = $request->file('carta')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$candidaturas->candidato->user_id, 'carta');
+        }else{
+             $carta =  $candidaturas->carta;
+        }
+
         try{
             $candidaturas->certificado = $certificado;
+            $candidaturas->carta = $carta;
             $candidaturas->save();
         }
         catch(\Exception $e) {

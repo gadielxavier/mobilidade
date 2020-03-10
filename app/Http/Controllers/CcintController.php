@@ -18,7 +18,7 @@ class CcintController extends Controller
      */
     public function index()
     {
-        $avaliacoes = Avaliacao_Ccint::where('avaliador_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $avaliacoes = Avaliacao_Ccint::where('avaliador_id', Auth::user()->id)->where('finalizado', 0)->orderBy('id', 'desc')->get();
 
         $data = [
             'avaliacoes' => $avaliacoes
@@ -41,6 +41,101 @@ class CcintController extends Controller
         ]; 
        
           return view('ccint.detalhes')->with($data);
+    }
+
+    protected function store(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'desempenho'        => 'required|numeric|min:0|max:10',
+            'estrutura'         => 'required|numeric|min:0|max:2',
+            'objetividade'      => 'required|numeric|min:0|max:6',
+            'clareza'           => 'required|numeric|min:0|max:2',
+            'participacao.*'    => 'required|numeric|min:0|max:1',
+            'indicadores.*'     => 'required|numeric|min:0|max:5',
+            'representacao.*'   => 'required|numeric|min:0|max:5',
+            'institucional.*'   => 'required|numeric|min:0|max:1',
+            'ideias'            => 'required|numeric|min:0|max:5',
+            'adicionais'        => 'required|numeric|min:0|max:2',
+            'merito'            => 'required|numeric|min:0|max:3',
+        ]);
+
+        $avaliacao = Avaliacao_Ccint::where('candidatura_id', $id)->where('avaliador_id', Auth::user()->id)->first();
+
+        $desempenho_academico = $request->desempenho;
+        $plano_trabalho = $request->estrutura + $request->objetividade + $request->clareza;
+
+        $participacao = 0;
+
+        if($request->participacao != null){
+            foreach ($request->participacao as $valor) {
+                $participacao += $valor;
+            }
+        }
+
+        if($participacao > 10){
+            $participacao = 10;
+        }
+
+         $indicadores = 0;
+
+         if($request->indicadores != null){
+            foreach ($request->indicadores as $valor) {
+                $indicadores += $valor;
+            }
+        }
+
+        if($indicadores > 10){
+            $indicadores = 10;
+        }
+
+        $representacao = 0;
+
+        if($request->representacao != null){
+            foreach ($request->representacao as $valor) {
+                $representacao += $valor;
+            }
+        }
+
+        if($representacao > 10){
+            $representacao = 10;
+        }
+
+        $institucional = 0;
+
+        if($request->representacao != null){
+            foreach ($request->institucional as $valor) {
+                $institucional += $valor;
+            }
+        }
+
+        if($institucional > 10){
+            $institucional = 10;
+        }
+
+        $curriculum_lattes = $participacao +  $indicadores + $representacao + $institucional;
+
+        $carta =  $request->estrutura + $request->objetividade + $request->clareza;
+
+        $nota_final = (2*$carta+2*$curriculum_lattes+2*$plano_trabalho+4*$desempenho_academico)/10;
+
+        try{
+            $avaliacao->desempenho_academico = $desempenho_academico;
+            $avaliacao->plano_trabalho = $plano_trabalho;
+            $avaliacao->curriculum_lattes = $curriculum_lattes;
+            $avaliacao->carta = $carta;
+            $avaliacao->nota_final = $nota_final;
+            $avaliacao->finalizado = true;
+            $avaliacao->save();
+
+        }
+        catch(\Exception $e) {
+            DB::rollback();
+            Log::error($e);
+            return $this->error($e->getMessage(), 500, $e);
+        }
+          return redirect('/ccint');
+
     }
 
 }

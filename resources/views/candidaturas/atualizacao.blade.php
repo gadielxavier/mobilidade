@@ -248,7 +248,7 @@
       + "<div class='form-group'>"
             +"<div class='dropdown'>"
               +"<label>Categoria</label>"
-              +"<select  name='categoria' class='form-control custom-select'>"
+              +"<select  name=\"" + categoria + "\"  class='form-control custom-select'>"
                     +"@foreach($comprovacoes as $comprovacao)"
                         +"<option value='{{ $comprovacao->id }}'>{{ $comprovacao->titulo }}</option>"
                     +"@endforeach"

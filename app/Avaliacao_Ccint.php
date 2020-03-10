@@ -19,7 +19,7 @@ class Avaliacao_Ccint extends Model
      *
      * @var array
      */
-    protected $fillable = ['candidatura_id', 'avaliador_id', 'desempenho_academico', 'plano_trabalho', 'curriculum_lattes', 'participacao', 'representacao_estudantil', 'programa_academico', 'nota_final', 'finalizado'];
+    protected $fillable = ['candidatura_id', 'avaliador_id', 'desempenho_academico', 'plano_trabalho', 'curriculum_lattes', 'carta', 'nota_final', 'finalizado'];
 
 
     /**

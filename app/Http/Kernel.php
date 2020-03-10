@@ -59,6 +59,6 @@ class Kernel extends HttpKernel
         'candidato' => Middleware\CheckUser::class,
         'admin' => Middleware\CheckAdmin::class,
         'staff' => Middleware\CheckStaff::class,
-        'evaluator' => Middleware\CheckEvaluator::class,
+        'ccint' => Middleware\CheckCcint::class,
     ];
 }
