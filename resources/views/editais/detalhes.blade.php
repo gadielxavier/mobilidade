@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="ccontainer-fluid">
-	<form method="POST" action="/editais/ccint/cadastrar/" enctype="multipart/form-data">
+	<form method="POST" action="{{ route('editais.ccint') }}" enctype="multipart/form-data">
 		{!! csrf_field() !!}
 		<div class="row">
 		    <div class="col-md-12 grid-margin">
@@ -95,7 +95,7 @@
 	      				<table class="table table-striped">
 	      					<thead>
 	      						<tr>
-	      							<th>Checkbox</th>
+	      							<th></th>
 	      							<th>Nome</th>
 				                    <th>Curso</th>
 				                    <th>Situaçâo</th>
@@ -111,11 +111,9 @@
 				             			</td>
 							        	<td>
 							          		@isset($candidatura->candidato->nome)
-							          		<div class="form-check">
 											  <label class="form-check-label" for="defaultCheck1">
 											    {{ $candidatura->candidato->nome }}
 											  </label>
-											</div>	
 							          		@endif
 							          	</td>
 								        <td> 

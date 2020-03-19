@@ -22,17 +22,24 @@
                   <thead>
                     <tr>
                        <th>Nome</th>
+                       <th>Edital</th>
                     </tr>
                   </thead>
                   <tbody>
                   
                     @foreach ($avaliacoes as $avaliacao)
                       <tr>
-                        <td>
+                          <td>
                           @isset($avaliacao->candidatura->candidato->nome)
                             {{ $avaliacao->candidatura->candidato->nome }}</td>
                           @endif
-                         <td>
+                          </td>
+                          <td>
+                          @isset($avaliacao->candidatura->edital->nome)
+                            {{ $avaliacao->candidatura->edital->nome.'  '.$avaliacao->candidatura->edital->numero }}</td>
+                          @endif
+                          </td>
+                          <td>
                           <a  href="ccint/detalhes/{{ $avaliacao->candidatura->id }}" class="btn btn-success btn-sm">
                               Visualizar
                           </a>

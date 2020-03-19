@@ -110,201 +110,183 @@
 				<a  href="{{ route('ccint.curriculum', $candidatura->id) }}" target="_blank">
                 	Visualizar
                 </a>
-				<h5>Participações /Organizações em/de Reuniões/Eventos por área de formação (máx 10 pontos)</h5>
-				<table class="table table-striped">
-				  <thead>
-				    <tr>
-				       <th>Categoria</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				  	 @isset($arquivos)
-					    	@foreach ($arquivos as $arquivo)
-					    		@if($arquivo->comprovacao->categoria == 'Participações')
-						        	<tr>
-						          		<td>
-						          			<div class="dropdown">
-						          				<!--
-								                <select id="curso" name="curso" class="form-control custom-select">
-								                  <option selected>{{ $arquivo->comprovacao->titulo }}</option>
-								                    @foreach($comprovacoes as $comprovacao)
-								                        <option value="{{ $comprovacao->id }}">{{ $comprovacao->titulo }}</option>
-								                    @endforeach
-								                </select>
-								            -->
-								            {{ $arquivo->comprovacao->titulo }}
-								            </div>
-						          		</td>
-						          		<td>
-						          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
-						                		Visualizar
-						                	</a>
-						          		</td>
-						          	</tr>
-						          	<tr>
-						          		<td>
-						          			<input id="participacao[]" name="participacao[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('participacao[]') }}" required autofocus>
-						          		</td>
-						          		<td>
-							            	@if ($errors->has('participacao'))
-						                    <span class="help-block">
-						                      <strong>{{ $errors->first('participacao') }}</strong>
-						                    </span>
-						                    @endif
-						          		</td>
-						        	</tr>
-						        @endif
+				@if(isset($arquivoParticipacoes[0]))
+					<h5>Participações /Organizações em/de Reuniões/Eventos por área de formação (máx 10 pontos)</h5>
+					<table class="table table-striped">
+				  		<thead>
+				    		<tr>
+				       			<th>Categoria</th>
+				    		</tr>
+				  		</thead>
+				  		<tbody>
+					    	@foreach ($arquivoParticipacoes as $arquivo)
+					        	<tr>
+					          		<td>
+					          			<div class="dropdown">
+							                <select id="curso" name="curso" class="form-control custom-select">
+							                  <option selected>{{ $arquivo->comprovacao->titulo }}</option>
+							                    @foreach($comprovacoes as $comprovacao)
+							                        <option value="{{ $comprovacao->id }}">{{ $comprovacao->titulo }}</option>
+							                    @endforeach
+							                </select>
+							            </div>
+					          		</td>
+					          		<td>
+					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
+					                		Visualizar
+					                	</a>
+					          		</td>
+					          	</tr>
+					          	<tr>
+					          		<td>
+					          			<input id="participacao[]" name="participacao[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('participacao[]') }}" required autofocus>
+					          		</td>
+					          		<td>
+						            	@if ($errors->has('participacao'))
+					                    <span class="help-block">
+					                      <strong>{{ $errors->first('participacao') }}</strong>
+					                    </span>
+					                    @endif
+					          		</td>
+					        	</tr>
 					    	@endforeach
-					    @endif
-				   </tbody>
-				</table>
+					    </tbody>
+					</table>
+				@endif
+
 				<br>
-				<h5>Indicadores de Produção Científica, Tecnológica e Artística</h5>
-				<table class="table table-striped">
-				  <thead>
-				    <tr>
-				       <th>Categoria</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				  	 @isset($arquivos)
-					    	@foreach ($arquivos as $arquivo)
-					    		@if($arquivo->comprovacao->categoria == 'Indicadores')
-						        	<tr>
-						          		<td>
-						          			<div class="dropdown">
-						          				<!--
-								                <select id="curso" name="curso" class="form-control custom-select">
-								                  <option selected>{{ $arquivo->comprovacao->titulo }}</option>
-								                    @foreach($comprovacoes as $comprovacao)
-								                        <option value="{{ $comprovacao->id }}">{{ $comprovacao->titulo }}</option>
-								                    @endforeach
-								                </select>
-								            -->
-								            {{ $arquivo->comprovacao->titulo }}
-								            </div>
-						          		</td>
-						          		<td>
-						          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
-						                		Visualizar
-						                	</a>
-						          		</td>
-						          	</tr>
-						          	<tr>
-						          		<td>
-						          			<input id="indicadores[]" name="indicadores[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('indicadores[]') }}" required autofocus>
-						          		</td>
-						          		<td>
-							            	@if ($errors->has('indicadores'))
-						                    <span class="help-block">
-						                      <strong>{{ $errors->first('indicadores') }}</strong>
-						                    </span>
-						                    @endif
-						          		</td>
-						        	</tr>
-						        @endif
+				@if(isset($arquivoIndicadores[0]))
+					<h5>Indicadores de Produção Científica, Tecnológica e Artística</h5>
+					<table class="table table-striped">
+					  	<thead>
+					    	<tr>
+					       		<th>Categoria</th>
+					    	</tr>
+					  	</thead>
+					  	<tbody>
+					  		@foreach ($arquivoIndicadores as $arquivo)
+						        <tr>
+						          	<td>
+						          		<div class="dropdown">
+							                <select id="curso" name="curso" class="form-control custom-select">
+							                  <option selected>{{ $arquivo->comprovacao->titulo }}</option>
+							                    @foreach($comprovacoes as $comprovacao)
+							                        <option value="{{ $comprovacao->id }}">{{ $comprovacao->titulo }}</option>
+							                    @endforeach
+							                </select>
+								        </div>
+						          	</td>
+						          	<td>
+					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
+					                		Visualizar
+					                	</a>
+						          	</td>
+						        </tr>
+					          	<tr>
+					          		<td>
+					          			<input id="indicadores[]" name="indicadores[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('indicadores[]') }}" required autofocus>
+					          		</td>
+					          		<td>
+					            		@if ($errors->has('indicadores'))
+				                    	<span class="help-block">
+				                      		<strong>{{ $errors->first('indicadores') }}</strong>
+				                    	</span>
+				                    	@endif
+				          			</td>
+				        		</tr>
 					    	@endforeach
-					    @endif
-				   </tbody>
-				</table>
+						</tbody>
+					</table>
+				@endif
+				   
 				<br>   
-				<h5>Representação/Liderança Estudantil em instâncias da Universidade (máx 10 pontos)</h5>
-				<table class="table table-striped">
-				  <thead>
-				    <tr>
-				       <th>Categoria</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				  	 @isset($arquivos)
-					    	@foreach ($arquivos as $arquivo)
-					    		@if($arquivo->comprovacao->categoria == 'Representação')
-						        	<tr>
-						          		<td>
-						          			<div class="dropdown">
-						          				<!--
-								                <select id="curso" name="curso" class="form-control custom-select">
-								                  <option selected>{{ $arquivo->comprovacao->titulo }}</option>
-								                    @foreach($comprovacoes as $comprovacao)
-								                        <option value="{{ $comprovacao->id }}">{{ $comprovacao->titulo }}</option>
-								                    @endforeach
-								                </select>
-								            -->
-								            {{ $arquivo->comprovacao->titulo }}
-								            </div>
-						          		</td>
-						          		<td>
-						          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
-						                		Visualizar
-						                	</a>
-						          		</td>
-						          	</tr>
-						          	<tr>
-						          		<td>
-						          			<input id="representacao[]" name="representacao[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('representacao[]') }}" required autofocus>
-						          		</td>
-						          		<td>
-							      			@if ($errors->has('representacao'))
-						                    <span class="help-block">
-						                      <strong>{{ $errors->first('representacao') }}</strong>
-						                    </span>
-						                    @endif
-						          		</td>
-						        	</tr>
-						        @endif
+				@if(isset($arquivoRepresentacao[0]))
+					<h5>Representação/Liderança Estudantil em instâncias da Universidade (máx 10 pontos)</h5>
+					<table class="table table-striped">
+					  	<thead>
+					    	<tr>
+					       		<th>Categoria</th>
+					    	</tr>
+					  	</thead>
+					  	<tbody>
+					    	@foreach ($arquivoRepresentacao as $arquivo)
+					        	<tr>
+					          		<td>
+					          			<div class="dropdown">
+							                <select id="curso" name="curso" class="form-control custom-select">
+							                  <option selected>{{ $arquivo->comprovacao->titulo }}</option>
+							                    @foreach($comprovacoes as $comprovacao)
+							                        <option value="{{ $comprovacao->id }}">{{ $comprovacao->titulo }}</option>
+							                    @endforeach
+							                </select>
+							            </div>
+					          		</td>
+					          		<td>
+					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
+					                		Visualizar
+					                	</a>
+					          		</td>
+					          	</tr>
+					          	<tr>
+					          		<td>
+					          			<input id="representacao[]" name="representacao[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('representacao[]') }}" required autofocus>
+					          		</td>
+					          		<td>
+						      			@if ($errors->has('representacao'))
+					                    <span class="help-block">
+					                      <strong>{{ $errors->first('representacao') }}</strong>
+					                    </span>
+					                    @endif
+					          		</td>
+					        	</tr>
 					    	@endforeach
-					    @endif
-				   </tbody>
-				</table>
+					    </tbody>
+					</table>
+				@endif
 				<br>   
-				<h5>Participação em Programa Acadêmico Institucional ou Estágios (máx 10 pontos)</h5>
-				<table class="table table-striped">
-				  <thead>
-				    <tr>
-				       <th>Categoria</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				  	 @isset($arquivos)
+				@if(isset($arquivoInstitucional[0]))
+					<h5>Participação em Programa Acadêmico Institucional ou Estágios (máx 10 pontos)</h5>
+					<table class="table table-striped">
+				  		<thead>
+				    		<tr>
+				       			<th>Categoria</th>
+				    		</tr>
+				  		</thead>
+				  		<tbody>
 					    	@foreach ($arquivos as $arquivo)
-					    		@if($arquivo->comprovacao->categoria == 'Institucional')
-						        	<tr>
-						          		<td>
-						          			<div class="dropdown">
-						          				<!--
-								                <select id="curso" name="curso" class="form-control custom-select">
-								                  <option selected>{{ $arquivo->comprovacao->titulo }}</option>
-								                    @foreach($comprovacoes as $comprovacao)
-								                        <option value="{{ $comprovacao->id }}">{{ $comprovacao->titulo }}</option>
-								                    @endforeach
-								                </select>
-								            -->
-								            {{ $arquivo->comprovacao->titulo }}
-								            </div>
-						          		</td>
-						          		<td>
-						          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
-						                		Visualizar
-						                	</a>
-						          		</td>
-						          	</tr>
-						          	<tr>
-						          		<td>
-						          			<input id="institucional[]" name="institucional[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('institucional[]') }}" required autofocus>
-						          		</td>
-						          		<td>
-							            	@if ($errors->has('institucional'))
-						                    <span class="help-block">
-						                      <strong>{{ $errors->first('institucional') }}</strong>
-						                    </span>
-						                    @endif
-						          		</td>
-						        	</tr>
-						        @endif
+					        	<tr>
+					          		<td>
+					          			<div class="dropdown">
+							                <select id="curso" name="curso" class="form-control custom-select">
+							                  <option selected>{{ $arquivo->comprovacao->titulo }}</option>
+							                    @foreach($comprovacoes as $comprovacao)
+							                        <option value="{{ $comprovacao->id }}">{{ $comprovacao->titulo }}</option>
+							                    @endforeach
+							                </select>
+							            </div>
+					          		</td>
+					          		<td>
+					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
+					                		Visualizar
+					                	</a>
+					          		</td>
+					          	</tr>
+					          	<tr>
+					          		<td>
+					          			<input id="institucional[]" name="institucional[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('institucional[]') }}" required autofocus>
+					          		</td>
+					          		<td>
+						            	@if ($errors->has('institucional'))
+					                    <span class="help-block">
+					                      <strong>{{ $errors->first('institucional') }}</strong>
+					                    </span>
+					                    @endif
+					          		</td>
+					        	</tr>
 					    	@endforeach
-					    @endif
-				   </tbody>
-				</table>
+				   		</tbody>
+					</table>
+				@endif
 				<br> 
 	      	</div>
 	  	</div>
@@ -312,12 +294,12 @@
 	    <div class="card">
 	    	<div class="card-body">
 	    		<label class="card-title">Carta de Recomendação</label>
-	          	<a  href="{{ route('ccint.trabalho1', $candidatura->id) }}" target="_blank">
+	          	<a  href="{{ route('ccint.certificado', $candidatura->id) }}" target="_blank">
                 	Visualizar
                 </a>
                 <div class="form-group">
 		        	<label>
-		        		Capacidade de aprender novas idéias, Capacidade de trabalhar e persistência, Motivação, entusiasmo e interesse, Capacidade de resolver problema, Imaginação e criatividade, Expressão escrita, Expressão oral (até 5,0)
+		        		Capacidade de aprender novas idéias, Capacidade de trabalhar e persistência, Motivação, entusiasmo e interesse, Capacidade de resolver problema, Imaginação e criatividade, Expressão escrita e Expressão oral (até 5,0)
 		        	</label>
 		        	<div class="input-group">
 		        		<div class="input-group-prepend bg-transparent">

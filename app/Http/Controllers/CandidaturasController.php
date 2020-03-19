@@ -192,11 +192,15 @@ class CandidaturasController extends Controller
         }
 
         $counter = 1;
+        $numeroComprovantes = count(Comprovacao_Lattes_Arquivos::where('candidatura_id', $id)->get()) + 1;
 
-        while($counter != 0){
+
+        while($counter < 6){
             if ($request->hasFile('comprovacao'.$counter) && $request->file('comprovacao'.$counter)->isValid()){
 
-                $arquivo = $request->file('comprovacao'.$counter)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'comprovacao'.$counter);
+                $arquivo = $request->file('comprovacao'.$counter)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'comprovacao'.$numeroComprovantes);
+
+                $numeroComprovantes++;
 
                 $comprovacao_lattes_id = 'categoria'.$counter;
 
@@ -215,11 +219,8 @@ class CandidaturasController extends Controller
                         Log::error($e);
                         return $this->error($e->getMessage(), 500, $e);
                     }
-
-                $counter++;
-            }else{
-                $counter = 0;
             }
+            $counter++;
         }
 
         return redirect('/home');

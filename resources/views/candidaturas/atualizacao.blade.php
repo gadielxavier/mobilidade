@@ -241,24 +241,34 @@
       var comprovacao = 'comprovacao'+counter;
       var categoria = 'categoria'+counter;
 
-      var newdiv = document.createElement('div');
-      newdiv.id = "div"+counter;
-      newdiv.innerHTML = "Comprovação Lattes  " + (counter)
-      + "<a href='#'style='color:red'  onClick='removeElement(\"" + newdiv.id + "\");'>Remover</a>" 
-      + "<div class='form-group'>"
-            +"<div class='dropdown'>"
-              +"<label>Categoria</label>"
-              +"<select  name=\"" + categoria + "\"  class='form-control custom-select'>"
-                    +"@foreach($comprovacoes as $comprovacao)"
-                        +"<option value='{{ $comprovacao->id }}'>{{ $comprovacao->titulo }}</option>"
-                    +"@endforeach"
-                +"</select>"
-            +"</div>"
-            +"<label>Arquivo</label>"
-            +"<input type='file' accept='application/pdf' name=\"" + comprovacao + "\" class='form-control' >"
-          +"</div>";
-      document.getElementById(divName).appendChild(newdiv);
-      counter++;
+      if (counter < 6) {
+
+        var newdiv = document.createElement('div');
+        newdiv.id = "div"+counter;
+        newdiv.innerHTML = "Comprovação Lattes  " + (counter)
+        + "<a href='#'style='color:red'  onClick='removeElement(\"" + newdiv.id + "\");'>Remover</a>" 
+        + "<div class='form-group'>"
+              +"<div class='dropdown'>"
+                +"<label>Categoria</label>"
+                +"<select  name=\"" + categoria + "\"  class='form-control custom-select'>"
+                      +"@foreach($comprovacoes as $comprovacao)"
+                          +"<option value='{{ $comprovacao->id }}'>{{ $comprovacao->titulo }}</option>"
+                      +"@endforeach"
+                  +"</select>"
+              +"</div>"
+              +"<label>Arquivo</label>"
+              +"<input type='file' accept='application/pdf' name=\"" + comprovacao + "\" class='form-control' >"
+            +"</div>";
+        document.getElementById(divName).appendChild(newdiv);
+        counter++;
+
+      } else {
+
+        alert('Máximo de 5 comprovantes por envio. Para adicionar mais de 5 comprovantes finalize a Inscrição e depois clique em Editar')
+         
+      }
+
+      
 
     }
     function removeElement(elementId) {

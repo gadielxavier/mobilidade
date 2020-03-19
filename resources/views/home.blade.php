@@ -49,12 +49,13 @@
                             {{ $edital->fim_inscricao->format('d/m/Y') }}
                           @endif
                         </td>
-                         <td>
-                          <a  href="editais/download/{{ $edital->id }}" class="btn btn-success btn-sm" target="_blank">
-                              Visualizar
-                          </a>
-                        </td>
+
                         @if(Auth::user()->privilegio == 1)
+                          <td>
+                            <a  href="{{ route('candidato.edital',  $edital->id) }}" class="btn btn-success btn-sm" target="_blank">
+                              Visualizar
+                            </a>
+                          </td>
                           <td>
                             {{ $inscrito = false }}
                             @isset($candidaturas)
@@ -83,6 +84,11 @@
                             @endif
                           </td>
                           @else
+                          <td>
+                            <a  href="editais/download/{{ $edital->id }}" class="btn btn-success btn-sm" target="_blank">
+                              Visualizar
+                            </a>
+                          </td>
                           <td>
                             <a href="/editais/detalhes/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Detalhes</a>
                           </td>

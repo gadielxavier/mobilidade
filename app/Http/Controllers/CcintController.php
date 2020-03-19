@@ -33,11 +33,32 @@ class CcintController extends Controller
         $candidatura = Candidaturas::find($id);
         $comprovacoes =  Comprovacao_Lattes::all(); 
         $arquivos = Comprovacao_Lattes_Arquivos::where('candidatura_id', $id)->get();
+        $arquivoParticipacoes = [];
+        $arquivoIndicadores = [];
+        $arquivoRepresentacao = [];
+        $arquivoInstitucional = [];
+
+        foreach ($arquivos as $arquivo) {
+            if($arquivo->comprovacao->tipo == 1){
+                $arquivoParticipacoes[] = $arquivo;
+            }
+            else if($arquivo->comprovacao->tipo == 2){
+                $arquivoIndicadores[] = $arquivo;
+            }
+            else if($arquivo->comprovacao->tipo == 3){
+                $arquivoRepresentacao[] = $arquivo;
+            }else{
+                $arquivoInstitucional[] = $arquivo;
+            }
+        }
 
         $data = [
             'candidatura' => $candidatura,
             'comprovacoes' => $comprovacoes,
-            'arquivos' => $arquivos
+            'arquivoParticipacoes' => $arquivoParticipacoes,
+            'arquivoIndicadores' => $arquivoIndicadores,
+            'arquivoRepresentacao' => $arquivoRepresentacao,
+            'arquivoInstitucional' => $arquivoInstitucional
         ]; 
        
           return view('ccint.detalhes')->with($data);
@@ -51,10 +72,10 @@ class CcintController extends Controller
             'estrutura'         => 'required|numeric|min:0|max:2',
             'objetividade'      => 'required|numeric|min:0|max:6',
             'clareza'           => 'required|numeric|min:0|max:2',
-            'participacao.*'    => 'required|numeric|min:0|max:1',
+            'participacao.*'    => 'required|numeric|min:0|max:2',
             'indicadores.*'     => 'required|numeric|min:0|max:5',
-            'representacao.*'   => 'required|numeric|min:0|max:5',
-            'institucional.*'   => 'required|numeric|min:0|max:1',
+            'representacao.*'   => 'required|numeric|min:0|max:1',
+            'institucional.*'   => 'required|numeric|min:0|max:5',
             'ideias'            => 'required|numeric|min:0|max:5',
             'adicionais'        => 'required|numeric|min:0|max:2',
             'merito'            => 'required|numeric|min:0|max:3',

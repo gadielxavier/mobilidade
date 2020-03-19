@@ -23,6 +23,7 @@ Route::get('/configuracoes', 'HomeController@configuracoes')->name('configuracoe
 Route::post('/update/{id}', 'HomeController@update')->name('update');
 
 Route::group(['prefix' => 'candidato',  'middleware' => ['auth','candidato']], function() {
+    Route::get('download/{id}', 'EditaisController@download')->name('candidato.edital');
     Route::post('store', 'CandidatoController@store');
     Route::post('update', 'CandidatoController@update');
     Route::get('/', 'CandidatoController@index');
@@ -54,7 +55,7 @@ Route::group(['prefix' => 'editais',  'middleware' => ['auth','staff']], functio
     Route::get('atualizar/{id}', 'EditaisController@atualizar');
     Route::get('download/{id}', 'EditaisController@download');
     Route::post('store', 'EditaisController@store');
-    Route::post('ccint/cadastrar', 'EditaisController@ccint');
+    Route::post('ccint/cadastrar', 'EditaisController@ccint')->name('editais.ccint');
     Route::get('/', 'EditaisController@index');
 });
 
