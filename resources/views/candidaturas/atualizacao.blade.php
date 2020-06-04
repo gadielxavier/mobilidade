@@ -12,7 +12,7 @@
             <strong>Erro no envio!!! Tamanho máximo dos arquivos somados é de 8 Mb</strong>
         @endif
         <div class="form-group">
-          <label>Primeira Opção Universidade</label>
+          <label><b>Primeira Opção Universidade</b></label>
           <div class="input-group">
             <input id="opcao1universidade" value="{{ $candidatura->primeira_opcao_universidade }}" name="opcao1universidade" type="text" class="form-control" required>
             @if ($errors->has('opcao1universidade'))
@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Primeira Opção Curso</label>
+          <label><b>Primeira Opção Curso</b></label>
           <div class="input-group">
             <input id="opcao1curso" value="{{ $candidatura->primeira_opcao_curso }}" name="opcao1curso"  type="text" class="form-control" required>
             @if ($errors->has('opcao1curso'))
@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Primeira Opção País</label>
+          <label><b>Primeira Opção País</b></label>
           <div class="input-group">
             <input id="opcao1pais" value="{{ $candidatura->primeira_opcao_pais }}" name="opcao1pais" type="text" class="form-control" required>
             @if ($errors->has('opcao1pais'))
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Segunda Opção Universidade</label>
+          <label><b>Segunda Opção Universidade</b></label>
           <div class="input-group">
             <input id="opcao2universidade" value="{{ $candidatura->segunda_opcao_universidade }}" name="opcao2universidade" type="text" class="form-control" required>
             @if ($errors->has('opcao2universidade'))
@@ -56,7 +56,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Segunda Opção Curso</label>
+          <label><b>Segunda Opção Curso</b></label>
           <div class="input-group">
             <input id="opcao2curso" value="{{ $candidatura->segunda_opcao_curso }}" name="opcao2curso" type="text" class="form-control" required>
             @if ($errors->has('opcao2curso'))
@@ -67,7 +67,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Segunda Opção País</label>
+          <label><b>Segunda Opção País</b></label>
           <div class="input-group">
             <input id="opcao2pais" value="{{ $candidatura->segunda_opcao_pais }}" name="opcao2pais" type="text" class="form-control" required>
             @if ($errors->has('opcao2pais'))
@@ -78,7 +78,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Terceira Opção Universidade</label>
+          <label><b>Terceira Opção Universidade</b></label>
           <div class="input-group">
             <input id="opcao3universidade" value="{{ $candidatura->terceira_opcao_universidade }}" name="opcao3universidade" type="text" class="form-control" required>
             @if ($errors->has('opcao3universidade'))
@@ -89,7 +89,7 @@
           </div>
         </div> 
         <div class="form-group">
-          <label>Terceira Opção Curso</label>
+          <label><b>Terceira Opção Curso</b></label>
           <div class="input-group">
             <input id="opcao3curso" value="{{ $candidatura->terceira_opcao_curso }}" name="opcao3curso" type="text" class="form-control" required>
             @if ($errors->has('opcao3curso'))
@@ -100,7 +100,7 @@
           </div>
         </div> 
         <div class="form-group">
-          <label>Terceira Opção País</label>
+          <label><b>Terceira Opção País</b></label>
           <div class="input-group">
             <input id="opcao3pais" value="{{ $candidatura->terceira_opcao_pais }}" name="opcao3pais" type="text" class="form-control" required>
             @if ($errors->has('opcao3pais'))
@@ -111,7 +111,7 @@
           </div>
         </div>  
         <div class="form-group">
-          <label>Guia de matrícula</label>
+          <label><b>Guia de matrícula</b></label>
           <input type="file" accept="application/pdf" id="matricula" name="matricula" class="form-control" >
           @if ($errors->has('matricula'))
           <span class="help-block">
@@ -120,7 +120,7 @@
           @endif
         </div>
         <div class="form-group">
-          <label>Histórico escolar</label>
+          <label><b>Histórico escolar</b></label>
           <input type="file" accept="application/pdf" id="historico" name="historico" class="form-control" >
           @if ($errors->has('historico'))
           <span class="help-block">
@@ -129,7 +129,7 @@
           @endif 
         </div>
         <div class="form-group">
-          <label>Percentual de carga horária concluída</label>
+          <label><b>Percentual de carga horária concluída</b></label>
           <input type="file" accept="application/pdf" id="percentual" name="percentual" class="form-control" >
           @if ($errors->has('percentual'))
           <span class="help-block">
@@ -138,7 +138,7 @@
           @endif
         </div>
         <div class="form-group">
-          <label>Curriculum Lattes</label>
+          <label><b>Curriculum Lattes</b></label>
           <input type="file" accept="application/pdf" id="curriculum" name="curriculum" class="form-control" >
           @if ($errors->has('curriculum'))
           <span class="help-block">
@@ -147,7 +147,7 @@
           @endif
         </div>
         <div class="form-group">
-          <label>Plano de trabalho 1</label>
+          <label><b>Plano de trabalho 1</b></label>
           <input type="file" accept="application/pdf" id="trabalho1" name="trabalho1" class="form-control" >
           @if ($errors->has('trabalho1'))
           <span class="help-block">
@@ -156,7 +156,7 @@
           @endif
         </div>
         <div class="form-group">
-          <label>Plano de trabalho 2</label>
+          <label><b>Plano de trabalho 2</b></label>
           <input type="file" accept="application/pdf" id="trabalho2" name="trabalho2" class="form-control" >
           @if ($errors->has('trabalho2'))
           <span class="help-block">
@@ -165,7 +165,7 @@
           @endif 
         </div>
         <div class="form-group">
-          <label>Plano de trabalho 3</label>
+          <label><b>Plano de trabalho 3</b></label>
           <input type="file" accept="application/pdf" id="trabalho3" name="trabalho3" class="form-control" >
           @if ($errors->has('trabalho3'))
           <span class="help-block">
@@ -174,7 +174,7 @@
           @endif
         </div>
         <div class="form-group">
-          <label>Plano de estudo 1</label>
+          <label><b>Plano de estudo 1</b></label>
           <input type="file" accept="application/pdf" id="estudo1" name="estudo1" class="form-control" >
           @if ($errors->has('estudo1'))
           <span class="help-block">
@@ -183,7 +183,7 @@
           @endif
         </div>
         <div class="form-group">
-          <label>Plano de estudo 2</label>
+          <label><b>Plano de estudo 2</b></label>
           <input type="file" accept="application/pdf" id="estudo2" name="estudo2" class="form-control" >
           @if ($errors->has('estudo2'))
           <span class="help-block">
@@ -192,7 +192,7 @@
           @endif
         </div>
         <div class="form-group">
-          <label>Plano de estudo 3</label>
+          <label><b>Plano de estudo 3</b></label>
           <input type="file" accept="application/pdf" id="estudo3" name="estudo3" class="form-control" >
           @if ($errors->has('estudo3'))
           <span class="help-block">
@@ -200,22 +200,71 @@
           </span>
           @endif 
         </div>
-        <div id="dynamicInput">
-          <div class="form-group">
-          </div>
-        </div>
-        <input type="button" value="Adicionar Comprovação Lattes" onClick="addInput('dynamicInput');">
-        <!--
-        <div class="form-group">
-          <label>Certificado</label>
-          <input type="file" accept="application/pdf" id="certificado" name="certificado" class="form-control" >
-          @if ($errors->has('certificado'))
-          <span class="help-block">
-            <strong>{{ $errors->first('certificado') }}</strong>
-          </span>
-          @endif
-        </div>
-      -->
+        <div class="table-responsive">
+             <span id="result"></span>
+             <table class="table table-bordered" id="user_table">
+               <thead>
+                <tr>
+                  <th width="35%">Categoria</th>
+                  <th width="35%">Arquivo</th>
+                  <th width="30%">Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($arquivos as $arquivo)
+                  <tr>
+                    <td>
+                      <label>{{ $comprovacoes[$arquivo->comprovacao_lattes_id]->titulo }}</label>
+                    </td>
+                    <td>
+                      <a  href="candidaturas/comprovacao/{{ $arquivo->id }}" target="_blank">
+                        Visualizar
+                      </a>
+                    </td>
+                    <td>
+                      <button type="button" href="#deleteModal_{{ $arquivo->id }}" data-toggle="modal" class="btn btn-danger">Remover</button>
+
+                      <!-- Remover Modal-->
+                      <div class="modal fade" id="deleteModal_{{ $arquivo->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
+                              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <h6>Você tem certeza que deseja excluir este comprovante?</h6>
+                                <div class="modal-footer">
+                                  <div class="form-group">
+                                    <a class="btn btn-primary" href="comprovante/delete/{{ $arquivo->id }}">
+                                      Sim
+                                    </a>
+                                    <button type="button" data-dismiss="modal" class="btn btn-outline-primary">
+                                      Não
+                                    </button>
+                                  </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </td>
+                  </tr>
+                @endforeach
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2" align="right">&nbsp;</td>
+                  <td>
+                    <button type="button" name="add" id="add" class="btn btn-success">Adicionar Comprovação Lattes</button>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+         </div>
         <div class="mt-3">
           <div class="form-group">
             <div class="input-group">
@@ -233,52 +282,49 @@
 @endsection
 
 @section('scripts')
-  <script type="text/javascript">
-    var counter = 1;
 
-    function addInput(divName){
+<script>
+$(document).ready(function(){
 
-      var comprovacao = 'comprovacao'+counter;
-      var categoria = 'categoria'+counter;
+ var count = 1;
+ var files = 0;
 
-      if (counter < 6) {
+ dynamic_field(count);
 
-        var newdiv = document.createElement('div');
-        newdiv.id = "div"+counter;
-        newdiv.innerHTML = "Comprovação Lattes  " + (counter)
-        + "<a href='#'style='color:red'  onClick='removeElement(\"" + newdiv.id + "\");'>Remover</a>" 
-        + "<div class='form-group'>"
-              +"<div class='dropdown'>"
-                +"<label>Categoria</label>"
-                +"<select  name=\"" + categoria + "\"  class='form-control custom-select'>"
+ function dynamic_field(number)
+ {
+  html = '<tr>';
+        html += '<td><select name="categoria[]" class="form-control custom-select">'
                       +"@foreach($comprovacoes as $comprovacao)"
                           +"<option value='{{ $comprovacao->id }}'>{{ $comprovacao->titulo }}</option>"
                       +"@endforeach"
-                  +"</select>"
-              +"</div>"
-              +"<label>Arquivo</label>"
-              +"<input type='file' accept='application/pdf' name=\"" + comprovacao + "\" class='form-control' >"
-            +"</div>";
-        document.getElementById(divName).appendChild(newdiv);
-        counter++;
+                  +'</select></td>';
+        html += '<td><input type="file" name="comprovacao[]" accept="application/pdf" class="form-control"></td>';
+        if(number > 1 && files < 5)
+        {
+            html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove</button></td></tr>';
+            $('tbody').append(html);
+            files++;
+        }
+        else if(number > 1) 
+        {
+          alert('Máximo de 5 comprovantes por envio. Para adicionar mais  comprovantes finalize a Inscrição e depois clique em Editar')
 
-      } else {
+        }
+ }
 
-        alert('Máximo de 5 comprovantes por envio. Para adicionar mais de 5 comprovantes finalize a Inscrição e depois clique em Editar')
-         
-      }
+ $(document).on('click', '#add', function(){
+  count++;
+  dynamic_field(count);
+ });
 
-      
+ $(document).on('click', '.remove', function(){
+  count--;
+  $(this).closest("tr").remove();
+  files--;
+ });
 
-    }
-    function removeElement(elementId) {
-        // Removes an element from the document
-        var element = document.getElementById(elementId);
-        element.parentNode.removeChild(element);
-        counter--;
-    }
-  </script>
-
-
+} ) ;
+</script>
 
 @endsection

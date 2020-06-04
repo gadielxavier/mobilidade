@@ -67,7 +67,7 @@
 	            	<div class="input-group">
 	              		<div class="input-group-prepend bg-transparent">
 	              	</div>
-	              	<input id="estrutura" name="estrutura" type="text" class="form-control form-control-lg border-left-0" value="{{ old('estrutura') }}" required autofocus>
+	              	<input id="estrutura" name="estrutura" type="text" class="form-control" value="{{ old('estrutura') }}" required autofocus>
 	              	@if ($errors->has('estrutura'))
                     <span class="help-block">
                       <strong>{{ $errors->first('estrutura') }}</strong>
@@ -80,7 +80,7 @@
 	            	<div class="input-group">
 	              		<div class="input-group-prepend bg-transparent">
 	              		</div>
-	              		<input id="objetividade" name="objetividade" type="text" class="form-control form-control-lg border-left-0" value="{{ old('objetividade') }}" required autofocus>
+	              		<input id="objetividade" name="objetividade" type="text" class="form-control" value="{{ old('objetividade') }}" required autofocus>
 		              	@if ($errors->has('objetividade'))
 	                    <span class="help-block">
 	                      <strong>{{ $errors->first('objetividade') }}</strong>
@@ -93,7 +93,7 @@
 	            	<div class="input-group">
 	              		<div class="input-group-prepend bg-transparent">
 	              		</div>
-	              	<input id="clareza" name="clareza" type="text" class="form-control form-control-lg border-left-0" value="{{ old('clareza') }}" required autofocus>
+	              	<input id="clareza" name="clareza" type="text" class="form-control" value="{{ old('clareza') }}" required autofocus>
 	              	@if ($errors->has('clareza'))
                     <span class="help-block">
                       <strong>{{ $errors->first('clareza') }}</strong>
@@ -139,7 +139,7 @@
 					          	</tr>
 					          	<tr>
 					          		<td>
-					          			<input id="participacao[]" name="participacao[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('participacao[]') }}" required autofocus>
+					          			<input id="participacao[]" name="participacao[]" type="text" class="form-control" value="{{ old('participacao[]') }}" required autofocus>
 					          		</td>
 					          		<td>
 						            	@if ($errors->has('participacao'))
@@ -184,7 +184,7 @@
 						        </tr>
 					          	<tr>
 					          		<td>
-					          			<input id="indicadores[]" name="indicadores[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('indicadores[]') }}" required autofocus>
+					          			<input id="indicadores[]" name="indicadores[]" type="text" class="form-control" value="{{ old('indicadores[]') }}" required autofocus>
 					          		</td>
 					          		<td>
 					            		@if ($errors->has('indicadores'))
@@ -229,7 +229,7 @@
 					          	</tr>
 					          	<tr>
 					          		<td>
-					          			<input id="representacao[]" name="representacao[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('representacao[]') }}" required autofocus>
+					          			<input id="representacao[]" name="representacao[]" type="text" class="form-control" value="{{ old('representacao[]') }}" required autofocus>
 					          		</td>
 					          		<td>
 						      			@if ($errors->has('representacao'))
@@ -253,7 +253,7 @@
 				    		</tr>
 				  		</thead>
 				  		<tbody>
-					    	@foreach ($arquivos as $arquivo)
+					    	@foreach ($arquivoInstitucional as $arquivo)
 					        	<tr>
 					          		<td>
 					          			<div class="dropdown">
@@ -273,7 +273,7 @@
 					          	</tr>
 					          	<tr>
 					          		<td>
-					          			<input id="institucional[]" name="institucional[]" type="text" class="form-control form-control-lg border-left-0" value="{{ old('institucional[]') }}" required autofocus>
+					          			<input id="institucional[]" name="institucional[]" type="text" class="form-control" value="{{ old('institucional[]') }}" required autofocus>
 					          		</td>
 					          		<td>
 						            	@if ($errors->has('institucional'))
@@ -304,7 +304,7 @@
 		        	<div class="input-group">
 		        		<div class="input-group-prepend bg-transparent">
 		              	</div>
-		              	<input id="ideias" name="ideias" type="text" class="form-control form-control-lg border-left-0" value="{{ old('ideias') }}" required autofocus>
+		              	<input id="ideias" name="ideias" type="text" class="form-control" value="{{ old('ideias') }}" required autofocus>
 		            	@if ($errors->has('ideias'))
 	                    <span class="help-block">
 	                      <strong>{{ $errors->first('ideias') }}</strong>
@@ -317,7 +317,7 @@
 	            	<div class="input-group">
 	              		<div class="input-group-prepend bg-transparent">
 	              		</div>
-	              		<input id="adicionais" name="adicionais" type="text" class="form-control form-control-lg border-left-0" value="{{ old('adicionais') }}" required autofocus>
+	              		<input id="adicionais" name="adicionais" type="text" class="form-control" value="{{ old('adicionais') }}" required autofocus>
 	              		@if ($errors->has('adicionais'))
 	                    <span class="help-block">
 	                      <strong>{{ $errors->first('adicionais') }}</strong>
@@ -330,7 +330,7 @@
 	            	<div class="input-group">
 	              		<div class="input-group-prepend bg-transparent">
 	              		</div>
-	              		<input id="merito" name="merito" type="text" class="form-control form-control-lg border-left-0" value="{{ old('merito') }}" required autofocus>
+	              		<input id="merito" name="merito" type="text" class="form-control" value="{{ old('merito') }}" required autofocus>
 	              		@if ($errors->has('merito'))
 	                    <span class="help-block">
 	                      <strong>{{ $errors->first('merito') }}</strong>
@@ -341,7 +341,7 @@
 	          	<div class="mt-3">
 	            	<div class="form-group">
 	              		<div class="input-group">
-	                		<button type="submit" class="btn btn-primary ml-auto">
+	                		<button type="button" class="btn btn-primary ml-auto" id="submitButton" data-toggle="modal" data-target="#confirm-submit-modal">
 	                  			{{ __('Enviar') }}
 	                		</button>
 	              		</div>
@@ -349,7 +349,81 @@
 	          	</div>
       		</div>
      	</div>
+     	<!------------------------------------------------------------------------------------->
+		<div class="modal fade" id="confirm-submit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                Confirmar Envio
+		            </div>
+		            <div class="modal-body">
+		            	<label class="card-title">Planos de trabalhos</label>
+		                <table class="table">
+		                    <tr>
+		                        <th>Estrutura do texto</th>
+		                        <td id="estrutura_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Objetividade</th>
+		                        <td id="objetividade_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Clareza</th>
+		                        <td id="clareza_modal"></td>
+		                    </tr>
+		                </table>
+		                <label class="card-title">Carta de Recomendação</label>
+		                <table class="table">
+		                    <tr>
+		                        <th>Ideias</th>
+		                        <td id="ideias_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Adicionais</th>
+		                        <td id="adicionais_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Mérito</th>
+		                        <td id="merito_modal"></td>
+		                    </tr>
+		                </table>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		                <button type="submit" class="btn btn-success success">Enviar</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 	</form>
 </div>
+
+
+@endsection
+
+@section('scripts')
+
+<script type="text/javascript">
+@if (count($errors) > 0){
+    $('#confirm-submit-modal').modal({show: false});
+}
+@endif
+</script>
+
+<script>
+	$('#submitButton').click(function() {
+		$('#estrutura_modal').text($('#estrutura').val());
+		$('#objetividade_modal').text($('#objetividade').val());
+		$('#clareza_modal').text($('#clareza').val());
+		$('#ideias_modal').text($('#ideias').val());
+		$('#adicionais_modal').text($('#adicionais').val());
+		$('#merito_modal').text($('#merito').val());
+	});
+
+	$('#submit').click(function(){
+		alert('submitting');
+		$('#formfield').submit();
+	});
+</script>
 
 @endsection

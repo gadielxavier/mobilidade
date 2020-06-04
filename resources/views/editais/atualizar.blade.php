@@ -54,7 +54,7 @@
 			    <div class="form-group">
 				    <label>Anexar Edital</label>
 				    <input type="file" id="anexo" name="anexo" class="form-control" >
-				</div>	
+				</div>
 
 				<div class="mt-3">
 					<div class="form-group">

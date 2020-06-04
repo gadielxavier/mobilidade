@@ -48,9 +48,11 @@ class CandidaturasController extends Controller
     {
 
         $edital = Editais::find($id);
+        $comprovacoes =  Comprovacao_Lattes::all();
 
         $data = [
-            'edital' => $edital
+            'edital' => $edital,
+            'comprovacoes' => $comprovacoes
         ]; 
         
         return view('candidaturas.inscricao')->with($data);
@@ -63,9 +65,11 @@ class CandidaturasController extends Controller
 
        $candidatura =  Candidaturas::where('candidato_id', $candidato->id)->where('edital_id', $id)->first();
        $comprovacoes =  Comprovacao_Lattes::all();
+       $arquivos = Comprovacao_Lattes_Arquivos::where('candidatura_id', $candidatura->id)->get();
 
         $data = [
             'candidatura' => $candidatura,
+            'arquivos' => $arquivos,
             'comprovacoes' => $comprovacoes
         ]; 
        
@@ -191,25 +195,24 @@ class CandidaturasController extends Controller
             return $this->error($e->getMessage(), 500, $e);
         }
 
-        $counter = 1;
-        $numeroComprovantes = count(Comprovacao_Lattes_Arquivos::where('candidatura_id', $id)->get()) + 1;
+
+        $comprovacao = $request->comprovacao;
+        $categoria = $request->categoria;
 
 
-        while($counter < 6){
-            if ($request->hasFile('comprovacao'.$counter) && $request->file('comprovacao'.$counter)->isValid()){
+        for($count = 0; $count < count($comprovacao); $count++)
+        {
 
-                $arquivo = $request->file('comprovacao'.$counter)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'comprovacao'.$numeroComprovantes);
+            if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
 
-                $numeroComprovantes++;
-
-                $comprovacao_lattes_id = 'categoria'.$counter;
+                $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
 
                 DB::beginTransaction();
                     try{
                         $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
                         'candidatura_id' => $id,
                         'arquivo' => $arquivo,
-                        'comprovacao_lattes_id' => $request->$comprovacao_lattes_id
+                        'comprovacao_lattes_id' => $request->categoria[$count]
                     ]);
                         
                         DB::commit();
@@ -220,7 +223,6 @@ class CandidaturasController extends Controller
                         return $this->error($e->getMessage(), 500, $e);
                     }
             }
-            $counter++;
         }
 
         return redirect('/home');
@@ -256,6 +258,8 @@ class CandidaturasController extends Controller
     protected function store(Request $request, $id)
     {
 
+        $edital = Editais::where('id', $id)->first();
+
         $this->validate($request, [
             'matricula' => 'required|file|max:8000',
             'historico' => 'required|file|max:8000',
@@ -268,9 +272,7 @@ class CandidaturasController extends Controller
             'estudo2' => 'required|file|max:8000',
             'estudo3' => 'required|file|max:8000',
         ]);
-
-
-        $edital = Editais::where('id', $id)->first();  
+  
 
         if ($request->hasFile('matricula') && $request->file('matricula')->isValid()){
             $matricula = $request->file('matricula')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'matricula');
@@ -337,6 +339,11 @@ class CandidaturasController extends Controller
         }else{
              $certificado = 0;
         }
+        if ($request->hasFile('carta') && $request->file('carta')->isValid()){
+            $certificado = $request->file('carta')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'carta');
+        }else{
+             $carta = 0;
+        }
 
         $candidato = Candidato::where('user_id', Auth::user()->id)->first();
 
@@ -367,7 +374,8 @@ class CandidaturasController extends Controller
             'plano_estudo2'=> $estudo2,
             'plano_estudo3'=> $estudo3,
             'certificado'=> $certificado,
-            'status_id'=> 1
+            'status_id'=> 1,
+            'carta'=> $carta
         ]);
             
             DB::commit();
@@ -377,8 +385,45 @@ class CandidaturasController extends Controller
             Log::error($e);
             return $this->error($e->getMessage(), 500, $e);
         }
-          return redirect('/candidaturas');
 
+        $comprovacao = $request->comprovacao;
+        $categoria = $request->categoria;
+
+
+        for($count = 0; $count < count($comprovacao); $count++)
+        {
+
+            if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
+
+                $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+
+                DB::beginTransaction();
+                    try{
+                        $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
+                        'candidatura_id' => $candidatura->id,
+                        'arquivo' => $arquivo,
+                        'comprovacao_lattes_id' => $request->categoria[$count]
+                    ]);
+                        
+                        DB::commit();
+                    }
+                     catch(\Exception $e) {
+                        DB::rollback();
+                        Log::error($e);
+                        return $this->error($e->getMessage(), 500, $e);
+                    }
+            }
+        }
+
+        return redirect('/candidaturas');
+
+    }
+
+    public function deleteComprovante($id)
+    {
+        $comprovacao = Comprovacao_Lattes_Arquivos::find($id);
+        $comprovacao->delete();
+        return Redirect::back();
     }
 
     public function matricula(Request $request, $id)

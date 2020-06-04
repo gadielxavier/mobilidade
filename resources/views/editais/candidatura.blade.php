@@ -58,7 +58,36 @@
 	</div>
 
 	<div class="row">
+	 	<div class="col-md-12 grid-margin stretch-card">
+	 		<div class="card">
+				<div class="card-body">
+					<form method="POST" action="atualizar/certificado/{{ $candidatura->id }}" enctype="multipart/form-data">
+						{!! csrf_field() !!}
+						<div class="form-group{{ $errors->has('certificado') ? ' has-error' : '' }}">
+							<label>Desempenho Acadêmico (0 a 10)</label>
+							<input type="text" id="desempenho" name="desempenho" class="form-control">
+							@if ($errors->has('desempenho'))
+							<span class="help-block">
+								<strong>{{ $errors->first('certificado') }}</strong>
+							</span>
+							@endif
+						</div>
+						<div class="mt-3">
+				          <div class="form-group">
+				            <div class="input-group">
+				              <button type="submit" class="btn btn-primary ml-auto">
+				                {{ __('Enviar') }}
+				              </button>
+				            </div>
+				          </div>
+				        </div>
+				    </form>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<div class="row">
 		 @if($candidatura->status->id == 6 ||
 		 $candidatura->status->id == 7  )
 		 	<div class="col-md-12 grid-margin stretch-card">
@@ -98,7 +127,6 @@
 				</div>
 			</div>
 		 @endif
-		
 	</div>
 
 	<div class="row">
