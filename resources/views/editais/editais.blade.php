@@ -122,7 +122,7 @@
                             <span class="help-block">
                                 <strong>{{ $errors->first('anexo') }}</strong>
                             </span>
-                        @endif
+                          @endif
 		                  <button class="btn btn-primary" id="falseinput">Escolher arquivo</button>
 		                  <span class="input-group-prepend bg-transparent" id="selected_filename">Nenhum arquivo selecionado</span>
 		                </div>

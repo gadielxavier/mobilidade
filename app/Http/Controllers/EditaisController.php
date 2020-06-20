@@ -78,6 +78,7 @@ class EditaisController extends Controller
             'qtd_bolsas'=> $request->bolsas,
             'status_edital_id'=> '1',
             'path_anexo'=> $anexo,
+            'maior_pontuacao' => 0,
 
         ]);
             
@@ -119,6 +120,87 @@ class EditaisController extends Controller
         ]; 
        
           return view('editais.atualizar')->with($data);
+    }
+
+    public function resultado(Request $request, $id)
+    {
+        $edital = Editais::where('id', $id)->first();
+        $status = Status_Edital::all();
+        $avaliacoes = Avaliacao_Ccint::where('edital_id', $edital->id)
+        ->orderBy('nota_final', 'desc')->get();
+
+        $data = [
+            'edital' => $edital,
+            'avaliacoes' => $avaliacoes,
+            'status' => $status
+        ]; 
+       
+          return view('editais.resultado')->with($data);
+    }
+
+    public function atualizarResultado(Request $request, $id)
+    {
+        $edital = Editais::where('id', $id)->first();
+
+        for ($i = 0; $i<count($request->input('avaliacoes'));  $i++) {
+
+            $avaliacao = Avaliacao_Ccint::where('id', $request->input('avaliacoes')[$i])->first();
+
+            $desempenho_academico = $request->input('desempenho')[$i];
+
+            if($edital->maior_pontuacao > 0){
+                $curriculum_lattes = 10 * $avaliacao->curriculum_lattes / $edital->maior_pontuacao;
+            }else{
+                $curriculum_lattes = 0;
+            }
+
+            $nota_final = (2*$avaliacao->carta+2*$curriculum_lattes+2*$avaliacao->plano_trabalho+4*$desempenho_academico)/10;
+
+            try{
+                $avaliacao->desempenho_academico = $desempenho_academico;
+                $avaliacao->nota_final = $nota_final;
+                $avaliacao->save();
+
+            }
+            catch(\Exception $e) {
+                DB::rollback();
+                Log::error($e);
+                return $this->error($e->getMessage(), 500, $e);
+            } 
+            
+        }
+
+        $posicao = 1;
+
+        $avaliacoes = DB::table('avaliacao_ccint')
+                ->where('edital_id', $id)
+                ->orderBy('nota_final', 'desc')
+                ->get();
+
+
+        foreach ($avaliacoes as $avaliacao) {
+
+            $avaliacao = Avaliacao_Ccint::where('id', $avaliacao->id)->first();
+
+            try{
+                $avaliacao->posicao = $posicao;
+                $avaliacao->save();
+
+            }
+            catch(\Exception $e) {
+                DB::rollback();
+                Log::error($e);
+                return $this->error($e->getMessage(), 500, $e);
+            }
+
+            $posicao++; 
+            
+        }
+
+
+
+        return redirect('/editais');
+
     }
 
     public function update(Request $request, $id)
@@ -194,7 +276,6 @@ class EditaisController extends Controller
 
      public function ccint(Request $request)
     {
-        //dd($request->input('candidato'));
 
         foreach ($request->input('candidatura') as $candidatura) {
 
@@ -206,7 +287,7 @@ class EditaisController extends Controller
             
             DB::beginTransaction();
             try{
-                $edital = Avaliacao_Ccint::create([
+                $avaliacaoCcint = Avaliacao_Ccint::create([
                 'candidatura_id' => $candidatura,
                 'avaliador_id' => $request->avaliador,
                 'desempenho_academico' => 0,
@@ -215,6 +296,8 @@ class EditaisController extends Controller
                 'carta' => 0,
                 'nota_final' => 0,
                 'finalizado' => false,
+                'edital' => $candidatura->edital_id,
+                'posicao' => 0,
             ]);
                 
                 DB::commit();

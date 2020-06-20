@@ -7,6 +7,7 @@ use App\Avaliacao_Ccint;
 use App\Candidaturas;
 use App\Comprovacao_Lattes;
 use App\Comprovacao_Lattes_Arquivos;
+use App\Editais;
 use Auth, DB, Log;
 
 class CcintController extends Controller
@@ -68,7 +69,6 @@ class CcintController extends Controller
     {
 
         $this->validate($request, [
-            'desempenho'        => 'required|numeric|min:0|max:10',
             'estrutura'         => 'required|numeric|min:0|max:2',
             'objetividade'      => 'required|numeric|min:0|max:6',
             'clareza'           => 'required|numeric|min:0|max:2',
@@ -83,7 +83,6 @@ class CcintController extends Controller
 
         $avaliacao = Avaliacao_Ccint::where('candidatura_id', $id)->where('avaliador_id', Auth::user()->id)->first();
 
-        $desempenho_academico = $request->desempenho;
         $plano_trabalho = $request->estrutura + $request->objetividade + $request->clareza;
 
         $participacao = 0;
@@ -138,16 +137,22 @@ class CcintController extends Controller
 
         $carta =  $request->estrutura + $request->objetividade + $request->clareza;
 
-        $nota_final = (2*$carta+2*$curriculum_lattes+2*$plano_trabalho+4*$desempenho_academico)/10;
+        $edital = Editais::where('id', $avaliacao->edital_id)->first();
+
+        $maior_pontuacao = $edital->maior_pontuacao;
+
+        if($curriculum_lattes > $maior_pontuacao){
+            $maior_pontuacao = $curriculum_lattes;
+        }
 
         try{
-            $avaliacao->desempenho_academico = $desempenho_academico;
             $avaliacao->plano_trabalho = $plano_trabalho;
             $avaliacao->curriculum_lattes = $curriculum_lattes;
             $avaliacao->carta = $carta;
-            $avaliacao->nota_final = $nota_final;
             $avaliacao->finalizado = true;
+            $edital->maior_pontuacao = $maior_pontuacao;
             $avaliacao->save();
+            $edital->save();
 
         }
         catch(\Exception $e) {

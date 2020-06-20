@@ -19,7 +19,7 @@ class Avaliacao_Ccint extends Model
      *
      * @var array
      */
-    protected $fillable = ['candidatura_id', 'avaliador_id', 'desempenho_academico', 'plano_trabalho', 'curriculum_lattes', 'carta', 'nota_final', 'finalizado'];
+    protected $fillable = ['candidatura_id', 'avaliador_id', 'desempenho_academico', 'plano_trabalho', 'curriculum_lattes', 'carta', 'nota_final', 'finalizado', 'edital_id', 'posicao'];
 
 
     /**
@@ -28,5 +28,10 @@ class Avaliacao_Ccint extends Model
     public function candidatura()
     {
         return $this->belongsTo('App\Candidaturas', 'candidatura_id');
+    }
+
+    public function avaliador()
+    {
+        return $this->belongsTo('App\User', 'avaliador_id');
     }
 }

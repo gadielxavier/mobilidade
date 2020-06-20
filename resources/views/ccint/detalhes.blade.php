@@ -26,26 +26,6 @@
 		@endif
 
 		<div class="card">
-    		<div class="card-body">
-    			<label class="card-title">Desempenho Acadêmico (0 a 10)</label>
-    		 
-	          	<div class="form-group">
-	            	<label>Conforme Percentil (até 10% nota 10, entre 10% e 25% nota 8, entre 25% e 50% nota 5, entre 50% e 75% nota 3, entre 75% e 100% nota 0) </label>
-	            	<div class="input-group">
-	              		<div class="input-group-prepend bg-transparent">
-	              		</div>
-	              	<input id="desempenho" type="text" class="form-control" name="desempenho" value="{{ old('desempenho') }}" required autofocus>
-	              	@if ($errors->has('desempenho'))
-                    <span class="help-block">
-                      <strong>{{ $errors->first('desempenho') }}</strong>
-                    </span>
-                    @endif
-	            	</div>
-	          	</div>
-	    	</div>
-		</div>
-		<br>
-		<div class="card">
 	    	<div class="card-body">
 	    		<label class="card-title">Plano de trabalho 1</label>
 	          	<a  href="{{ route('ccint.trabalho1', $candidatura->id) }}" target="_blank">
@@ -357,7 +337,7 @@
 		                Confirmar Envio
 		            </div>
 		            <div class="modal-body">
-		            	<label class="card-title">Planos de trabalhos</label>
+		            	<label class="card-title">Planos de trabalho</label>
 		                <table class="table">
 		                    <tr>
 		                        <th>Estrutura do texto</th>

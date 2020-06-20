@@ -45,6 +45,11 @@
 							        <td>
 							          	<a href="/editais/atualizar/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Editar</a>
 							        </td>
+							       	@if($edital->status->id == 3)
+							        <td>
+							          	<a href="/editais/resultado/{{ $edital->id }}"  class="btn btn-success btn-sm"> Resultado Parcial</a>
+							        </td>
+							        @endif
 							        <!--
 							        <td>
 							          	<a href="#deleteModal_{{ $edital->id }}" data-toggle="modal" class="btn btn-danger btn-sm"> Excluir</a>

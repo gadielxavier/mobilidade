@@ -21,7 +21,7 @@ class Editais extends Model
      *
      * @var array
      */
-    protected $fillable = ['fim_inscricao', 'nome', 'numero', 'qtd_bolsas', 'status_edital_id', 'path_anexo', 'resultado'];
+    protected $fillable = ['fim_inscricao', 'nome', 'numero', 'qtd_bolsas', 'status_edital_id', 'path_anexo', 'resultado', 'maior_pontuacao'];
 
     /**
      * Get the status record associated with the candidatura.

@@ -37,7 +37,7 @@ class RecursosController extends Controller
           return view('recursos.detalhes')->with($data);
     }
 
-     public function storeResposta(Request $request, $id)
+    public function storeResposta(Request $request, $id)
     {
         $recurso = Recursos::find($id);
 

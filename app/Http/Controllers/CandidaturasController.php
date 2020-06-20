@@ -231,7 +231,7 @@ class CandidaturasController extends Controller
     public function details(Request $request, $id)
     {
         $candidatura = Candidaturas::where('id', $id)->first();
-        $recurso = Recursos::where('candidato_id', $candidatura->candidato->id)->where('edital_id', $candidatura->edital->id)->first();
+        $recurso = Recursos::where('candidato_id', $candidatura->candidato->id)->where('edital_id', $candidatura->edital->id)->orderBy('id', 'desc')->first();
 
         if($recurso == null){
              $resposta = null;

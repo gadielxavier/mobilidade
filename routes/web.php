@@ -52,7 +52,9 @@ Route::group(['prefix' => 'editais',  'middleware' => ['auth','staff']], functio
     Route::delete('detalhes/delete/{id}','EditaisController@destroy');
     Route::get('detalhes/{id}', 'EditaisController@details');
     Route::post('atualizar/update/{id}', 'EditaisController@update')->name('editais.update');
+    Route::post('atualizar/resultado/update/{id}', 'EditaisController@atualizarResultado')->name('resultado.update');
     Route::get('atualizar/{id}', 'EditaisController@atualizar');
+    Route::get('resultado/{id}', 'EditaisController@resultado');
     Route::get('download/{id}', 'EditaisController@download');
     Route::post('store', 'EditaisController@store');
     Route::post('ccint/cadastrar', 'EditaisController@ccint')->name('editais.ccint');

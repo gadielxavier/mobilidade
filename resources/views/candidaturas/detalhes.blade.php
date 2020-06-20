@@ -87,10 +87,57 @@
             <p>{{ $candidatura->status->titulo }}</p>
           @elseif( $candidatura->status->id == 11 )
             <p>{{ $candidatura->status->titulo }}</p>
+            <button type="submit" data-toggle="modal" data-target="#editalModal"  class="btn btn-primary btn-sm">
+              {{ __('Recurso') }}
+            </button>
           @elseif( $candidatura->status->id == 12 )
             <p>{{ $candidatura->status->titulo }}</p>
+
+            @isset($recurso->candidato->nome)
+            <div class="card">
+                <div class="card-body" style="background-color:powderblue;">
+                  <h4 class="card-title">{{ $recurso->candidato->nome }}</h4>
+                  <p>
+                    {{ $recurso->description }}
+                  </p>
+                </div>
+            </div>
+            @endif
+
+            @isset($resposta->description)
+            <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Aeri</h4>
+                  <p>
+                    {{ $resposta->description }}
+                  </p>
+                </div>
+            </div>
+            @endif
           @elseif( $candidatura->status->id == 13 )
             <p>{{ $candidatura->status->titulo }}</p>
+
+             @isset($recurso->candidato->nome) 
+             <div class="card">
+                <div class="card-body" style="background-color:powderblue;">
+                  <h4 class="card-title">{{ $recurso->candidato->nome }}</h4>
+                  <p>
+                    {{ $recurso->description }}
+                  </p>
+                </div>
+            </div>
+            @endif
+
+            @isset($resposta->description)
+            <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Aeri</h4>
+                  <p>
+                    {{ $resposta->description }}
+                  </p>
+                </div>
+            </div>
+            @endif
           @elseif( $candidatura->status->id == 14 )
             <p>{{ $candidatura->status->titulo }}</p>
           @elseif( $candidatura->status->id == 15 )
