@@ -111,7 +111,10 @@
           </div>
         </div>  
         <div class="form-group">
-          <label><b>Guia de matrícula</b></label>
+          <label><b>Guia de matrícula</b></label> 
+          <a  href="{{ route('candidaturas.matricula', $candidatura->id) }}"  target="_blank">
+            Visualizar
+          </a>
           <input type="file" accept="application/pdf" id="matricula" name="matricula" class="form-control" >
           @if ($errors->has('matricula'))
           <span class="help-block">
@@ -121,6 +124,9 @@
         </div>
         <div class="form-group">
           <label><b>Histórico escolar</b></label>
+          <a  href="{{ route('candidaturas.matricula', $candidatura->id) }}"  target="_blank">
+            Visualizar
+          </a>
           <input type="file" accept="application/pdf" id="historico" name="historico" class="form-control" >
           @if ($errors->has('historico'))
           <span class="help-block">
@@ -130,6 +136,9 @@
         </div>
         <div class="form-group">
           <label><b>Percentual de carga horária concluída</b></label>
+          <a  href="{{ route('candidaturas.matricula', $candidatura->id) }}"  target="_blank">
+            Visualizar
+          </a>
           <input type="file" accept="application/pdf" id="percentual" name="percentual" class="form-control" >
           @if ($errors->has('percentual'))
           <span class="help-block">
@@ -139,6 +148,9 @@
         </div>
         <div class="form-group">
           <label><b>Curriculum Lattes</b></label>
+          <a  href="{{ route('candidaturas.matricula', $candidatura->id) }}"  target="_blank">
+            Visualizar
+          </a>
           <input type="file" accept="application/pdf" id="curriculum" name="curriculum" class="form-control" >
           @if ($errors->has('curriculum'))
           <span class="help-block">
@@ -148,6 +160,9 @@
         </div>
         <div class="form-group">
           <label><b>Plano de trabalho 1</b></label>
+          <a  href="{{ route('candidaturas.matricula', $candidatura->id) }}"  target="_blank">
+            Visualizar
+          </a>
           <input type="file" accept="application/pdf" id="trabalho1" name="trabalho1" class="form-control" >
           @if ($errors->has('trabalho1'))
           <span class="help-block">
@@ -157,6 +172,9 @@
         </div>
         <div class="form-group">
           <label><b>Plano de trabalho 2</b></label>
+          <a  href="{{ route('candidaturas.matricula', $candidatura->id) }}"  target="_blank">
+            Visualizar
+          </a>
           <input type="file" accept="application/pdf" id="trabalho2" name="trabalho2" class="form-control" >
           @if ($errors->has('trabalho2'))
           <span class="help-block">
@@ -166,6 +184,9 @@
         </div>
         <div class="form-group">
           <label><b>Plano de trabalho 3</b></label>
+          <a  href="{{ route('candidaturas.matricula', $candidatura->id) }}"  target="_blank">
+            Visualizar
+          </a>
           <input type="file" accept="application/pdf" id="trabalho3" name="trabalho3" class="form-control" >
           @if ($errors->has('trabalho3'))
           <span class="help-block">
@@ -175,6 +196,9 @@
         </div>
         <div class="form-group">
           <label><b>Plano de estudo 1</b></label>
+          <a  href="{{ route('candidaturas.matricula', $candidatura->id) }}"  target="_blank">
+            Visualizar
+          </a>
           <input type="file" accept="application/pdf" id="estudo1" name="estudo1" class="form-control" >
           @if ($errors->has('estudo1'))
           <span class="help-block">
@@ -184,6 +208,9 @@
         </div>
         <div class="form-group">
           <label><b>Plano de estudo 2</b></label>
+          <a  href="{{ route('candidaturas.matricula', $candidatura->id) }}"  target="_blank">
+            Visualizar
+          </a>
           <input type="file" accept="application/pdf" id="estudo2" name="estudo2" class="form-control" >
           @if ($errors->has('estudo2'))
           <span class="help-block">
@@ -193,6 +220,9 @@
         </div>
         <div class="form-group">
           <label><b>Plano de estudo 3</b></label>
+          <a  href="{{ route('candidaturas.matricula', $candidatura->id) }}"  target="_blank">
+            Visualizar
+          </a>
           <input type="file" accept="application/pdf" id="estudo3" name="estudo3" class="form-control" >
           @if ($errors->has('estudo3'))
           <span class="help-block">
