@@ -274,7 +274,7 @@
 	    <div class="card">
 	    	<div class="card-body">
 	    		<label class="card-title">Carta de Recomendação</label>
-	          	<a  href="{{ route('ccint.certificado', $candidatura->id) }}" target="_blank">
+	          	<a  href="{{ route('ccint.carta', $candidatura->id) }}" target="_blank">
                 	Visualizar
                 </a>
                 <div class="form-group">

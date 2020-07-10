@@ -45,6 +45,7 @@ Route::group(['prefix' => 'editais',  'middleware' => ['auth','staff']], functio
     Route::get('detalhes/candidatura/foto/{id}', 'CandidaturasController@foto')->name('editais.foto');
     Route::get('detalhes/candidatura/comprovacao/{id}', 'CandidaturasController@comprovacao')->name('editais.comprovacao');
     Route::get('detalhes/candidatura/certificado/{id}', 'CandidaturasController@certificado')->name('editais.certificado');
+    Route::get('detalhes/candidatura/carta/{id}', 'CandidaturasController@carta')->name('editais.carta');
     Route::post('detalhes/candidatura/atualizar/certificado/{id}', 'CandidaturasController@atualizarCertificado');
     Route::post('detalhes/candidatura/atualizar/{id}', 'CandidaturasController@atualizarStatus');
 
@@ -82,6 +83,7 @@ Route::group(['prefix' => 'candidaturas',  'middleware' => ['auth','candidato']]
     Route::get('candidaturas/estudo1/{id}', 'CandidaturasController@estudo1')->name('candidaturas.estudo1');
     Route::get('candidaturas/estudo2/{id}', 'CandidaturasController@estudo2')->name('candidaturas.estudo2');
     Route::get('candidaturas/estudo3/{id}', 'CandidaturasController@estudo3')->name('candidaturas.estudo3');
+    Route::get('recurso/{id}', 'CandidaturasController@recursoDetalhes')->name('candidaturas.recurso');
 
 });
 
@@ -113,7 +115,7 @@ Route::group(['prefix' => 'ccint',  'middleware' => ['auth','ccint']], function(
     Route::get('detalhes/candidatura/foto/{id}', 'CandidaturasController@foto')->name('ccint.foto');
     Route::get('detalhes/candidatura/comprovacao/{id}', 'CandidaturasController@comprovacao')->name('ccint.comprovacao');
     Route::get('detalhes/candidatura/certificado/{id}', 'CandidaturasController@certificado')->name('ccint.certificado');
-    Route::get('detalhes/candidatura/carta/{id}', 'CandidaturasController@carta')->name('ccint.certificado');
+    Route::get('detalhes/candidatura/carta/{id}', 'CandidaturasController@carta')->name('ccint.carta');
 
 
     Route::get('/', 'CcintController@index');
@@ -128,7 +130,3 @@ Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('view:clear');
     return 'DONE'; //Return anything
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

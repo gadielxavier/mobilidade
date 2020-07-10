@@ -16,7 +16,8 @@
 	<div class="card">
     	<div class="card-body">
       		<h4 class="card-title">Recursos abertos</h4>
-      			<div class="row table-responsive">
+  			<div class="row table-responsive">
+  				<div class="card-body">
       				@if(isset($recursos[0]))
       				<table class="table table-striped">
       					<thead>
@@ -42,13 +43,14 @@
 							          	<a href="{{ route('recurso.detalhes', $recurso->id) }}"  class="btn btn-primary btn-sm"> Visualizar</a>
 							        </td>
 						      	</tr>
-					      @endforeach
+					      	@endforeach
 			             </tbody>
 			         </table>
 			         @else
 			          <p>Não existe nenhum recurso aberto no momento!</p>
 			         @endif
-      			</div>
+			     </div>
+  			</div>
       	</div>
      </div>
 

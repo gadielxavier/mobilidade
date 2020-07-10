@@ -41,7 +41,11 @@
 					            	{{ $avaliacao->avaliador->name }}
 					            @endif
 					            </td>
-					          	@if($avaliacao->finalizado)
+					            @if($avaliacao->candidatura->carta == '0')
+					            	<td>Carta de Recomendação não anexada</td>
+						        	<td></td>
+						        	<td></td>
+					          	@elseif($avaliacao->finalizado)
 					          		<td>
 						          	@isset($avaliacao->plano_trabalho)
 						            	{{ $avaliacao->plano_trabalho }}

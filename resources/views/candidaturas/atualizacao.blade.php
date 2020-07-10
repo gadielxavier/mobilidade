@@ -231,6 +231,7 @@
           @endif 
         </div>
         <div class="table-responsive">
+            <label>Comprovação Lattes</label>
              <span id="result"></span>
              <table class="table table-bordered" id="user_table">
                <thead>

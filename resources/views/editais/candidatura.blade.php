@@ -58,45 +58,52 @@
 	</div>
 
 	<div class="row">
-		 @if($candidatura->status->id == 6 ||
-		 $candidatura->status->id == 7  )
-		 	<div class="col-md-12 grid-margin stretch-card">
-		 		<div class="card">
-					<div class="card-body">
-						<form method="POST" action="atualizar/certificado/{{ $candidatura->id }}" enctype="multipart/form-data">
-							{!! csrf_field() !!}
-							<div class="form-group{{ $errors->has('certificado') ? ' has-error' : '' }}">
-								<label>Anexar Certificado de Proficiência</label>
-								<input type="file" accept="application/pdf" id="certificado" name="certificado" class="form-control">
-								@if ($errors->has('certificado'))
-								<span class="help-block">
-									<strong>{{ $errors->first('certificado') }}</strong>
-								</span>
-								@endif
-							</div>
-							<div class="form-group{{ $errors->has('carta') ? ' has-error' : '' }}">
-								<label>Anexar Carta de Recomendação</label>
-								<input type="file" accept="application/pdf" id="carta" name="carta" class="form-control">
-								@if ($errors->has('carta'))
-								<span class="help-block">
-									<strong>{{ $errors->first('carta') }}</strong>
-								</span>
-								@endif
-							</div>
-							<div class="mt-3">
-					          <div class="form-group">
-					            <div class="input-group">
-					              <button type="submit" class="btn btn-primary ml-auto">
-					                {{ __('Enviar') }}
-					              </button>
-					            </div>
-					          </div>
-					        </div>
-					    </form>
-					</div>
+	 	<div class="col-md-12 grid-margin stretch-card">
+	 		<div class="card">
+				<div class="card-body">
+					<form method="POST" action="atualizar/certificado/{{ $candidatura->id }}" enctype="multipart/form-data">
+						{!! csrf_field() !!}
+						<div class="form-group{{ $errors->has('certificado') ? ' has-error' : '' }}">
+							<label>Anexar Certificado de Proficiência</label>
+							@if($candidatura->certificado != '0')
+							<a  href="certificado/{{ $candidatura->id }}" target="_blank">
+			                  Visualizar
+			              	</a>
+			              	@endif
+							<input type="file" accept="application/pdf" id="certificado" name="certificado" class="form-control">
+							@if ($errors->has('certificado'))
+							<span class="help-block">
+								<strong>{{ $errors->first('certificado') }}</strong>
+							</span>
+							@endif
+						</div>
+						<div class="form-group{{ $errors->has('carta') ? ' has-error' : '' }}">
+							<label>Anexar Carta de Recomendação</label>
+							@if($candidatura->carta != '0')
+							<a  href="carta/{{ $candidatura->id }}" target="_blank">
+			                  Visualizar
+			              	</a>
+			              	@endif
+							<input type="file" accept="application/pdf" id="carta" name="carta" class="form-control">
+							@if ($errors->has('carta'))
+							<span class="help-block">
+								<strong>{{ $errors->first('carta') }}</strong>
+							</span>
+							@endif
+						</div>
+						<div class="mt-3">
+				          <div class="form-group">
+				            <div class="input-group">
+				              <button type="submit" class="btn btn-primary ml-auto">
+				                {{ __('Enviar') }}
+				              </button>
+				            </div>
+				          </div>
+				        </div>
+				    </form>
 				</div>
 			</div>
-		 @endif
+		</div>
 	</div>
 
 	<div class="row">
@@ -218,16 +225,6 @@
 			                    	</td>
 			                        <td> 
 			                        	<a  href="estudo3/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
-			                        		Visualizar
-			                            </a>
-			                        </td>
-			                    </tr>
-			                    <tr>
-			                    	<td>
-			                    		Certificado de Proficiência
-			                    	</td>
-			                        <td> 
-			                        	<a  href="certificado/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 			                        		Visualizar
 			                            </a>
 			                        </td>

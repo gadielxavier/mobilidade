@@ -277,36 +277,65 @@ class EditaisController extends Controller
      public function ccint(Request $request)
     {
 
-        foreach ($request->input('candidatura') as $candidatura) {
+        if($request->input('candidatura') == null){
+            return redirect('/editais');
+        }
 
-            $avaliacao = Avaliacao_Ccint::where('candidatura_id', $candidatura)->first();
-            if($avaliacao != null){
+        foreach ($request->input('candidatura') as $candidatura_id) {
 
-                $avaliacao->delete();
+            $candidatura =  Candidaturas::find($candidatura_id);
+
+            if($request->status != null){
+
+                try{
+
+                    $candidatura->status_id =  $request->status;
+                    $candidatura->save();
+
+                }
+                catch(\Exception $e) {
+                    DB::rollback();
+                    Log::error($e);
+                    return $this->error($e->getMessage(), 500, $e);
+                }
+
             }
+
+            if($request->avaliador != null){
+
+                $avaliacao = Avaliacao_Ccint::where('candidatura_id', $candidatura->id)->first();
+
+                if($avaliacao != null){
+
+                    $avaliacao->delete();
+                }
+
+                DB::beginTransaction();
+                try{
+                    $avaliacaoCcint = Avaliacao_Ccint::create([
+                    'candidatura_id' => $candidatura->id,
+                    'avaliador_id' => $request->avaliador,
+                    'desempenho_academico' => 0,
+                    'plano_trabalho' => 0,
+                    'curriculum_lattes' => 0,
+                    'carta' => 0,
+                    'nota_final' => 0,
+                    'finalizado' => false,
+                    'edital_id' => $candidatura->edital_id,
+                    'posicao' => 0,
+                ]);
+                    
+                    DB::commit();
+                }
+                 catch(\Exception $e) {
+                    DB::rollback();
+                    Log::error($e);
+                    return $this->error($e->getMessage(), 500, $e);
+                }
             
-            DB::beginTransaction();
-            try{
-                $avaliacaoCcint = Avaliacao_Ccint::create([
-                'candidatura_id' => $candidatura,
-                'avaliador_id' => $request->avaliador,
-                'desempenho_academico' => 0,
-                'plano_trabalho' => 0,
-                'curriculum_lattes' => 0,
-                'carta' => 0,
-                'nota_final' => 0,
-                'finalizado' => false,
-                'edital' => $candidatura->edital_id,
-                'posicao' => 0,
-            ]);
-                
-                DB::commit();
             }
-             catch(\Exception $e) {
-                DB::rollback();
-                Log::error($e);
-                return $this->error($e->getMessage(), 500, $e);
-            }
+
+            
         }
 
         return redirect('/editais');

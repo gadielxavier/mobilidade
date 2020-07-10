@@ -96,83 +96,96 @@
 		<div class="card">
 	    	<div class="card-body">
 	      		<h4 class="card-title">Candidatos Inscritos</h4>
-	      			<div class="row table-responsive">
-	      				<table class="table table-striped">
-	      					<thead>
-	      						<tr>
-	      							<th></th>
-	      							<th>Nome</th>
-				                    <th>Curso</th>
-				                    <th>Situaçâo</th>
-				                    <th></th>
-				                 </tr>
-				             </thead>
-				             <tbody>
-				             	@foreach ($candidaturas as $candidatura)
+      			<div class="row table-responsive">
+      				<table class="table table-striped">
+      					<thead>
+      						<tr>
+      							<th></th>
+      							<th>Nome</th>
+			                    <th>Curso</th>
+			                    <th>Situaçâo</th>
+			                    <th></th>
+			                 </tr>
+			             </thead>
+			             <tbody>
+			             	@foreach ($candidaturas as $candidatura)
 
-				             		<tr>
-				             			<td>
-											<input name="candidatura[]" type="checkbox" value="{{ $candidatura->id }}" id="candidatura">
-				             			</td>
-							        	<td>
-							          		@isset($candidatura->candidato->nome)
-											  <label class="form-check-label" for="defaultCheck1">
-											    {{ $candidatura->candidato->nome }}
-											  </label>
-							          		@endif
-							          	</td>
-								        <td> 
-								          	@isset($candidatura->candidato->curso)
-								            	{{ $candidatura->candidato->curso }}
-								          	@endif
-								        </td>
-								        <td>
-								          	@isset($candidatura->status->titulo)
-								            	{{ $candidatura->status->titulo }}
-								          	@endif
-								        </td>
-								        <td>
-								          	<a href="candidatura/{{ $candidatura->id }}"  class="btn btn-primary btn-sm"> Visualizar</a>
-								        </td>
-							      	</tr>
-						      @endforeach
-				             </tbody>
-				         </table>
-				         {{ $candidaturas->links("pagination::bootstrap-4") }}
-	      			</div>
-	      			
+			             		<tr>
+			             			<td>
+										<input name="candidatura[]" type="checkbox" value="{{ $candidatura->id }}" id="candidatura">
+			             			</td>
+						        	<td>
+						          		@isset($candidatura->candidato->nome)
+										  <label class="form-check-label" for="defaultCheck1">
+										    {{ $candidatura->candidato->nome }}
+										  </label>
+						          		@endif
+						          	</td>
+							        <td> 
+							          	@isset($candidatura->candidato->curso)
+							            	{{ $candidatura->candidato->curso }}
+							          	@endif
+							        </td>
+							        <td>
+							          	@isset($candidatura->status->titulo)
+							            	{{ $candidatura->status->titulo }}
+							          	@endif
+							        </td>
+							        <td>
+							          	<a href="candidatura/{{ $candidatura->id }}"  class="btn btn-primary btn-sm"> Visualizar</a>
+							        </td>
+						      	</tr>
+					      @endforeach
+			             </tbody>
+			         </table>
+			         {{ $candidaturas->links("pagination::bootstrap-4") }}
+      			</div>	
 	      	</div>
 	     </div>
+	     <div class="card">
+	     	<div class="card-body">
+	     		<div class="row">
+					<div class="col-md-5">
+						<label>Status Inscrição:</label>
+					    <div class="dropdown">
+				    		<select id="status" name="status" class="form-control custom-select">
+				                <option selected></option>
+				                    @foreach($status as $estado)
+				                    	<option value="{{  $estado->id }}">{{ $estado->titulo }}</option>
+				                    @endforeach
+				            </select>
+				        </div>
+				    </div>
+				</div>
+	     	</div>
+	     </div>
+	     
 	     <div class="card">
 	    	<div class="card-body">
 	    		<div class="row">
 	    			@if($edital->status->id == 3)
 		                <div class="col-md-5">
-		                	<div class="row justify-content-center">
-					          	@isset($candidatura->status->titulo)
-						          	<select id="avaliador" name="avaliador">
-									    @foreach($avaliadores as $avaliador)
-					                    	<option value="{{  $avaliador->id }}">{{ $avaliador->name }}</option>
-					                    @endforeach
-									</select>
-								@endif
-							</div>
+		                	<label>Avaliador Ccint:</label>
+				          	@isset($candidatura->status->titulo)
+					          	<select id="avaliador" name="avaliador" class="form-control custom-select">
+					          		<option selected></option>
+								    @foreach($avaliadores as $avaliador)
+				                    	<option value="{{  $avaliador->id }}">{{ $avaliador->name }}</option>
+				                    @endforeach
+								</select>
+							@endif
 		                </div>	
-			            <div class="col-md-5">
-			            	<div class="row justify-content-center">
-			           			<div class="form-group">
-								    <div class="dropdown">
-								        <div class="mt-3">
-								        	<button type="submit" class="btn btn-primary btn-sm">
-							                  {{ __('Cadastrar') }}
-							                </button>
-								        </div>
-								    </div>
-							    </div>			
-							</div>
-						</div>
 					@endif
 		          </div>
+		          <div class="mt-3">
+			       	<div class="form-group">
+			           <div class="input-group">
+			             <button type="submit" class="btn btn-primary ml-auto">
+			               {{ __('Atualizar') }}
+			             </button>
+			           </div>
+			        </div>
+			      </div>
 	    	</div>
 	    </div>
 	</form>

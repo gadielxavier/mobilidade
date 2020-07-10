@@ -28,6 +28,7 @@
                   <tbody>
                   
                     @foreach ($avaliacoes as $avaliacao)
+                    @if($avaliacao->candidatura->carta != '0')
                       <tr>
                           <td>
                           @isset($avaliacao->candidatura->candidato->nome)
@@ -45,6 +46,7 @@
                           </a>
                         </td>
                       </tr>
+                      @endif
                     @endforeach
                   @else
                   <p>Não existe nenhum candidato para ser avaliado no momento!</p>

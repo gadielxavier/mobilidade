@@ -5,147 +5,66 @@
 <div class="ccontainer-fluid">
 	<div class="card">
 		<div class="card-body">
-      		<h4 class="card-title">Acompanhar Inscrição</h4>
+  		<h4 class="card-title">Acompanhar Inscrição</h4>
+      <p class="card-description">Status</p>
+      <div class="form-group">
+        <p>{{ $candidatura->status->titulo }}</p>
 
-          @if($candidatura->status->id == 1)
-           <p>{{ $candidatura->status->titulo }}</p>
-          @elseif( $candidatura->status->id ==  2 )
-            <p>{{ $candidatura->status->titulo }}</p>
-          @elseif( $candidatura->status->id ==  3 )
-            <p>{{ $candidatura->status->titulo }}</p>
-            <button type="submit" data-toggle="modal" data-target="#editalModal"  class="btn btn-primary btn-sm">
-              {{ __('Recurso') }}
-            </button>
-          @elseif( $candidatura->status->id ==  4 )
-            <p>{{ $candidatura->status->titulo }}</p>
-
-            @isset($recurso->candidato->nome)
-            <div class="card">
-                <div class="card-body" style="background-color:powderblue;">
-                  <h4 class="card-title">{{ $recurso->candidato->nome }}</h4>
-                  <p>
-                    {{ $recurso->description }}
-                  </p>
-                </div>
-            </div>
-            @endif
-
-            @isset($resposta->description)
-            <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Aeri</h4>
-                  <p>
-                    {{ $resposta->description }}
-                  </p>
-                </div>
-            </div>
-            @endif
-
-          @elseif( $candidatura->status->id ==  5 )
-            <p>{{ $candidatura->status->titulo }}</p>
-
-             @isset($recurso->candidato->nome) 
-             <div class="card">
-                <div class="card-body" style="background-color:powderblue;">
-                  <h4 class="card-title">{{ $recurso->candidato->nome }}</h4>
-                  <p>
-                    {{ $recurso->description }}
-                  </p>
-                </div>
-            </div>
-            @endif
-
-            @isset($resposta->description)
-            <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Aeri</h4>
-                  <p>
-                    {{ $resposta->description }}
-                  </p>
-                </div>
-            </div>
-            @endif
-
-          @elseif( $candidatura->status->id ==  6 )
-            <p>{{ $candidatura->status->titulo }}</p>
-
-             <a  href="{{ route('candidaturas.certificado', $candidatura->id) }}" class="btn btn-primary btn-sm" target="_blank">
-              Visualizar
-            </a>
-
-          @elseif( $candidatura->status->id ==  7 )
-            <p>{{ $candidatura->status->titulo }}</p>
-
-            <a  href="{{ route('candidaturas.certificado', $candidatura->id) }}" class="btn btn-primary btn-sm" target="_blank">
-              Visualizar
-            </a>
-
-
-          @elseif( $candidatura->status->id ==  9 )
-            <p>{{ $candidatura->status->titulo }}</p>
-          @elseif( $candidatura->status->id == 10 )
-            <p>{{ $candidatura->status->titulo }}</p>
-          @elseif( $candidatura->status->id == 11 )
-            <p>{{ $candidatura->status->titulo }}</p>
-            <button type="submit" data-toggle="modal" data-target="#editalModal"  class="btn btn-primary btn-sm">
-              {{ __('Recurso') }}
-            </button>
-          @elseif( $candidatura->status->id == 12 )
-            <p>{{ $candidatura->status->titulo }}</p>
-
-            @isset($recurso->candidato->nome)
-            <div class="card">
-                <div class="card-body" style="background-color:powderblue;">
-                  <h4 class="card-title">{{ $recurso->candidato->nome }}</h4>
-                  <p>
-                    {{ $recurso->description }}
-                  </p>
-                </div>
-            </div>
-            @endif
-
-            @isset($resposta->description)
-            <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Aeri</h4>
-                  <p>
-                    {{ $resposta->description }}
-                  </p>
-                </div>
-            </div>
-            @endif
-          @elseif( $candidatura->status->id == 13 )
-            <p>{{ $candidatura->status->titulo }}</p>
-
-             @isset($recurso->candidato->nome) 
-             <div class="card">
-                <div class="card-body" style="background-color:powderblue;">
-                  <h4 class="card-title">{{ $recurso->candidato->nome }}</h4>
-                  <p>
-                    {{ $recurso->description }}
-                  </p>
-                </div>
-            </div>
-            @endif
-
-            @isset($resposta->description)
-            <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Aeri</h4>
-                  <p>
-                    {{ $resposta->description }}
-                  </p>
-                </div>
-            </div>
-            @endif
-          @elseif( $candidatura->status->id == 14 )
-            <p>{{ $candidatura->status->titulo }}</p>
-          @elseif( $candidatura->status->id == 15 )
-           <p>{{ $candidatura->status->titulo }}</p>
-           @elseif( $candidatura->status->id == 16 )
-           <p>{{ $candidatura->status->titulo }}</p>  
+        @if( $candidatura->status->id ==  3 || $candidatura->status->id == 11 )
+        <p class="card-description">Entrar com Recurso</p>
+          <button type="submit" data-toggle="modal" data-target="#editalModal"  class="btn btn-primary btn-sm">
+            {{ __('Recurso') }}
+          </button>
+        @endif
+      </div>
+      <div class="form-group">
+        @if($candidatura->status->id > 13 )
+          @if($avaliacao != null && $avaliacao->posicao != '0')
+          <p>
+            <p class="card-description">Resultado</p>
+            Sua posição é {{ $avaliacao->posicao }}º em um edital com {{ $edital->qtd_bolsas }} bolsas ofertadas
+          </p>
           @endif
-
+        @endif
+      </div> 
+      <div class="form-group">
+        @if(isset($recursos[0]))
+          <p class="card-description">Recursos</p>
+          <table class="table table-striped">
+              <tbody>
+              @foreach ($recursos as $recurso)
+                  <tr>
+                    <td>
+                        @isset($recurso->candidato->id)
+                          @if(strlen($recurso->description) > 15 )
+                            {{ substr($recurso->description,0,15).('...')}}
+                          @else
+                            {{ $recurso->description }}
+                          @endif 
+                        @endif
+                    </td>
+                    <td> 
+                        @isset($recurso->edital->id)
+                          {{ $recurso->created_at->format('d/m/Y  H:i:s') }}
+                        @endif
+                    </td>
+                    <td>
+                        <a href="{{ route('candidaturas.recurso', $recurso->id) }}"  class="btn btn-primary btn-sm"> Visualizar</a>
+                    </td>
+                </tr>
+               </tbody>
+            @endforeach
+           </table>
+        @endif
+      </div>     
+      <div class="form-group">
+        @if($candidatura->certificado != '0')
+          <p class="card-description">Certificado de Proeficiência</p>
+          <a  href="{{ route('candidaturas.certificado', $candidatura->id) }}" class="btn btn-primary btn-sm" target="_blank">
+            Visualizar
+          </a>
+        @endif
+      </div>
 		</div>
 	</div>
 

@@ -24,6 +24,7 @@
 			<thead>
 				<tr>
 					 <th>Nome</th>
+					 <th>Tipo</th>
 				</tr>
 	    </thead>
 	    <tbody>
@@ -32,6 +33,15 @@
 		        <td>
 		          @isset($funcionario->name)
 		            {{ $funcionario->name }}
+		          @endif
+		        </td>
+		        <td>
+		          @isset($funcionario->privilegio)
+		          	@if($funcionario->privilegio == 2)
+		          		Servidor Aeri
+		          	@elseif($funcionario->privilegio == 3)
+				    	Participante CCint
+		          	@endif
 		          @endif
 		        </td>
 		        <td>

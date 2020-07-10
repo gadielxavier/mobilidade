@@ -12,6 +12,7 @@ use App\Resposta_Recurso;
 use App\Status_Inscricao;
 use App\Comprovacao_Lattes;
 use App\Comprovacao_Lattes_Arquivos;
+use App\Avaliacao_Ccint;
 use Redirect;
 use Auth, DB, Log;
 
@@ -231,19 +232,17 @@ class CandidaturasController extends Controller
     public function details(Request $request, $id)
     {
         $candidatura = Candidaturas::where('id', $id)->first();
-        $recurso = Recursos::where('candidato_id', $candidatura->candidato->id)->where('edital_id', $candidatura->edital->id)->orderBy('id', 'desc')->first();
+        $recursos = Recursos::where('candidato_id', $candidatura->candidato->id)->where('edital_id', $candidatura->edital->id)->get();
+        $avaliacao = Avaliacao_Ccint::where('candidatura_id', $candidatura->id)->first();
+        $edital = Editais::where('id', $candidatura->edital_id)->first();
 
-        if($recurso == null){
-             $resposta = null;
-        } 
-        else{
-            $resposta = Resposta_Recurso::where('recurso_id', $recurso->id)->first();
-        }
+        
 
         $data = [
             'candidatura' => $candidatura,
-            'recurso' => $recurso,
-            'resposta' => $resposta
+            'recursos'     => $recursos,
+            'avaliacao'   => $avaliacao,
+            'edital'      => $edital
         ]; 
        
           return view('candidaturas.detalhes')->with($data);
@@ -340,7 +339,7 @@ class CandidaturasController extends Controller
              $certificado = 0;
         }
         if ($request->hasFile('carta') && $request->file('carta')->isValid()){
-            $certificado = $request->file('carta')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'carta');
+            $carta = $request->file('carta')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'carta');
         }else{
              $carta = 0;
         }
@@ -663,6 +662,19 @@ class CandidaturasController extends Controller
 
 
         return Redirect::back();
+    }
+
+    public function recursoDetalhes(Request $request, $id)
+    {
+        $recurso = Recursos::find($id);
+        $resposta = Resposta_Recurso::where('recurso_id', $id)->first();
+
+        $data = [
+            'recurso' => $recurso,
+            'resposta' => $resposta
+        ]; 
+       
+          return view('candidaturas.recurso')->with($data);
     }
 
 }
