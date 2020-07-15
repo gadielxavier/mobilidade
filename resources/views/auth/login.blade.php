@@ -68,7 +68,7 @@
                       Me mantenha conectado
                     </label>
                   </div>
-                  <a href="#" class="auth-link text-black">Esqueceu a  senha?</a>
+                  <a href="{{ url('/password/reset') }}" class="auth-link text-black">Esqueceu a senha?</a>
                 </div>
 
                 <div class="form-group">

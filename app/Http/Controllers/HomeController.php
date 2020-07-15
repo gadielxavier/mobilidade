@@ -53,7 +53,7 @@ class HomeController extends Controller
 
     public function configuracoes()
     {
-        return view('auth/passwords/reset');
+        return view('configuracoes/configuracoes');
     }
 
     public function update(Request $request, $id)
