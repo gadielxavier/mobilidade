@@ -30,10 +30,58 @@
           <span class="ti-view-list"></span>
         </button>
         <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown">
+            <div class="mr-lg-6">
+              <span class="menu-title">{{ Auth::user()->name }}</span>
+            </div>   
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+              <i class="ti-bell mx-0"></i>
+              <span class="count"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown" style="height:300px; overflow:scroll;">
+              <div class="row">
+                <div class="col-sm-8">
+                  <p class="mb-0 font-weight-normal float-left dropdown-header">Notificações</p>
+                </div>
+                <div class="col-sm-4">
+                  <a title="Marcar todas como lida" href="/markasread">
+                    <i class="ti-check"></i>
+                  </a>
+                </div>
+              </div>
+              @foreach (Auth::user()->unreadNotifications as $notification)
+                  <a class="dropdown-item" href="notification/{{ $notification->id }}">
+                    <div class="item-thumbnail">
+                      <div class="item-icon {{ $notification->data['bg'] }}">
+                        <i class="{{ $notification->data['icon'] }} mx-0"></i>
+                      </div>
+                    </div>
+                    <div class="item-content">
+                      <h6 class="font-weight-normal">{{ $notification->data['message'] }}</h6>
+                      <p class="font-weight-light small-text mb-0 text-muted">
+                        {{ $notification->created_at->format('d/m/Y') }}
+                      </p>
+                    </div>
+                  </a>
+              @endforeach
+              <a class="dropdown-item" href="/editais/detalhes/1">
+                <div class="item-thumbnail">
+                  <div class="item-icon bg-info">
+                    <i class="ti-user mx-0"></i>
+                  </div>
+                </div>
+                <div class="item-content">
+                  <h6 class="font-weight-normal">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    2 days ago
+                  </p>
+                </div>
+              </a>
+            </div>
+          </li>
           <li class="nav-item nav-profile dropdown">
-          	<div class="mr-lg-5">
-          		<span class="menu-title">{{ Auth::user()->name }}</span>
-          	</div>
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <i class="ti-user menu-icon"></i>
             </a>

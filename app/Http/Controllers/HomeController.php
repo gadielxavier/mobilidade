@@ -83,4 +83,22 @@ class HomeController extends Controller
 
         return redirect('/home');
     }
+
+    public function markAsRead(){
+
+        foreach ( Auth::user()->unreadNotifications as $notification) {
+            $notification->markAsRead();
+        }
+
+        return redirect('/home');
+    }
+
+    public function notification(Request $request, $id){
+
+        $notification = Auth()->user()->unreadNotifications->where('id', $id);
+
+        $notification->markAsRead();
+
+        return redirect($notification[0]->data['action']);
+    }
 }

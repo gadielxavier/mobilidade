@@ -20,7 +20,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/configuracoes', 'HomeController@configuracoes')->name('configuracoes');
+Route::get('/markasread', 'HomeController@markAsRead')->name('markasread');
 Route::post('/update/{id}', 'HomeController@update')->name('update');
+Route::get('/notification/{id}', 'HomeController@notification')->name('notification');
 
 Route::group(['prefix' => 'candidato',  'middleware' => ['auth','candidato']], function() {
     Route::get('download/{id}', 'EditaisController@download')->name('candidato.edital');

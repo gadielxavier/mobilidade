@@ -13,6 +13,9 @@ use App\Status_Inscricao;
 use App\Comprovacao_Lattes;
 use App\Comprovacao_Lattes_Arquivos;
 use App\Avaliacao_Ccint;
+use App\User;
+use App\Notifications\UserSubscription;
+use App\Notifications\ChangeStatus;
 use Redirect;
 use Auth, DB, Log;
 
@@ -414,6 +417,12 @@ class CandidaturasController extends Controller
             }
         }
 
+        $users = User::where('privilegio', 2)->orWhere('privilegio', 4)->get();
+
+        foreach ($users as $user) {
+            $user->notify(new UserSubscription($edital->id));            
+        }
+
         return redirect('/candidaturas');
 
     }
@@ -622,6 +631,8 @@ class CandidaturasController extends Controller
         $candidatura->status_id = $statusTitulo->id;
         $candidatura->save();
 
+        $user = User::where('id', $candidatura->candidato->user_id)->first();
+        $user->notify(new ChangeStatus($candidatura->id));
 
         return Redirect::back();
     }
