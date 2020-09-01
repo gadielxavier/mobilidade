@@ -43,7 +43,7 @@ class UserSubscription extends Notification
     {
         return (new MailMessage)
                     ->line('Nova iscrição de candidato')
-                    ->action('Ir para o site', url('mobilidade.uefs.br/editais/detalhes/'.$this->edtialId))
+                    ->action('Ir para o site', url('editais/detalhes/'.$this->edtialId))
                     ->line('Obrigado pela atenção!');
     }
 

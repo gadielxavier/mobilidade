@@ -43,7 +43,7 @@ class ChangeStatus extends Notification
     {
         return (new MailMessage)
                     ->line('O Status da sua inscrição foi atualizado.')
-                    ->action('Ir para o site', url('mobilidade.uefs.br/candidaturas/detalhes/'.$this->inscricaoId));
+                    ->action('Ir para o site', url('candidaturas/detalhes/'.$this->inscricaoId));
     }
     public function toDatabase($notifiable)
     {

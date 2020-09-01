@@ -45,6 +45,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof \Illuminate\Session\TokenMismatchException){
+            // token mismatch is a security concern, ensure logout.
+            Auth::logout();
+
+            // Tell the user what happened.
+            session()->flash('alert-warning','Sua sessão expirou. Por favor login para continuar.');
+
+            // Go to login.
+            return redirect()->route('login');
+         }
+
         if($exception instanceof PostTooLargeException){
             return parent::render($request, $exception);
         }

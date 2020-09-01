@@ -10,6 +10,7 @@ use App\Status_Inscricao;
 use App\Status_Edital;
 use App\User;
 use App\Avaliacao_Ccint;
+use App\Notifications\ChangeStatus;
 use DB, Log;
 
 class EditaisController extends Controller
@@ -291,6 +292,9 @@ class EditaisController extends Controller
 
                     $candidatura->status_id =  $request->status;
                     $candidatura->save();
+
+                    $user = User::where('id', $candidatura->candidato->user_id)->first();
+                    $user->notify(new ChangeStatus($candidatura->id));
 
                 }
                 catch(\Exception $e) {
