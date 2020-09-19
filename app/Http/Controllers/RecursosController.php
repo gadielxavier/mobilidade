@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Recursos;
 use App\Candidaturas;
 use App\Resposta_Recurso;
+use App\Notifications\RespostaRecursoNotification;
+use App\User;
 use DB, Log;
 
 class RecursosController extends Controller
@@ -90,6 +92,9 @@ class RecursosController extends Controller
             'recursos' => $recursos,
             'recursosRespondidos' => $recursosRespondidos
         ];
+
+        $user = User::where('id', $candidatura->candidato->user_id)->first();
+        $user->notify(new RespostaRecursoNotification($recurso->id));
 
         return view('recursos.recursos')->with($data);
     }

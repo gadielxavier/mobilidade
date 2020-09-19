@@ -16,6 +16,7 @@ use App\Avaliacao_Ccint;
 use App\User;
 use App\Notifications\UserSubscription;
 use App\Notifications\ChangeStatus;
+use App\Notifications\RecursoNotification;
 use Redirect;
 use Auth, DB, Log;
 
@@ -620,7 +621,14 @@ class CandidaturasController extends Controller
             Log::error($e);
             return $this->error($e->getMessage(), 500, $e);
         }
-          return redirect('/candidaturas');
+
+        $users = User::where('privilegio', 2)->orWhere('privilegio', 4)->get();
+
+        foreach ($users as $user) {
+            $user->notify(new RecursoNotification($recurso->id));    
+        }
+
+        return redirect('/candidaturas');
        
     }
 

@@ -7,19 +7,19 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class UserSubscription extends Notification
+class RespostaRecursoNotification extends Notification
 {
     use Queueable;
-    protected $edtialId;
+    protected $recursoId;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($edtialId)
+    public function __construct($recursoId)
     {
-        $this->edtialId = $edtialId;
+        $this->recursoId = $recursoId;
     }
 
     /**
@@ -42,17 +42,17 @@ class UserSubscription extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Nova iscrição de candidato')
-                    ->action('Ir para o site', url('editais/detalhes/'.$this->edtialId));
+                    ->line('O seu recurso foi respondido.')
+                    ->action('Ir para o site', url('candidaturas'));
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'icon' => 'ti-user',
-            'action' => 'editais/detalhes/'.$this->edtialId,
-            'message' => 'Nova iscrição de candidato',
-            'bg' => 'bg-info',
+            'icon' => 'ti-comment-alt',
+            'action' => '/candidaturas',
+            'message' => 'O seu recurso foi respondido.',
+            'bg' => 'bg-success',
         ];
     }
 

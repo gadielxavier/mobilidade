@@ -45,6 +45,7 @@ class ChangeStatus extends Notification
                     ->line('O Status da sua inscrição foi atualizado.')
                     ->action('Ir para o site', url('candidaturas/detalhes/'.$this->inscricaoId));
     }
+    
     public function toDatabase($notifiable)
     {
         return [
