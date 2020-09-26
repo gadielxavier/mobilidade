@@ -18,7 +18,7 @@
         @endif
       </div>
       <div class="form-group">
-        @if($candidatura->status->id > 13 )
+        @if($candidatura->status->id > 13 && $candidatura->status->id < 16 )
           @if($avaliacao != null && $avaliacao->posicao != '0')
           <p>
             <p class="card-description">Resultado</p>

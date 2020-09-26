@@ -30,7 +30,7 @@
                 <h4 class="text-center">MOBILIDADE OUT</h4>
                 <h6 class="font-weight-light text-center">Bem vindo!</h6>
               </div>     
-              <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+              <form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
 
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -73,7 +73,7 @@
 
                 <div class="form-group">
                   <div class="input-group">
-                    <button type="submit"  class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
+                    <button type="submit"  class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn button-prevent-multiple-submits">
                       Entrar
                     </button>
 
@@ -103,6 +103,7 @@
   <script src="theme/js/hoverable-collapse.js"></script>
   <script src="theme/js/template.js"></script>
   <script src="theme/js/todolist.js"></script>
+  <script src="js/submit.js"></script>
   <!-- endinject -->
 </body>
 
