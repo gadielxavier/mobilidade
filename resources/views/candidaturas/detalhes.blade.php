@@ -79,7 +79,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form class="form-horizontal" method="POST" action="{{ route('recurso', $candidatura->id) }}">
+          <form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('recurso', $candidatura->id) }}">
             {{ csrf_field() }}
               <div>
                 <p>
@@ -92,7 +92,7 @@
                 <div class="mt-3">
                   <div class="form-group">
                     <div class="input-group">
-                      <button type="submit"  class="btn btn-primary btn-sm">
+                      <button type="submit"  class="btn btn-primary btn-sm button-prevent-multiple-submits">
                         {{ __('Enviar') }}
                       </button>
                     </div>

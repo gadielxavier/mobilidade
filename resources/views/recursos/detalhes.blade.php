@@ -44,6 +44,10 @@
 	               		<select id="status" name="status" class="form-control custom-select">
 	                  		<option selected value="4">Inscrição homologada após recurso</option>
 	                    	<option value="5">Inscrição não homologada após recurso</option>
+	                    	<option value="8">Candidato aprovado proficiência após recurso</option>
+	                    	<option value="9">Candidato reprovado proficiência após recurso</option>
+	                    	<option value="12">Candidato aprovado ccint após recurso</option>
+	                    	<option value="13">Candidato reprovado ccint após recurso</option>
 	              		</select>
 	            	</div>
 	          	</div>

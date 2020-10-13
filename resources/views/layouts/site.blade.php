@@ -35,52 +35,65 @@
               <span class="menu-title">{{ Auth::user()->name }}</span>
             </div>   
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-              <i class="ti-bell mx-0"></i>
-              <span class="count"></span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown" style="height:300px; overflow:scroll;">
-              <div class="row">
-                <div class="col-sm-8">
-                  <p class="mb-0 font-weight-normal float-left dropdown-header">Notificações</p>
-                </div>
-                <div class="col-sm-4">
-                  <a title="Marcar todas como lida" href="/markasread">
-                    <i class="ti-check"></i>
+            @if(isset(Auth::user()->unreadNotifications[0] ))
+              <li class="nav-item dropdown">
+                  <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                    <i class="ti-bell mx-0"></i>
+                    <span class="count"></span>
                   </a>
-                </div>
-              </div>
-              @foreach (Auth::user()->unreadNotifications as $notification)
-                  <a class="dropdown-item" href="notification/{{ $notification->id }}">
-                    <div class="item-thumbnail">
-                      <div class="item-icon {{ $notification->data['bg'] }}">
-                        <i class="{{ $notification->data['icon'] }} mx-0"></i>
+                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown" style="height:300px; overflow:scroll;">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <p class="mb-0 font-weight-normal float-left dropdown-header">Notificações</p>
+                      </div>
+                      <div class="col-sm-4">
+                        <a title="Marcar todas como lida" href="/markasread">
+                          <i class="ti-check"></i>
+                        </a>
                       </div>
                     </div>
-                    <div class="item-content">
-                      <h6 class="font-weight-normal">{{ $notification->data['message'] }}</h6>
-                      <p class="font-weight-light small-text mb-0 text-muted">
-                        {{ $notification->created_at->format('d/m/Y') }}
-                      </p>
-                    </div>
+                    @foreach (Auth::user()->unreadNotifications as $notification)
+                      <a class="dropdown-item" href="notification/{{ $notification->id }}">
+                        <div class="item-thumbnail">
+                          <div class="item-icon {{ $notification->data['bg'] }}">
+                            <i class="{{ $notification->data['icon'] }} mx-0"></i>
+                          </div>
+                        </div>
+                        <div class="item-content">
+                          <h6 class="font-weight-normal">{{ $notification->data['message'] }}</h6>
+                          <p class="font-weight-light small-text mb-0 text-muted">
+                            {{ $notification->created_at->format('d/m/Y') }}
+                          </p>
+                        </div>
+                      </a>
+                    @endforeach
+                </div>
+              </li>
+            @else
+            <li class="nav-item dropdown">
+                  <a class="nav-link  " id="notificationDropdown" href="#" data-toggle="dropdown">
+                    <i class="ti-bell"></i>
+                    <span class="count"></span>
                   </a>
-              @endforeach
-              <a class="dropdown-item" href="/editais/detalhes/1">
-                <div class="item-thumbnail">
-                  <div class="item-icon bg-info">
-                    <i class="ti-user mx-0"></i>
+                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown" style="height:300px; overflow:scroll;">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <p class="mb-0 font-weight-normal float-left dropdown-header">Notificações</p>
+                      </div>
+                      <div class="col-sm-4">
+                        <a title="Marcar todas como lida" href="/markasread">
+                          <i class="ti-check"></i>
+                        </a>
+                      </div>
+                    </div>
+                    <a class="dropdown-item" href="/editais/detalhes/1">
+                      <div class="item-content">
+                        <h6 class="font-weight-normal">Não existe notificações no momento</h6>
+                      </div>
+                    </a>
                   </div>
-                </div>
-                <div class="item-content">
-                  <h6 class="font-weight-normal">New user registration</h6>
-                  <p class="font-weight-light small-text mb-0 text-muted">
-                    2 days ago
-                  </p>
-                </div>
-              </a>
-            </div>
-          </li>
+              </li>
+            @endif
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <i class="ti-user menu-icon"></i>
@@ -220,6 +233,7 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="../../../theme/js/dashboard.js"></script>
+  <script src="../../../js/submit.js"></script>
 
   @yield('scripts')
 

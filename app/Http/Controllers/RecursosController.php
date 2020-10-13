@@ -16,7 +16,7 @@ class RecursosController extends Controller
     public function index()
     {
     	$recursos = Recursos::where('replied', false)->get();
-        $recursosRespondidos = Recursos::where('replied', true)->get();
+        $recursosRespondidos = Recursos::where('replied', true)->orderBy('id', 'desc')->get();
 
     	$data = [
             'recursos' => $recursos,
