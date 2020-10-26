@@ -73,7 +73,7 @@
 
                 <div class="form-group">
                   <div class="input-group">
-                    <button type="submit"  class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn button-prevent-multiple-submits">
+                    <button type="submit" id="btnFetch" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn button-prevent-multiple-submits">
                       Entrar
                     </button>
 

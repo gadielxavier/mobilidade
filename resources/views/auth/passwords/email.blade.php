@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
+                    <form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('password.email') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -33,7 +33,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" id="btnFetch" class="btn btn-primary button-prevent-multiple-submits">
                                     Enviar Link para Redefinir Senha
                                 </button>
                             </div>
