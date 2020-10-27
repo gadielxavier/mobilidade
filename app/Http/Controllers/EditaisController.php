@@ -90,7 +90,7 @@ class EditaisController extends Controller
             Log::error($e);
             return $this->error($e->getMessage(), 500, $e);
         }
-          return redirect('/editais');
+          return redirect('/editais')->with('message', 'EDITAL CADASTRADO COM SUCESSO!');
     }
 
     public function details(Request $request, $id)

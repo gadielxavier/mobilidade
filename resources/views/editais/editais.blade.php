@@ -15,6 +15,14 @@
 	</div>
 
 	<div class="row table-responsive">
+		@if(session()->has('message'))
+		    <div class="alert alert-success alert-dismissible fade show">
+		        {{ session()->get('message') }}
+		        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				</button>
+		    </div>
+		@endif
 		<div class="input-group">
                 <button type="submit" data-toggle="modal" data-target="#editalModal" class="btn btn-primary ml-auto">
                   {{ __('Adicionar') }}
