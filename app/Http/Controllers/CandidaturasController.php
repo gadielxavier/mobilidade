@@ -230,7 +230,7 @@ class CandidaturasController extends Controller
             }
         }
 
-        return redirect('/home');
+        return redirect('/home')->with('message', 'INSCRIÇÃO ATUALIZADA COM SUCESSO!');;
     }
 
     public function details(Request $request, $id)
@@ -424,7 +424,7 @@ class CandidaturasController extends Controller
             $user->notify(new UserSubscription($edital->id));            
         }
 
-        return redirect('/candidaturas');
+        return redirect('/candidaturas')->with('message', 'INSCRIÇÃO REALIZADA COM SUCESSO!');
 
     }
 
@@ -642,7 +642,7 @@ class CandidaturasController extends Controller
         $user = User::where('id', $candidatura->candidato->user_id)->first();
         $user->notify(new ChangeStatus($candidatura->id));
 
-        return Redirect::back();
+        return Redirect::back()->with('message', 'STATUS ATUALIZADO COM SUCESSO!');
     }
 
     public function atualizarCertificado(Request $request, $id){

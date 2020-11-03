@@ -17,5 +17,9 @@
     "laravel-mix": "^1.0",
     "lodash": "^4.17.4",
     "vue": "^2.1.10"
+  },
+  "dependencies": {
+    "infinite-scroll": "^3.0.6",
+    "jscroll": "^2.4.1"
   }
 }

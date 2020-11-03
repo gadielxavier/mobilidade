@@ -27,7 +27,7 @@ class EditaisController extends Controller
 
     public function index()
     {
-    	$editais = Editais::orderBy('id', 'desc')->get();
+    	$editais = Editais::orderBy('id', 'desc')->paginate(10);
 
     	$data = [
             'editais' => $editais
@@ -246,7 +246,7 @@ class EditaisController extends Controller
         }
 
 
-        return redirect('/editais');
+        return redirect('/editais/detalhes/'.$edital->id )->with('message', 'EDITAL ATUALIZADO COM SUCESSO!');
     }
 
     public function candidatura(Request $request, $id)
@@ -342,7 +342,7 @@ class EditaisController extends Controller
             
         }
 
-        return redirect('/editais');
+        return redirect('/editais/detalhes/'.$candidatura->edital->id )->with('message', 'INSCRIÇŌES ATUALIZADAS COM SUCESSO!');
 
     }
 }

@@ -10,7 +10,7 @@
         		Atualizar os  dados do edital
       		</p>
 
-			<form method="POST" action="{{ route('editais.update', $edital->id) }}" enctype="multipart/form-data">
+			<form class="form-prevent-multiple-submits" method="POST" action="{{ route('editais.update', $edital->id) }}" enctype="multipart/form-data">
             {{ csrf_field() }}
            		<div class="form-group">
 					<label>Status:</label>
@@ -59,7 +59,7 @@
 				<div class="mt-3">
 					<div class="form-group">
 				  		<div class="input-group">
-				    		<button type="submit" class="btn btn-primary ml-auto">
+				    		<button id="btnFetch" type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits">
 				      			{{ __('Atuaizar Dados') }}
 				    		</button>
 				  		</div>
@@ -71,6 +71,12 @@
 		</div>
 	</div>
 </div>
+
+@endsection
+
+@section('scripts')
+
+	<script src="js/submit.js"></script>
 
 @endsection
 

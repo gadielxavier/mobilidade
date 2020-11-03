@@ -11,7 +11,7 @@
       </p>
 
       @isset($candidato)
-        <form method="POST" action="{{url('candidato/update')}}" enctype="multipart/form-data">
+        <form class="form-prevent-multiple-submits" method="POST" action="{{url('candidato/update')}}" enctype="multipart/form-data">
            {!! csrf_field() !!}
           <div class="form-group{{ $errors->has('foto_perfil') ? ' has-error' : '' }}">
               <label>Foto 3/4</label>
@@ -118,7 +118,7 @@
           <div class="mt-3">
             <div class="form-group">
               <div class="input-group">
-                <button type="submit" class="btn btn-primary ml-auto">
+                <button id="btnFetch" type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits">
                   {{ __('Atuaizar Dados') }}
                 </button>
               </div>
@@ -279,6 +279,7 @@
            $matricula.mask('99999999');
       });
   </script>
+  <script src="js/submit.js"></script>
 
 @endsection
 

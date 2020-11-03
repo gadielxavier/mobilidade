@@ -7,6 +7,14 @@
 	<div class="row">
 	    <div class="col-md-12 grid-margin stretch-card">
 	      <div class="card">
+	      	@if(session()->has('message'))
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session()->get('message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            @endif
 	        <div class="card-body">
 	          <p class="card-title">Dados candidato</p>
 	          <div class="row">
@@ -31,7 +39,7 @@
 	              </div>
 	            </div>
 	            <div class=" col-md-6">
-	            	<form method="POST" action="atualizar/{{ $candidatura->id }}" enctype="multipart/form-data">
+	            	<form class="form-prevent-multiple-submits" method="POST" action="atualizar/{{ $candidatura->id }}" enctype="multipart/form-data">
            			{!! csrf_field() !!}
 						<div class="form-group">
 							<label>Status Inscrição:</label>
@@ -43,7 +51,7 @@
 					                    @endforeach
 					            </select>
 						        <div class="mt-3">
-						        	<button type="submit" class="btn btn-primary btn-sm">
+						        	<button id="btnFetch" type="submit" class="btn btn-primary btn-sm button-prevent-multiple-submits">
 					                  {{ __('Atuaizar') }}
 					                </button>
 						        </div>
@@ -236,5 +244,11 @@
 		</div>
 	</div>
 </div>
+
+@endsection
+
+@section('scripts')
+
+	<script src="js/submit.js"></script>
 
 @endsection

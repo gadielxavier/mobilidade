@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="ccontainer-fluid">
-	<form method="POST" action="{{ route('editais.ccint') }}" enctype="multipart/form-data">
+	<form class="form-prevent-multiple-submits" method="POST" action="{{ route('editais.ccint') }}" enctype="multipart/form-data">
 		{!! csrf_field() !!}
 		<div class="row">
 		    <div class="col-md-12 grid-margin">
@@ -16,6 +16,14 @@
 		</div>
 
 		<div class="card">
+			@if(session()->has('message'))
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session()->get('message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            @endif
 	    	<div class="card-body">
 	    		<h4 class="card-title">Informações do Edital</h4>
 	      			<div class="row table-responsive">
@@ -50,42 +58,6 @@
 							          	<a href="/editais/resultado/{{ $edital->id }}"  class="btn btn-success btn-sm"> Resultado Parcial</a>
 							        </td>
 							        @endif
-							        <!--
-							        <td>
-							          	<a href="#deleteModal_{{ $edital->id }}" data-toggle="modal" class="btn btn-danger btn-sm"> Excluir</a>
-
-							          	<div id="deleteModal_{{ $edital->id }}" class="modal fade">
-							          		<div class="modal-dialog">
-							          			<div class="modal-content">
-							          				<div class="modal-header">
-							          					<h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
-							          					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-							          						<span aria-hidden="true">×</span>
-							          					</button>
-							          				</div>
-							          				<div class="modal-body">
-							          					<form class="form-horizontal" method="POST" action="delete/{{ $edital->id }}">
-									                      {{ csrf_field() }}
-									                      <input type="hidden" name="_method" value="DELETE">
-									                      <h6>Você tem certeza que deseja excluir esta edital?</h6>
-
-									                    	<div class="modal-footer">
-									                      		<div class="form-group">
-									                        		<button type="submit" class="btn btn-primary">
-									                          			Sim
-									                        		</button>
-									                        		<button type="button" data-dismiss="modal" class="btn btn-outline-primary">
-									                          			Não
-									                        		</button>
-									                      		</div>
-									                    	</div>
-									      				</form>
-									      			</div>
-									      		</div>
-									      	</div>
-									    </div>
-									</td>
-								-->
 						      	</tr>
 				             </tbody>
 				         </table>
@@ -132,7 +104,7 @@
 							          	@endif
 							        </td>
 							        <td>
-							          	<a href="candidatura/{{ $candidatura->id }}"  class="btn btn-primary btn-sm"> Visualizar</a>
+							          	<a href="candidatura/{{ $candidatura->id }}"  class="btn btn-primary btn-sm"> Detalhes</a>
 							        </td>
 						      	</tr>
 					      @endforeach
@@ -180,7 +152,7 @@
 		          <div class="mt-3">
 			       	<div class="form-group">
 			           <div class="input-group">
-			             <button type="submit" class="btn btn-primary ml-auto">
+			             <button type="submit" id="btnFetch" class="btn btn-primary ml-auto button-prevent-multiple-submits">
 			               {{ __('Atualizar') }}
 			             </button>
 			           </div>
@@ -190,5 +162,11 @@
 	    </div>
 	</form>
 </div>
+
+@endsection
+
+@section('scripts')
+
+	<script src="js/submit.js"></script>
 
 @endsection

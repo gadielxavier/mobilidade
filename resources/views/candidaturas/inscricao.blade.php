@@ -7,7 +7,7 @@
     <div class="card-body">
       <h4 class="card-title">Inscrição</h4>
 
-      <form class="form-horizontal" method="POST" action="store/{{ $edital->id }}" enctype="multipart/form-data" id="dynamic_form">
+      <form class="form-horizontal form-prevent-multiple-submits" method="POST" action="store/{{ $edital->id }}" enctype="multipart/form-data" id="dynamic_form">
         {{ csrf_field() }}
         @if($errors->any())
            <strong>Erro no envio!!! Tamanho máximo dos arquivos somados é de 8 Mb</strong>
@@ -219,7 +219,7 @@
                 <tr>
                   <td colspan="2" align="right">&nbsp;</td>
                   <td>
-                    <button type="button" name="add" id="add" class="btn btn-success">Adicionar Comprovação Lattes</button>
+                    <button  type="button" name="add" id="add" class="btn btn-success">Adicionar Comprovação Lattes</button>
                   </td>
                 </tr>
               </tfoot>
@@ -228,7 +228,7 @@
           <div class="modal-footer">
             <div class="form-group">
               <div class="input-group">
-                <button type="submit" class="btn btn-primary ml-auto">
+                <button id="btnFetch" type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits">
                   {{ __('Inscrever') }}
                 </button>
               </div>
@@ -284,4 +284,5 @@ $(document).ready(function(){
 
 } ) ;
 </script>
+<script src="js/submit.js"></script>
 @endsection

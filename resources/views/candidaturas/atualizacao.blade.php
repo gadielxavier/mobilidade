@@ -6,7 +6,7 @@
 		<div class="card-body">
       <h4 class="card-title">Atualizar Inscrição</h4>
 
-      <form method="POST" action="update/{{ $candidatura->id }}" enctype="multipart/form-data">
+      <form class="form-horizontal form-prevent-multiple-submits" method="POST" action="update/{{ $candidatura->id }}" enctype="multipart/form-data">
         {!! csrf_field() !!}
         @if($errors->any())
             <strong>Erro no envio!!! Tamanho máximo dos arquivos somados é de 8 Mb</strong>
@@ -299,7 +299,7 @@
         <div class="mt-3">
           <div class="form-group">
             <div class="input-group">
-              <button type="submit" class="btn btn-primary ml-auto">
+              <button id="btnFetch" type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits">
                 {{ __('Atualizar Dados') }}
               </button>
             </div>
@@ -357,5 +357,6 @@ $(document).ready(function(){
 
 } ) ;
 </script>
+<script src="js/submit.js"></script>
 
 @endsection

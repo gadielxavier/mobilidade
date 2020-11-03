@@ -93,7 +93,7 @@ class CandidatoController extends Controller
             Log::error($e);
             return $this->error($e->getMessage(), 500, $e);
         }
-          return redirect('/home');
+          return redirect('/home')->with('message', 'DADOS ATUALIZADOS COM SUCESSO!');;
 
     }
 
@@ -149,7 +149,7 @@ class CandidatoController extends Controller
             Log::error($e);
             return $this->error($e->getMessage(), 500, $e);
         }
-          return redirect('/home');
+          return redirect('/home')->with('message', 'DADOS ATUALIZADOS COM SUCESSO!');;
     }
 
     public function foto(Request $request, $id)

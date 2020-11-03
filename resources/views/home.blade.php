@@ -14,6 +14,14 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
           <div class="card">
+            @if(session()->has('message'))
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session()->get('message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            @endif
             <div class="card-body">
               <p class="card-title mb-0">Editais Abertos</p>
               <div class="table-responsive">

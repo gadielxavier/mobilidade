@@ -46,6 +46,7 @@
 					      	@endforeach
 			             </tbody>
 			         </table>
+			         {{ $recurso->links("pagination::bootstrap-4") }}
 			         @else
 			          <p>Não existe nenhum recurso aberto no momento!</p>
 			         @endif
@@ -57,12 +58,13 @@
      <div class="card">
     	<div class="card-body">
       		<h4 class="card-title">Recursos respondidos</h4>
-      			<div class="row table-responsive">
-      				@if(isset($recursosRespondidos[0]))
-      				<table class="table table-striped">
-      					<thead>
-      						<tr>
-      							<th>Candidato</th>
+  			<div class="row table-responsive">
+  				<div class="card-body">
+	  				@if(isset($recursosRespondidos[0]))
+	  				<table class="table table-striped">
+	  					<thead>
+	  						<tr>
+	  							<th>Candidato</th>
 			                     <th>Edital</th>
 			                 </tr>
 			             </thead>
@@ -86,10 +88,12 @@
 					      @endforeach
 			             </tbody>
 			         </table>
+			         {{ $recursosRespondidos->links("pagination::bootstrap-4") }}
 			         @else
 			          <p>Não existe nenhum recurso respondido no momento!</p>
 			         @endif
-      			</div>
+			    </div>
+  			</div>
       	</div>
      </div>
 </div>
