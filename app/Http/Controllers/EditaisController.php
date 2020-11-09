@@ -294,6 +294,16 @@ class EditaisController extends Controller
                     $candidatura->save();
 
                     $user = User::where('id', $candidatura->candidato->user_id)->first();
+
+                    $notifications = $user
+                    ->notifications
+                    ->where('type', 'App\Notifications\ChangeStatus')
+                    ->all();
+
+                    foreach ($notifications as $notification) {
+                        $notification->markAsRead();
+                    }
+
                     $user->notify(new ChangeStatus($candidatura->id));
 
                 }

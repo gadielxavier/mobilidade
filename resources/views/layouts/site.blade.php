@@ -147,6 +147,12 @@
               <span class="menu-title">Recursos</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/convenios">
+             <i class="ti-world menu-icon"></i>
+              <span class="menu-title">Convênios</span>
+            </a>
+          </li>
           @endif
           @if(Auth::user()->privilegio == 1)
           <li class="nav-item">

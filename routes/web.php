@@ -103,7 +103,6 @@ Route::group(['prefix' => 'recursos',  'middleware' => ['auth','staff']], functi
 });
 
 Route::group(['prefix' => 'ccint',  'middleware' => ['auth','ccint']], function() {
-
     Route::get('detalhes/candidatura/matricula/{id}', 'CandidaturasController@matricula')->name('ccint.matricula');
     Route::get('detalhes/candidatura/historico/{id}', 'CandidaturasController@historico')->name('ccint.historico');
     Route::get('detalhes/candidatura/percentual/{id}', 'CandidaturasController@percentual')->name('ccint.percentual');
@@ -118,11 +117,16 @@ Route::group(['prefix' => 'ccint',  'middleware' => ['auth','ccint']], function(
     Route::get('detalhes/candidatura/comprovacao/{id}', 'CandidaturasController@comprovacao')->name('ccint.comprovacao');
     Route::get('detalhes/candidatura/certificado/{id}', 'CandidaturasController@certificado')->name('ccint.certificado');
     Route::get('detalhes/candidatura/carta/{id}', 'CandidaturasController@carta')->name('ccint.carta');
-
-
     Route::get('/', 'CcintController@index');
     Route::get('detalhes/{id}', 'CcintController@details');
-     Route::post('store/{id}', 'CcintController@store');
+    Route::post('store/{id}', 'CcintController@store');
+});
+
+Route::group(['prefix' => 'convenios',  'middleware' => ['auth','staff']], function() {
+    Route::post('store', 'ConveniosController@store');
+    Route::get('detalhes/{id}', 'ConveniosController@details');
+    Route::post('atualizar/{id}', 'ConveniosController@update')->name('convenios.update');
+    Route::get('/', 'ConveniosController@index');
 });
 
 Route::get('/clear-cache', function() {
