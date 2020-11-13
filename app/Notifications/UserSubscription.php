@@ -10,16 +10,16 @@ use Illuminate\Notifications\Messages\MailMessage;
 class UserSubscription extends Notification
 {
     use Queueable;
-    protected $edtialId;
+    protected $editalId;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($edtialId)
+    public function __construct($editalId)
     {
-        $this->edtialId = $edtialId;
+        $this->editalId = $editalId;
     }
 
     /**
@@ -43,14 +43,14 @@ class UserSubscription extends Notification
     {
         return (new MailMessage)
                     ->line('Nova iscrição de candidato')
-                    ->action('Ir para o site', url('editais/detalhes/'.$this->edtialId));
+                    ->action('Ir para o site', url('editais/detalhes/'.$this->editalId));
     }
 
     public function toDatabase($notifiable)
     {
         return [
             'icon' => 'ti-user',
-            'action' => 'editais/detalhes/'.$this->edtialId,
+            'action' => 'editais/detalhes/'.$this->editalId,
             'message' => 'Nova iscrição de candidato',
             'bg' => 'bg-info',
         ];

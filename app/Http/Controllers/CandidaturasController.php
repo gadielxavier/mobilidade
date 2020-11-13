@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\Storage;
 use App\Editais;
 use App\Candidato;
 use App\Candidaturas;
+use App\Convenios;
 use App\Recursos;
 use App\Resposta_Recurso;
 use App\Status_Inscricao;
 use App\Comprovacao_Lattes;
 use App\Comprovacao_Lattes_Arquivos;
 use App\Avaliacao_Ccint;
+use App\Universidade_Edital;
 use App\User;
 use App\Notifications\UserSubscription;
 use App\Notifications\ChangeStatus;
@@ -54,10 +56,12 @@ class CandidaturasController extends Controller
 
         $edital = Editais::find($id);
         $comprovacoes =  Comprovacao_Lattes::all();
+        $universidades = Universidade_Edital::where('edital_id', $edital->id)->get();
 
         $data = [
             'edital' => $edital,
-            'comprovacoes' => $comprovacoes
+            'comprovacoes' => $comprovacoes,
+            'universidades' => $universidades
         ]; 
         
         return view('candidaturas.inscricao')->with($data);
@@ -349,6 +353,9 @@ class CandidaturasController extends Controller
         }
 
         $candidato = Candidato::where('user_id', Auth::user()->id)->first();
+        $convenio1 = Convenios::where('universidade', $request->opcao1universidade)->first();
+        $convenio2 = Convenios::where('universidade', $request->opcao2universidade)->first();
+        $convenio3 = Convenios::where('universidade', $request->opcao3universidade)->first();
 
 
 
@@ -359,13 +366,13 @@ class CandidaturasController extends Controller
             'edital_id' => $id,
             'primeira_opcao_universidade'=> $request->opcao1universidade,
             'primeira_opcao_curso' => $request->opcao1curso,
-            'primeira_opcao_pais' => $request->opcao1pais,
+            'primeira_opcao_pais' => $convenio1->pais,
             'segunda_opcao_universidade' => $request->opcao2universidade,
             'segunda_opcao_curso' => $request->opcao2curso,
-            'segunda_opcao_pais'=> $request->opcao2pais,
+            'segunda_opcao_pais'=> $convenio2->pais,
             'terceira_opcao_universidade'=> $request->opcao3universidade,
             'terceira_opcao_curso'=> $request->opcao3curso,
-            'terceira_opcao_pais'=> $request->opcao3pais,
+            'terceira_opcao_pais'=> $convenio3->pais,
             'matricula'=> $matricula,
             'historico'=> $historico,
             'percentual'=> $percentual,

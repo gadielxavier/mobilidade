@@ -16,12 +16,11 @@
           <div class="form-group">
             <label><b>Primeira Opção Universidade</b></label>
             <div class="input-group">
-              <input id="opcao1universidade" name="opcao1universidade" type="text" class="form-control" required>
-              @if ($errors->has('opcao1universidade'))
-              <span class="help-block">
-                <strong>{{ $errors->first('opcao1universidade') }}</strong>
-              </span>
-              @endif
+              <select name="opcao1universidade" class="form-control custom-select" required>
+                    @foreach($universidades as $universidade)
+                        <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) "}}</option>
+                    @endforeach
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -36,25 +35,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label><b>Primeira Opção País</b></label>
-            <div class="input-group">
-              <input id="opcao1pais" name="opcao1pais" type="text" class="form-control" required>
-              @if ($errors->has('opcao1pais'))
-              <span class="help-block">
-                <strong>{{ $errors->first('opcao1pais') }}</strong>
-              </span>
-              @endif
-            </div>
-          </div>
-          <div class="form-group">
             <label><b>Segunda Opção Universidade</b></label>
             <div class="input-group">
-              <input id="opcao2universidade" name="opcao2universidade" type="text" class="form-control" required>
-              @if ($errors->has('opcao2universidade'))
-              <span class="help-block">
-                <strong>{{ $errors->first('opcao2universidade') }}</strong>
-              </span>
-              @endif
+              <select name="opcao2universidade" class="form-control custom-select" required>
+                    @foreach($universidades as $universidade)
+                        <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) "}}</option>
+                    @endforeach
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -69,25 +56,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label><b>Segunda Opção País</b></label>
-            <div class="input-group">
-              <input id="opcao2pais" name="opcao2pais" type="text" class="form-control" required>
-              @if ($errors->has('opcao2pais'))
-              <span class="help-block">
-                <strong>{{ $errors->first('opcao2pais') }}</strong>
-              </span>
-              @endif
-            </div>
-          </div>
-          <div class="form-group">
             <label><b>Terceira Opção Universidade</b></label>
             <div class="input-group">
-              <input id="opcao3universidade" name="opcao3universidade" type="text" class="form-control" required>
-              @if ($errors->has('opcao3universidade'))
-              <span class="help-block">
-                <strong>{{ $errors->first('opcao3universidade') }}</strong>
-              </span>
-              @endif
+              <select name="opcao3universidade" class="form-control custom-select" required>
+                    @foreach($universidades as $universidade)
+                        <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) "}}</option>
+                    @endforeach
+              </select>
             </div>
           </div> 
           <div class="form-group">
@@ -97,17 +72,6 @@
               @if ($errors->has('opcao3curso'))
               <span class="help-block">
                 <strong>{{ $errors->first('opcao3curso') }}</strong>
-              </span>
-              @endif
-            </div>
-          </div> 
-          <div class="form-group">
-            <label><b>Terceira Opção País</b></label>
-            <div class="input-group">
-              <input id="opcao3pais" name="opcao3pais" type="text" class="form-control" required>
-              @if ($errors->has('opcao3pais'))
-              <span class="help-block">
-                <strong>{{ $errors->first('opcao3pais') }}</strong>
               </span>
               @endif
             </div>

@@ -11,6 +11,7 @@ use App\Status_Edital;
 use App\User;
 use App\Avaliacao_Ccint;
 use App\Convenios;
+use App\Universidade_Edital;
 use App\Notifications\ChangeStatus;
 use DB, Log;
 
@@ -82,8 +83,7 @@ class EditaisController extends Controller
             'qtd_bolsas'=> $request->bolsas,
             'status_edital_id'=> '1',
             'path_anexo'=> $anexo,
-            'maior_pontuacao' => 0,
-
+            'maior_pontuacao' => 0
         ]);
             
             DB::commit();
@@ -93,7 +93,34 @@ class EditaisController extends Controller
             Log::error($e);
             return $this->error($e->getMessage(), 500, $e);
         }
-          return redirect('/editais')->with('message', 'EDITAL CADASTRADO COM SUCESSO!');
+
+        $universidades = $request->universidade;
+        $vagas = $request->vagas;
+
+
+        for($count = 0; $count < count($universidades); $count++)
+        {
+
+            DB::beginTransaction();
+            try{
+
+                $universidadeEdital = Universidade_Edital::create([
+                'nome' => $universidades[$count],
+                'vagas' => $vagas[$count],
+                'edital_id' => $edital->id
+            ]);
+                
+                DB::commit();
+            }
+             catch(\Exception $e) {
+                DB::rollback();
+                Log::error($e);
+                return $this->error($e->getMessage(), 500, $e);
+            }
+        }
+        
+
+        return redirect('/editais')->with('message', 'EDITAL CADASTRADO COM SUCESSO!');
     }
 
     public function details(Request $request, $id)

@@ -250,22 +250,17 @@ $(document).ready(function(){
  function dynamic_field(number)
  {
   html = '<tr>';
-        html += '<td><select name="categoria[]" class="form-control custom-select" required>'
+        html += '<td><select name="universidade[]" class="form-control custom-select" required>'
                       +"@foreach($convenios as $convenio)"
                           +"<option value='{{ $convenio->universidade }}'>{{ $convenio->universidade }}</option>"
                       +"@endforeach"
                   +'</select></td>';
-        html += '<td><input type="text" name="convenio[]" class="form-control" required></td>';
-        if(number > 1 && files < 5)
+        html += '<td><input type="text" name="vagas[]" class="form-control" required></td>';
+        if(number > 1 )
         {
             html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove</button></td></tr>';
             $('#auth-rows').append(html);
             files++;
-        }
-        else if(number > 1) 
-        {
-          alert('Máximo de 5 comprovantes por envio. Para adicionar mais de 5 comprovantes finalize a Inscrição e depois clique em Editar')
-
         }
  }
 
