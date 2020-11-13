@@ -12,12 +12,15 @@ class ConveniosController extends Controller
 {
     public function index()
     {
-      $convenios = Convenios::orderBy('id', 'desc')->paginate(10);
-      $proeficiencias = Proeficiencia::all();
+        $paises = DB::table('pais')
+            ->get();
+        $convenios = Convenios::orderBy('id', 'desc')->paginate(10);
+        $proeficiencias = Proeficiencia::all();
 
-    	$data = [
+        $data = [
             'proeficiencias' => $proeficiencias,
-            'convenios' => $convenios
+            'convenios' => $convenios,
+            'paises' => $paises
         ];
 
         return view('convenios.convenios')->with($data);
@@ -27,11 +30,14 @@ class ConveniosController extends Controller
     {
         $convenio = Convenios::find($id);
         $proeficiencias = Proeficiencia::all();
+        $paises = DB::table('pais')
+            ->get();
 
 
         $data = [
             'convenio' => $convenio,
-            'proeficiencias' => $proeficiencias
+            'proeficiencias' => $proeficiencias,
+            'paises' => $paises
 
         ]; 
        
@@ -59,7 +65,8 @@ class ConveniosController extends Controller
             $convenio = Convenios::create([
             'universidade' => $request->universidade,
             'pais' => $request->pais,
-            'proeficiencia_id' => $request->proeficiencia
+            'proeficiencia_id' => $request->proeficiencia,
+            'status' => 1
 
         ]);
             
@@ -83,6 +90,7 @@ class ConveniosController extends Controller
             $convenio->universidade =  $request->universidade;
             $convenio->pais = $request->pais;
             $convenio->proeficiencia_id = $request->proeficiencia;
+            $convenio->status = $request->status;
             $convenio->save();
 
         }

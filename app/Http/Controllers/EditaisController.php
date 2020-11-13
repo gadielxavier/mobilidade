@@ -10,6 +10,7 @@ use App\Status_Inscricao;
 use App\Status_Edital;
 use App\User;
 use App\Avaliacao_Ccint;
+use App\Convenios;
 use App\Notifications\ChangeStatus;
 use DB, Log;
 
@@ -28,9 +29,11 @@ class EditaisController extends Controller
     public function index()
     {
     	$editais = Editais::orderBy('id', 'desc')->paginate(10);
+        $convenios = Convenios::where('status', '1')->get();
 
     	$data = [
-            'editais' => $editais
+            'editais' => $editais,
+            'convenios' => $convenios
         ];
 
         return view('editais.editais')->with($data);

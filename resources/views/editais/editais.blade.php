@@ -70,6 +70,7 @@
 			        <td>
 			          <a href="/editais/detalhes/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Detalhes</a>
 			        </td>
+			        
 			        <td>
 			          	<a href="#deleteModal_{{ $edital->id }}" data-toggle="modal" class="btn btn-danger btn-sm"> Excluir</a>
 
@@ -104,6 +105,7 @@
 					      	</div>
 					    </div>
 					</td>
+					
 			      </tr>
 		      @endforeach
 		    </div>
@@ -132,7 +134,7 @@
 			          <div class="input-group">
 			            <div class="input-group-prepend bg-transparent">
 			            </div>
-			            <input id="nome" name="nome" type="text" class="form-control form-control-lg border-left-0" placeholder="Nome do edital" required>
+			            <input id="nome" name="nome" type="text" class="form-control" placeholder="Nome do edital" required>
 			          </div>
 			        </div>
 			        <div class="form-group">
@@ -140,7 +142,7 @@
 			          <div class="input-group">
 			            <div class="input-group-prepend bg-transparent">
 			            </div>
-			            <input id="numero" name="numero" type="text" class="form-control form-control-lg border-left-0" placeholder="Número do edital" required>
+			            <input id="numero" name="numero" type="text" class="form-control" placeholder="Número do edital" required>
 			            @if ($errors->has('nome'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('nome') }}</strong>
@@ -150,15 +152,15 @@
 			        </div>
 			        <div class="form-group">
 			          <label>Bolsas</label>
-			          <div class="input-group">
-			            <div class="input-group-prepend bg-transparent">
-			            </div>
-			            <input id="bolsas" name="bolsas" type="text" class="form-control form-control-lg border-left-0" placeholder="Número de bolsas" required>
-			          </div>
+			          	<div class="input-group">
+			            	<div class="input-group-prepend bg-transparent">
+			            	</div>
+			        		<input id="bolsas" name="bolsas" type="text" class="form-control" placeholder="Número de bolsas" required>
+			        	</div>
 			        </div>
 			        <div class="form-group">
-			          <label>Fim Inscrição</label>
-			          <input type="date" id="fim_inscricao" name="fim_inscricao" class="form-control" v-model="item.dan_data_documento">
+			        	<label>Fim Inscrição</label>
+			          	<input type="date" id="fim_inscricao" name="fim_inscricao" class="form-control" v-model="item.dan_data_documento">
 			        </div>
 			        <div class="form-group">
 		                <label>Anexar Edital</label>
@@ -173,7 +175,30 @@
 		                  <span class="input-group-prepend bg-transparent" id="selected_filename">Nenhum arquivo selecionado</span>
 		                </div>
 	              	</div>
-
+	              	<div class="table-responsive">
+			             <label>Universidades</label>
+			             <span id="result"></span>
+			             <table class="table table-bordered" id="user_table">
+			               <thead>
+			                <tr>
+			                  <th width="35%">Universidade</th>
+			                  <th width="35%">Vagas</th>
+			                  <th width="30%">Ação</th>
+			                </tr>
+			              </thead>
+			              <tbody id="auth-rows">
+			              	
+			              </tbody>
+			              <tfoot>
+			                <tr>
+			                  <td colspan="2" align="right">&nbsp;</td>
+			                  <td>
+			                    <button  type="button" name="add" id="add" class="btn btn-success">Adicionar</button>
+			                  </td>
+			                </tr>
+			              </tfoot>
+			            </table>
+			        </div>
 			        <div class="modal-footer">
 				        <div class="mt-3">
 				          <div class="form-group">
@@ -212,6 +237,50 @@
 	@if (count($errors) > 0)
 	$('#editalModal ').modal('show');
 	@endif
+</script>
+
+<script>
+$(document).ready(function(){
+
+ var count = 1;
+ var files = 0;
+
+ dynamic_field(count);
+
+ function dynamic_field(number)
+ {
+  html = '<tr>';
+        html += '<td><select name="categoria[]" class="form-control custom-select" required>'
+                      +"@foreach($convenios as $convenio)"
+                          +"<option value='{{ $convenio->universidade }}'>{{ $convenio->universidade }}</option>"
+                      +"@endforeach"
+                  +'</select></td>';
+        html += '<td><input type="text" name="convenio[]" class="form-control" required></td>';
+        if(number > 1 && files < 5)
+        {
+            html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove</button></td></tr>';
+            $('#auth-rows').append(html);
+            files++;
+        }
+        else if(number > 1) 
+        {
+          alert('Máximo de 5 comprovantes por envio. Para adicionar mais de 5 comprovantes finalize a Inscrição e depois clique em Editar')
+
+        }
+ }
+
+ $(document).on('click', '#add', function(){
+  count++;
+  dynamic_field(count);
+ });
+
+ $(document).on('click', '.remove', function(){
+  count--;
+  $(this).closest("tr").remove();
+  files--;
+ });
+
+} ) ;
 </script>
 
 @endsection

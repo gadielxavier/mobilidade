@@ -58,7 +58,11 @@
 			            {{ $convenio->proeficiencia->nome }}
 			          @endif
 			        </td>
-			        <td>Ativado</td>
+			        @if($convenio->status == '1')
+			        	<td>Ativado</td>
+			        @else
+			        	<td>Desativado</td>
+			        	@endif
 			        <td> 
 			          <a href="/convenios/detalhes/{{ $convenio->id }}"  class="btn btn-primary btn-sm"> Editar</a>
 			        </td>
@@ -90,17 +94,19 @@
 			          <div class="input-group">
 			            <div class="input-group-prepend bg-transparent">
 			            </div>
-			            <input id="universidade" name="universidade" type="text" class="form-control form-control-lg border-left-0" placeholder="Nome da Universidade" required>
+			            <input id="universidade" name="universidade" type="text" class="form-control" placeholder="Nome da Universidade" required>
 			          </div>
 			        </div>
-			        <div class="form-group">
-			          <label>País</label>
-			          <div class="input-group">
-			            <div class="input-group-prepend bg-transparent">
-			            </div>
-			            <input id="pais" name="pais" type="text" class="form-control form-control-lg border-left-0" placeholder="País da universidade" required>
-			          </div>
-			        </div>
+					<div class="form-group">
+					  	<label>País</label>
+					    <div class="dropdown">
+						   <select id="pais" name="pais" class="form-control custom-select">
+						        @foreach($paises as $pais)
+						            <option value="{{ $pais->pais_nome }}">{{ $pais->pais_nome }}</option>
+						        @endforeach
+						  </select>
+						</div>
+					</div>
 					<div class="form-group">
 						<label>Proeficiência</label>
 						<div class="dropdown">

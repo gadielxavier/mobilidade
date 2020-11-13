@@ -11,7 +11,7 @@ class Convenios extends Model
      *
      * @var array
      */
-    protected $fillable = ['universidade', 'pais', 'proeficiencia_id'];
+    protected $fillable = ['universidade', 'pais', 'proeficiencia_id', 'status'];
 
     public function proeficiencia()
     {
