@@ -234,7 +234,7 @@ class CandidaturasController extends Controller
             }
         }
 
-        return redirect('/home')->with('message', 'INSCRIÇÃO ATUALIZADA COM SUCESSO!');;
+        return redirect('/home')->with('message', 'INSCRIÇÃO ATUALIZADA COM SUCESSO!');
     }
 
     public function details(Request $request, $id)
@@ -385,7 +385,8 @@ class CandidaturasController extends Controller
             'plano_estudo3'=> $estudo3,
             'certificado'=> $certificado,
             'status_id'=> 1,
-            'carta'=> $carta
+            'carta'=> $carta,
+            'desempenho' => 0
         ]);
             
             DB::commit();
@@ -675,9 +676,16 @@ class CandidaturasController extends Controller
              $carta =  $candidaturas->carta;
         }
 
+        if($request->has('desempenho')){
+           $desempenho = $request->desempenho;
+        }else{
+            $desempenho = $request->desempenho;
+        }
+
         try{
             $candidaturas->certificado = $certificado;
             $candidaturas->carta = $carta;
+            $candidaturas->desempenho = $desempenho;
             $candidaturas->save();
         }
         catch(\Exception $e) {
@@ -687,7 +695,7 @@ class CandidaturasController extends Controller
         }
 
 
-        return Redirect::back();
+        return Redirect::back()->with('message', 'DADOS ATUALIZADOS COM SUCESSO!');
     }
 
     public function recursoDetalhes(Request $request, $id)

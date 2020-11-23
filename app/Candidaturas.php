@@ -14,7 +14,7 @@ class Candidaturas extends Model
      *
      * @var array
      */
-    protected $fillable = ['candidato_id', 'edital_id', 'primeira_opcao_universidade', 'primeira_opcao_curso', 'primeira_opcao_pais', 'segunda_opcao_universidade', 'segunda_opcao_curso', 'segunda_opcao_pais', 'terceira_opcao_universidade', 'terceira_opcao_curso', 'terceira_opcao_pais', 'matricula', 'historico', 'percentual', 'curriculum', 'plano_trabalho1', 'plano_trabalho2', 'plano_trabalho3', 'plano_estudo1', 'plano_estudo2', 'plano_estudo3', 'certificado', 'status_id', 'carta'];
+    protected $fillable = ['candidato_id', 'edital_id', 'primeira_opcao_universidade', 'primeira_opcao_curso', 'primeira_opcao_pais', 'segunda_opcao_universidade', 'segunda_opcao_curso', 'segunda_opcao_pais', 'terceira_opcao_universidade', 'terceira_opcao_curso', 'terceira_opcao_pais', 'matricula', 'historico', 'percentual', 'curriculum', 'plano_trabalho1', 'plano_trabalho2', 'plano_trabalho3', 'plano_estudo1', 'plano_estudo2', 'plano_estudo3', 'certificado', 'status_id', 'carta', 'desempenho'];
 
     /**
      * Get the edital record associated with the candidatura.

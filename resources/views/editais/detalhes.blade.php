@@ -75,7 +75,7 @@
       							<th></th>
       							<th>Nome</th>
 			                    <th>Curso</th>
-			                    <th>Situaçâo</th>
+			                    <th>Status</th>
 			                    <th></th>
 			                 </tr>
 			             </thead>

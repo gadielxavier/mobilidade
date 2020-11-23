@@ -6,6 +6,14 @@
 	<div class="card">
 		<div class="card-body table-responsive">
       		<h4 class="card-title">Resultado Parcial</h4>
+      		@if(session()->has('message'))
+			    <div class="alert alert-success alert-dismissible fade show">
+			        {{ session()->get('message') }}
+			        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    <span aria-hidden="true">&times;</span>
+					</button>
+			    </div>
+			@endif
 			<form method="POST" action="{{ route('resultado.update', $edital->id) }}" enctype="multipart/form-data">
 	            {{ csrf_field() }}
 	            <table class="table table-striped">
@@ -68,7 +76,7 @@
 					            @endif
 					            	<td>
 						          	@isset($avaliacao->desempenho_academico)
-						            	<input type="text" name="desempenho[]" value="{{ $avaliacao->desempenho_academico }}" required>
+						            	{{ $avaliacao->candidatura->desempenho }}
 						            @endif
 						        	</td>
 						        	<td>

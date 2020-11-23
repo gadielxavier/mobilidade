@@ -77,6 +77,12 @@ class CcintController extends Controller
             'representacao.*'   => 'required|numeric|min:0|max:1',
             'institucional.*'   => 'required|numeric|min:0|max:5',
             'ideias'            => 'required|numeric|min:0|max:5',
+            'persistencia'      => 'required|numeric|min:0|max:5',
+            'interesse'         => 'required|numeric|min:0|max:5',
+            'problema'          => 'required|numeric|min:0|max:5',
+            'criatividade'      => 'required|numeric|min:0|max:5',
+            'escrita'           => 'required|numeric|min:0|max:5',
+            'oral'              => 'required|numeric|min:0|max:5',
             'adicionais'        => 'required|numeric|min:0|max:2',
             'merito'            => 'required|numeric|min:0|max:3',
         ]);
@@ -135,7 +141,9 @@ class CcintController extends Controller
 
         $curriculum_lattes = $participacao +  $indicadores + $representacao + $institucional;
 
-        $carta =  $request->estrutura + $request->objetividade + $request->clareza;
+        $complemento = ($request->ideias + $request->persistencia + $request->interesse + $request->problema + $request->escrita + $request->oral) / 7;  
+
+        $carta =  $complemento + $request->objetividade + $request->clareza;
 
         $edital = Editais::where('id', $avaliacao->edital_id)->first();
 
@@ -160,7 +168,7 @@ class CcintController extends Controller
             Log::error($e);
             return $this->error($e->getMessage(), 500, $e);
         }
-          return redirect('/ccint');
+          return redirect('/ccint')->with('message', 'AVALIAÇÄO FINALIZADA COM SUCESSO!');;
 
     }
 

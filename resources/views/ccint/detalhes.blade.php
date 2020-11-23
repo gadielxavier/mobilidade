@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="ccontainer-fluid">
-	<form method="POST" action="/ccint/store/{{ $candidatura->id }}" enctype="multipart/form-data">
+	<form class="form-prevent-multiple-submits" method="POST" action="/ccint/store/{{ $candidatura->id }}" enctype="multipart/form-data">
 		{!! csrf_field() !!}
 		<div class="row">
 		    <div class="col-md-12 grid-margin">
@@ -277,47 +277,133 @@
 	          	<a  href="{{ route('ccint.carta', $candidatura->id) }}" target="_blank">
                 	Visualizar
                 </a>
-                <div class="form-group">
-		        	<label>
-		        		Capacidade de aprender novas idéias, Capacidade de trabalhar e persistência, Motivação, entusiasmo e interesse, Capacidade de resolver problema, Imaginação e criatividade, Expressão escrita e Expressão oral (até 5,0)
-		        	</label>
-		        	<div class="input-group">
-		        		<div class="input-group-prepend bg-transparent">
-		              	</div>
-		              	<input id="ideias" name="ideias" type="text" class="form-control" value="{{ old('ideias') }}" required autofocus>
-		            	@if ($errors->has('ideias'))
+		        <div class="row">
+				  <div class="col-md-6">
+				  	<label>Capacidade de aprender novas idéias (até 5,0)</label>
+				    <div class="form-group row">
+				      <div class="col-sm-9">
+				        <input type="text" class="form-control" name="ideias" id="ideias" value="{{ old('ideias') }}" required autofocus>
+				        @if ($errors->has('ideias'))
 	                    <span class="help-block">
 	                      <strong>{{ $errors->first('ideias') }}</strong>
 	                    </span>
 	                    @endif
-		            </div>
-		        </div>
-	          	<div class="form-group">
-	            	<label>Informações adicionais fornecidas (até 2,0)</label>
-	            	<div class="input-group">
-	              		<div class="input-group-prepend bg-transparent">
-	              		</div>
-	              		<input id="adicionais" name="adicionais" type="text" class="form-control" value="{{ old('adicionais') }}" required autofocus>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="col-md-6">
+				  	<label>Capacidade de trabalhar e persistência (até 5,0)</label>
+				    <div class="form-group row"> 
+				      <div class="col-sm-9">
+				        <input type="text" class="form-control" name="persistencia" id="persistencia" value="{{ old('persistencia') }}">
+				        @if ($errors->has('persistencia'))
+	                    <span class="help-block">
+	                      <strong>{{ $errors->first('persistencia') }}</strong>
+	                    </span>
+	                    @endif
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<div class="row">
+				  <div class="col-md-6">
+				  	<label>Motivação, entusiasmo e interesse (até 5,0)</label>
+				    <div class="form-group row">
+				      <div class="col-sm-9">
+				        <input type="text" class="form-control" name="interesse" value="{{ old('interesse') }}" id="interesse">
+				        @if ($errors->has('interesse'))
+	                    <span class="help-block">
+	                      <strong>{{ $errors->first('interesse') }}</strong>
+	                    </span>
+	                    @endif
+				      </div>
+				    </div>
+				  </div>
+				  <div class="col-md-6">
+				  	<label>Capacidade de resolver problema (até 5,0)</label>
+				    <div class="form-group row">
+				      <div class="col-sm-9">
+				        <input type="text" class="form-control" name="problema" value="{{ old('problema') }}" id="problema">
+				        @if ($errors->has('problema'))
+	                    <span class="help-block">
+	                      <strong>{{ $errors->first('problema') }}</strong>
+	                    </span>
+	                    @endif
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<div class="row">
+				  <div class="col-md-6">
+				  	<label>Imaginação e criatividade (até 5,0)</label>
+				    <div class="form-group row">
+				      <div class="col-sm-9">
+				        <input type="text" class="form-control" name="criatividade" value="{{ old('criatividade') }}" id="criatividade">
+				        @if ($errors->has('criatividade'))
+	                    <span class="help-block">
+	                      <strong>{{ $errors->first('criatividade') }}</strong>
+	                    </span>
+	                    @endif
+				      </div>
+				    </div>
+				  </div>
+				  <div class="col-md-6">
+				  	<label>Expressão escrita (até 5,0)</label>
+				    <div class="form-group row">
+				      <div class="col-sm-9">
+				        <input type="text" class="form-control" name="escrita" value="{{ old('escrita') }}"  id="escrita">
+				        @if ($errors->has('escrita'))
+	                    <span class="help-block">
+	                      <strong>{{ $errors->first('escrita') }}</strong>
+	                    </span>
+	                    @endif
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<div class="row">
+				  <div class="col-md-6">
+				  	<label>Expressão oral (até 5,0)</label>
+				    <div class="form-group row">
+				      <div class="col-sm-9">
+				        <input type="text" class="form-control" name="oral" value="{{ old('oral') }}" id="oral" >
+				        @if ($errors->has('oral'))
+	                    <span class="help-block">
+	                      <strong>{{ $errors->first('oral') }}</strong>
+	                    </span>
+	                    @endif
+				      </div>
+				    </div>
+				  </div>
+				  <div class="col-md-6">
+				  	<label>Informações adicionais fornecidas (até 2,0)</label>
+				    <div class="form-group row">
+				      <div class="col-sm-9">
+				        <input id="adicionais" name="adicionais" type="text" class="form-control" value="{{ old('adicionais') }}" required autofocus>
 	              		@if ($errors->has('adicionais'))
 	                    <span class="help-block">
 	                      <strong>{{ $errors->first('adicionais') }}</strong>
 	                    </span>
 	                    @endif
-	            	</div>
-	          	</div>
-	          	<div class="form-group">
-	            	<label>Mérito do candidato (até 3,0)</label>
-	            	<div class="input-group">
-	              		<div class="input-group-prepend bg-transparent">
-	              		</div>
-	              		<input id="merito" name="merito" type="text" class="form-control" value="{{ old('merito') }}" required autofocus>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<div class="row">
+				  <div class="col-md-6">
+				  	<label>Mérito do candidato (até 3,0)</label>
+				    <div class="form-group row">
+				      <div class="col-sm-9">
+				        <input id="merito" name="merito" type="text" class="form-control" value="{{ old('merito') }}" required autofocus>
 	              		@if ($errors->has('merito'))
 	                    <span class="help-block">
 	                      <strong>{{ $errors->first('merito') }}</strong>
 	                    </span>
 	                    @endif
-	            	</div>
-	          	</div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 	          	<div class="mt-3">
 	            	<div class="form-group">
 	              		<div class="input-group">
@@ -359,6 +445,30 @@
 		                        <td id="ideias_modal"></td>
 		                    </tr>
 		                    <tr>
+		                        <th>Persistência</th>
+		                        <td id="persistencia_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Interesse</th>
+		                        <td id="interesse_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Problema</th>
+		                        <td id="problema_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Criatividade</th>
+		                        <td id="criatividade_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Escrita</th>
+		                        <td id="escrita_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Oral</th>
+		                        <td id="oral_modal"></td>
+		                    </tr>
+		                    <tr>
 		                        <th>Adicionais</th>
 		                        <td id="adicionais_modal"></td>
 		                    </tr>
@@ -370,7 +480,7 @@
 		            </div>
 		            <div class="modal-footer">
 		                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		                <button type="submit" class="btn btn-success success">Enviar</button>
+		                <button type="submit" class="btn btn-success success button-prevent-multiple-submits">Enviar</button>
 		            </div>
 		        </div>
 		    </div>
@@ -382,6 +492,8 @@
 @endsection
 
 @section('scripts')
+
+<script src="js/submit.js"></script>
 
 <script type="text/javascript">
 @if (count($errors) > 0){
@@ -396,6 +508,12 @@
 		$('#objetividade_modal').text($('#objetividade').val());
 		$('#clareza_modal').text($('#clareza').val());
 		$('#ideias_modal').text($('#ideias').val());
+		$('#persistencia_modal').text($('#persistencia').val());
+		$('#interesse_modal').text($('#interesse').val());
+		$('#criatividade_modal').text($('#criatividade').val());
+		$('#problema_modal').text($('#problema').val());
+		$('#escrita_modal').text($('#escrita').val());
+		$('#oral_modal').text($('#oral').val());
 		$('#adicionais_modal').text($('#adicionais').val());
 		$('#merito_modal').text($('#merito').val());
 	});

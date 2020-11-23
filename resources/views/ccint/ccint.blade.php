@@ -17,6 +17,14 @@
             <div class="card-body">
               <p class="card-title mb-0">Candidatos para Avaliação</p>
               <div class="table-responsive">
+                @if(session()->has('message'))
+                    <div class="alert alert-success alert-dismissible fade show">
+                        {{ session()->get('message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                @endif
               @if(isset($avaliacoes[0]))
                 <table class="table table-striped">
                   <thead>

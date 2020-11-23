@@ -14,6 +14,7 @@ use App\Convenios;
 use App\Universidade_Edital;
 use App\Notifications\ChangeStatus;
 use DB, Log;
+use Redirect;
 
 class EditaisController extends Controller
 {
@@ -140,14 +141,26 @@ class EditaisController extends Controller
           return view('editais.detalhes')->with($data);
     }
 
+    public function deleteUniversidade($id)
+    {
+        $universidade = Universidade_Edital::find($id);
+        $universidade->delete();
+        return Redirect::back();
+    }
+
     public function atualizar(Request $request, $id)
     {
         $edital = Editais::where('id', $id)->first();
         $status = Status_Edital::all();
+        $convenios = Convenios::where('status', '1')->get();
+        $universidades = Universidade_Edital::where('edital_id', $edital->id)->get();
+            
 
         $data = [
             'edital' => $edital,
-            'status' => $status
+            'status' => $status,
+            'convenios' => $convenios,
+            'universidades' => $universidades
         ]; 
        
           return view('editais.atualizar')->with($data);
@@ -177,7 +190,7 @@ class EditaisController extends Controller
 
             $avaliacao = Avaliacao_Ccint::where('id', $request->input('avaliacoes')[$i])->first();
 
-            $desempenho_academico = $request->input('desempenho')[$i];
+            $desempenho_academico = $avaliacao->candidatura->desempenho;
 
             if($edital->maior_pontuacao > 0){
                 $curriculum_lattes = 10 * $avaliacao->curriculum_lattes / $edital->maior_pontuacao;
@@ -230,7 +243,7 @@ class EditaisController extends Controller
 
 
 
-        return redirect('/editais');
+        return Redirect::back()->with('message', 'RESULTADO ATUALIZADOS COM SUCESSO!');
 
     }
 
@@ -273,6 +286,31 @@ class EditaisController extends Controller
             DB::rollback();
             Log::error($e);
             return $this->error($e->getMessage(), 500, $e);
+        }
+
+        $universidades = $request->universidade;
+        $vagas = $request->vagas;
+
+
+        for($count = 0; $count < count($universidades); $count++)
+        {
+
+            DB::beginTransaction();
+            try{
+
+                $universidadeEdital = Universidade_Edital::create([
+                'nome' => $universidades[$count],
+                'vagas' => $vagas[$count],
+                'edital_id' => $edital->id
+            ]);
+                
+                DB::commit();
+            }
+             catch(\Exception $e) {
+                DB::rollback();
+                Log::error($e);
+                return $this->error($e->getMessage(), 500, $e);
+            }
         }
 
 

@@ -32,7 +32,7 @@
 					        {{ $candidatura->candidato->curso }}
 					    </p>
 					    <p>
-				      		<b>Matricula</b>
+				      		<b>Matrícula</b>
 				      		{{ $candidatura->candidato->matricula }}
 				      	</p>
 	                </div>
@@ -69,8 +69,16 @@
 	 	<div class="col-md-12 grid-margin stretch-card">
 	 		<div class="card">
 				<div class="card-body">
-					<form method="POST" action="atualizar/certificado/{{ $candidatura->id }}" enctype="multipart/form-data">
+					<form method="POST" class="form-prevent-multiple-submits" action="atualizar/certificado/{{ $candidatura->id }}" enctype="multipart/form-data">
 						{!! csrf_field() !!}
+						<div class="form-group">
+					      	<label>Desempenho</label>
+					      	<div class="input-group">
+					        	<div class="input-group-prepend bg-transparent">
+					        	</div>
+					        	<input id="desempenho" value="{{$candidatura->desempenho}}" name="desempenho" type="text" class="form-control">
+					      	</div>
+					    </div>
 						<div class="form-group{{ $errors->has('certificado') ? ' has-error' : '' }}">
 							<label>Anexar Certificado de Proficiência</label>
 							@if($candidatura->certificado != '0')
@@ -84,6 +92,7 @@
 								<strong>{{ $errors->first('certificado') }}</strong>
 							</span>
 							@endif
+							
 						</div>
 						<div class="form-group{{ $errors->has('carta') ? ' has-error' : '' }}">
 							<label>Anexar Carta de Recomendação</label>
@@ -102,7 +111,7 @@
 						<div class="mt-3">
 				          <div class="form-group">
 				            <div class="input-group">
-				              <button type="submit" class="btn btn-primary ml-auto">
+				              <button type="submit" class="btn btn-primary ml-auto utton-prevent-multiple-submits">
 				                {{ __('Enviar') }}
 				              </button>
 				            </div>
