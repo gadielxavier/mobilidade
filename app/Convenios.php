@@ -13,6 +13,9 @@ class Convenios extends Model
      */
     protected $fillable = ['universidade', 'pais', 'proeficiencia_id', 'status'];
 
+    /**
+     * Get the proficiencia record associated with the convenio.
+     */
     public function proeficiencia()
     {
         return $this->belongsTo('App\Proeficiencia', 'proeficiencia_id');

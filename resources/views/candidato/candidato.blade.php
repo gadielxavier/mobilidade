@@ -53,7 +53,7 @@
                   <i class="ti-id-badge text-primary"></i>
                 </span>
               </div>
-              <input type="text" value="{{ $candidato->matricula }}" id="matricula" name="matricula" class="form-control form-control-lg border-left-0" placeholder="Email" required>
+              <input type="text" value="{{ $candidato->matricula }}" id="matricula" name="matricula" class="form-control form-control-lg border-left-0" placeholder="Matrícula" required>
             </div>
           </div>
           <div class="form-group">
@@ -64,7 +64,7 @@
                   <i class="ti-credit-card text-primary"></i>
                 </span>
               </div>
-              <input type="text" value="{{ $candidato->cpf }}" id="cpf" name="cpf" class="form-control form-control-lg border-left-0" placeholder="Email" required>
+              <input type="text" value="{{ $candidato->cpf }}" id="cpf" name="cpf" class="form-control form-control-lg border-left-0" placeholder="CPF" required>
             </div>
           </div>
           <div class="form-group">
@@ -173,7 +173,7 @@
                 <i class="ti-id-badge text-primary"></i>
               </span>
             </div>
-            <input type="text" id="matricula" name="matricula" class="form-control form-control-lg border-left-0" placeholder="Email" required>
+            <input type="text" id="matricula" name="matricula" class="form-control form-control-lg border-left-0" placeholder="Matrícula" required>
           </div>
         </div>
         <div class="form-group">
@@ -184,7 +184,7 @@
                 <i class="ti-credit-card text-primary"></i>
               </span>
             </div>
-            <input type="text" id="cpf" name="cpf" class="form-control form-control-lg border-left-0" placeholder="Email" required>
+            <input type="text" id="cpf" name="cpf" class="form-control form-control-lg border-left-0" placeholder="CPF" required>
           </div>
         </div>
         <div class="form-group">
@@ -195,7 +195,7 @@
                 <i class="ti-id-badge text-primary"></i>
               </span>
             </div>
-            <input type="text" id="rg" name="rg" class="form-control form-control-lg border-left-0" placeholder="Email" required>
+            <input type="text" id="rg" name="rg" class="form-control form-control-lg border-left-0" placeholder="RG" required>
           </div>
         </div>
         <div class="form-group">
@@ -206,7 +206,7 @@
                 <i class="ti-stamp text-primary"></i>
               </span>
             </div>
-            <input id="emissor" name="emissor" type="text" class="form-control form-control-lg border-left-0" placeholder="Email" required>
+            <input id="emissor" name="emissor" type="text" class="form-control form-control-lg border-left-0" placeholder="Orgão Emissor" required>
           </div>
         </div>
         <div class="form-group">

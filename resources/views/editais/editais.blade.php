@@ -159,8 +159,120 @@
 			        	</div>
 			        </div>
 			        <div class="form-group">
+			        	<label>Início Inscrição</label>
+			          	<input type="date" id="inicio_inscricao" name="inicio_inscricao" class="form-control" required>
+			        </div>
+			        <div class="form-group">
 			        	<label>Fim Inscrição</label>
-			          	<input type="date" id="fim_inscricao" name="fim_inscricao" class="form-control" v-model="item.dan_data_documento">
+			          	<input type="date" id="fim_inscricao" name="fim_inscricao" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Divulgação das inscrições homologadas</label>
+			          	<input type="date" id="homologacoes_inscricoes" name="homologacoes_inscricoes" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Início recurso inscrição</label>
+			          	<input type="date" id="inicio_recurso_inscricao" name="inicio_recurso_inscricao" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Fim recurso inscrição</label>
+			          	<input type="date" id="fim_recurso_inscricao" name="fim_recurso_inscricao" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Divulgação Final da Homologação após período de recurso</label>
+			          	<input type="date" id="homologacao_final" name="homologacao_final" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Início da Avaliação de Proficiência</label>
+			          	<input type="date" id="inicio_proeficiencia" name="inicio_proeficiencia" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Fim da Avaliação de Proficiência</label>
+			          	<input type="date" id="fim_proeficiencia" name="fim_proeficiencia" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Divulgação do resultado dos alunos aprovados na 1ª fase</label>
+			          	<input type="date" id="aprovados_primeira_fase" name="aprovados_primeira_fase" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Início recurso da primeira fase</label>
+			          	<input type="date" id="inicio_recurso_primeira_fase" name="inicio_recurso_primeira_fase" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Fim recurso da primeira fase</label>
+			          	<input type="date" id="fim_recurso_primeira_fase" name="fim_recurso_primeira_fase" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Resultado final da primeira fase</label>
+			          	<input type="date" id="resultado_final_primeira_fase" name="resultado_final_primeira_fase" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Início da Avaliação e Classificação dos candidatos pela Comissão Interna de Cooperação Internacional – CCInt</label>
+			          	<input type="date" id="inicio_ccint" name="inicio_ccint" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Fim da Avaliação e Classificação dos candidatos pela Comissão Interna de Cooperação Internacional – CCInt</label>
+			          	<input type="date" id="fim_ccint" name="fim_ccint" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Resultado da 2ª fase por ordem de classificação</label>
+			          	<input type="date" id="resultado_segunda_fase" name="resultado_segunda_fase" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Início recurso da segunda fase</label>
+			          	<input type="date" id="inicio_recurso_segunda_fase" name="inicio_recurso_segunda_fase" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Fim recurso da segunda fase</label>
+			          	<input type="date" id="fim_recurso_segunda_fase" name="fim_recurso_segunda_fase" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Resultado final da segunda fase</label>
+			          	<input type="date" id="resultado_final_segunda_fase" name="resultado_final_segunda_fase" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Reunião de Esclarecimentos e orientações para preenchimento dos Formulários da Universidade Selecionada</label>
+			          	<input type="date" id="reuniao_esclarecimentos" name="reuniao_esclarecimentos" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Início para entrega dos Formulários de Candidatura, e respectiva documentação na AERI.</label>
+			          	<input type="date" id="inicio_entrega_documentos" name="inicio_entrega_documentos" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Fim para entrega dos Formulários de Candidatura, e respectiva documentação na AERI.</label>
+			          	<input type="date" id="fim_entrega_documentos" name="fim_entrega_documentos" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Início da avaliação dos documentos pelos Colegiados de Cursos</label>
+			          	<input type="date" id="inicio_avaliacao_documentos" name="inicio_avaliacao_documentos" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Fim da avaliação dos documentos pelos Colegiados de Cursos</label>
+			          	<input type="date" id="fim_avaliacao_documentos" name="fim_avaliacao_documentos" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Envio das Candidaturas para as IES anfitriãs</label>
+			          	<input type="date" id="envio_candidaturas" name="envio_candidaturas" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Início para apresentação e recepção das cartas de aceite das IES de acolhimento</label>
+			          	<input type="date" id="inicio_recepcao_carta" name="inicio_recepcao_carta" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Fim para apresentação e recepção das cartas de aceite das IES de acolhimento</label>
+			          	<input type="date" id="fim_recepcao_carta" name="fim_recepcao_carta" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Divulgação dos resultados da 3ª fase</label>
+			          	<input type="date" id="divulgacao_resultado_terceira_fase" name="divulgacao_resultado_terceira_fase" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Período para aquisição de visto, seguro, passagens e exames</label>
+			          	<input type="date" id="inicio_aquisicoes" name="inicio_aquisicoes" class="form-control" required>
+			        </div>
+			        <div class="form-group">
+			        	<label>Início da Mobilidade Acadêmica</label>
+			          	<input type="date" id="inicio_mobilidade" name="inicio_mobilidade" class="form-control" required>
 			        </div>
 			        <div class="form-group">
 		                <label>Anexar Edital</label>

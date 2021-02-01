@@ -95,10 +95,14 @@ class HomeController extends Controller
 
     public function notification(Request $request, $id){
 
-        $notification = Auth()->user()->unreadNotifications->where('id', $id);
+        $notifications = Auth()->user()->unreadNotifications->where('id', $id);
 
-        $notification->markAsRead();
+        foreach ($notifications as $notification) {
+            $link = $notification->data['action'];
+        }
 
-        return redirect($notification[0]->data['action']);
+        $notifications->markAsRead();
+
+        return redirect($link);
     }
 }

@@ -39,7 +39,7 @@ class CandidaturasController extends Controller
 
         } 
         else{
-            $candidaturas = Candidaturas::where('candidato_id', $candidato->id)->get();
+            $candidaturas = Candidaturas::where('candidato_id', $candidato->id)->orderBy('id', 'desc')->get();
         } 
 
         $data = [
@@ -57,11 +57,13 @@ class CandidaturasController extends Controller
         $edital = Editais::find($id);
         $comprovacoes =  Comprovacao_Lattes::all();
         $universidades = Universidade_Edital::where('edital_id', $edital->id)->get();
+        $departamentos = DB::table('departamento')->get();
 
         $data = [
-            'edital' => $edital,
-            'comprovacoes' => $comprovacoes,
-            'universidades' => $universidades
+            'edital'        => $edital,
+            'comprovacoes'  => $comprovacoes,
+            'universidades' => $universidades,
+            'departamentos' => $departamentos
         ]; 
         
         return view('candidaturas.inscricao')->with($data);
@@ -75,11 +77,55 @@ class CandidaturasController extends Controller
        $candidatura =  Candidaturas::where('candidato_id', $candidato->id)->where('edital_id', $id)->first();
        $comprovacoes =  Comprovacao_Lattes::all();
        $arquivos = Comprovacao_Lattes_Arquivos::where('candidatura_id', $candidatura->id)->get();
+       $departamentos = DB::table('departamento')->get();
+       $universidades = Universidade_Edital::where('edital_id', $candidatura->edital_id)->get();
+
+       $count = 0;
+
+        if($candidatura->primeira_opcao_universidade == null)
+            $count++;
+        if($candidatura->primeira_opcao_curso == null)
+            $count++;
+        if($candidatura->segunda_opcao_universidade == null)
+            $count++;
+        if($candidatura->segunda_opcao_curso == null)
+            $count++;
+        if($candidatura->terceira_opcao_universidade == null)
+            $count++;
+        if($candidatura->terceira_opcao_curso == null)
+            $count++;
+        if($candidatura->matricula == '0')
+            $count++;
+        if($candidatura->historico == '0')
+            $count++;
+        if($candidatura->percentual == '0')
+            $count++;
+        if($candidatura->curriculum == '0')
+            $count++;
+        if($candidatura->plano_trabalho1 == '0')
+            $count++;
+        if($candidatura->plano_trabalho2 == '0')
+            $count++;
+        if($candidatura->plano_trabalho3 == '0')
+            $count++;
+        if($candidatura->plano_estudo1 == '0')
+            $count++;
+        if($candidatura->plano_estudo2 == '0')
+            $count++;
+        if($candidatura->plano_estudo3 == '0')
+            $count++;
+        if($candidatura->professor_departamento_id == null)
+            $count++;
+        if($candidatura->nome_professor_carta == null)
+            $count++;
 
         $data = [
-            'candidatura' => $candidatura,
-            'arquivos' => $arquivos,
-            'comprovacoes' => $comprovacoes
+            'candidatura'   => $candidatura,
+            'arquivos'      => $arquivos,
+            'comprovacoes'  => $comprovacoes,
+            'departamentos' => $departamentos,
+            'universidades' => $universidades,
+            'count'         => $count
         ]; 
        
         return view('candidaturas.atualizacao')->with($data);
@@ -167,23 +213,42 @@ class CandidaturasController extends Controller
              $estudo3 =  $candidaturas->plano_estudo3;
         }
 
-        if ($request->hasFile('certificado') && $request->file('certificado')->isValid()){
-            $certificado = $request->file('certificado')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado');
+        if ($request->hasFile('certificado_proficiencia1') && $request->file('certificado_proficiencia1')->isValid()){
+            $certificado_proficiencia1 = $request->file('certificado_proficiencia1')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado_proficiencia1');
         }else{
-             $certificado =  $candidaturas->certificado;
+             $certificado_proficiencia1 = $candidaturas->certificado_proficiencia1;
+        }
+        if ($request->hasFile('certificado_proficiencia2') && $request->file('certificado_proficiencia2')->isValid()){
+            $certificado_proficiencia2 = $request->file('certificado_proficiencia2')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado_proficiencia2');
+        }else{
+             $certificado_proficiencia2 = $candidaturas->certificado_proficiencia2;
+        }
+        if ($request->hasFile('certificado_proficiencia3') && $request->file('certificado_proficiencia3')->isValid()){
+            $certificado_proficiencia3 = $request->file('certificado_proficiencia3')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado_proficiencia3');
+        }else{
+             $certificado_proficiencia3 = $candidaturas->certificado_proficiencia3;
+        }
+        if ($request->hasFile('carta') && $request->file('carta')->isValid()){
+            $carta = $request->file('carta')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'carta');
+        }else{
+             $carta = 0;
         }
 
+        $candidato = Candidato::where('user_id', Auth::user()->id)->first();
+        $convenio1 = Convenios::where('universidade', $request->opcao1universidade)->first();
+        $convenio2 = Convenios::where('universidade', $request->opcao2universidade)->first();
+        $convenio3 = Convenios::where('universidade', $request->opcao3universidade)->first();
 
         try{
             $candidaturas->primeira_opcao_universidade = $request->opcao1universidade;
             $candidaturas->primeira_opcao_curso = $request->opcao1curso;
-            $candidaturas->primeira_opcao_pais = $request->opcao1pais;
+            $candidaturas->primeira_opcao_pais = $convenio1->pais;
             $candidaturas->segunda_opcao_universidade = $request->opcao2universidade;
             $candidaturas->segunda_opcao_curso = $request->opcao2curso;
-            $candidaturas->segunda_opcao_pais = $request->opcao2pais;
+            $candidaturas->segunda_opcao_pais = $convenio2->pais;
             $candidaturas->terceira_opcao_universidade = $request->opcao3universidade;
             $candidaturas->terceira_opcao_curso = $request->opcao3curso;
-            $candidaturas->terceira_opcao_pais = $request->opcao3pais;
+            $candidaturas->terceira_opcao_pais = $convenio3->pais;
             $candidaturas->matricula = $matricula;
             $candidaturas->historico = $historico;
             $candidaturas->percentual = $percentual;
@@ -194,7 +259,13 @@ class CandidaturasController extends Controller
             $candidaturas->plano_estudo1 = $estudo1;
             $candidaturas->plano_estudo2 = $estudo2;
             $candidaturas->plano_estudo3 = $estudo3;
-            $candidaturas->certificado = $certificado;
+            $candidaturas->certificado_proficiencia1 = $certificado_proficiencia1;
+            $candidaturas->certificado_proficiencia2 = $certificado_proficiencia2;
+            $candidaturas->certificado_proficiencia3 = $certificado_proficiencia3;
+            $candidaturas->nome_professor_carta = $request->nome_professor_carta;
+            $candidaturas->professor_departamento_id = $request->professor_departamento_id;
+            $candidaturas->finalizado = false;
+            $candidaturas->status_id = 17;
             $candidaturas->save();
 
         }
@@ -234,12 +305,17 @@ class CandidaturasController extends Controller
             }
         }
 
+        $isFinished = $this->checkIsFinished($candidaturas);
+
         return redirect('/home')->with('message', 'INSCRIÇÃO ATUALIZADA COM SUCESSO!');
     }
 
     public function details(Request $request, $id)
     {
-        $candidatura = Candidaturas::where('id', $id)->first();
+        //pega candidato para garantir que um candidato so pode visualizar suas candidatuas
+        $candidato = Candidato::where('user_id', Auth::user()->id)->first(); 
+
+        $candidatura = Candidaturas::where('id', $id)->where('candidato_id', $candidato->id)->first();
         $recursos = Recursos::where('candidato_id', $candidatura->candidato->id)->where('edital_id', $candidatura->edital->id)->get();
         $avaliacao = Avaliacao_Ccint::where('candidatura_id', $candidatura->id)->first();
         $edital = Editais::where('id', $candidatura->edital_id)->first();
@@ -267,18 +343,26 @@ class CandidaturasController extends Controller
 
         $edital = Editais::where('id', $id)->first();
 
-        $this->validate($request, [
-            'matricula' => 'required|file|max:8000',
-            'historico' => 'required|file|max:8000',
-            'percentual' => 'required|file|max:8000',
-            'curriculum' => 'required|file|max:8000',
-            'trabalho1' => 'required|file|max:8000',
-            'trabalho2' => 'required|file|max:8000',
-            'trabalho3' => 'required|file|max:8000',
-            'estudo1' => 'required|file|max:8000',
-            'estudo2' => 'required|file|max:8000',
-            'estudo3' => 'required|file|max:8000',
-        ]);
+        switch ($request->input('action')) {
+            case 'subscribe':
+
+                $this->validate($request, [
+                    'matricula' => 'required|file|max:8000',
+                    'historico' => 'required|file|max:8000',
+                    'percentual' => 'required|file|max:8000',
+                    'curriculum' => 'required|file|max:8000',
+                    'trabalho1' => 'required|file|max:8000',
+                    'trabalho2' => 'required|file|max:8000',
+                    'trabalho3' => 'required|file|max:8000',
+                    'estudo1' => 'required|file|max:8000',
+                    'estudo2' => 'required|file|max:8000',
+                    'estudo3' => 'required|file|max:8000',
+                    'certificado_proficiencia1' => 'required|file|max:8000',
+                    'certificado_proficiencia2' => 'required|file|max:8000',
+                    'certificado_proficiencia3' => 'required|file|max:8000',
+                ]);
+            break;
+        }
   
 
         if ($request->hasFile('matricula') && $request->file('matricula')->isValid()){
@@ -341,10 +425,20 @@ class CandidaturasController extends Controller
              $estudo3 = 0;
         }
 
-        if ($request->hasFile('certificado') && $request->file('certificado')->isValid()){
-            $certificado = $request->file('certificado')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado');
+        if ($request->hasFile('certificado_proficiencia1') && $request->file('certificado_proficiencia1')->isValid()){
+            $certificado_proficiencia1 = $request->file('certificado_proficiencia1')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado_proficiencia1');
         }else{
-             $certificado = 0;
+             $certificado_proficiencia1 = 0;
+        }
+        if ($request->hasFile('certificado_proficiencia2') && $request->file('certificado_proficiencia2')->isValid()){
+            $certificado_proficiencia2 = $request->file('certificado_proficiencia2')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado_proficiencia2');
+        }else{
+             $certificado_proficiencia2 = 0;
+        }
+        if ($request->hasFile('certificado_proficiencia3') && $request->file('certificado_proficiencia3')->isValid()){
+            $certificado_proficiencia3 = $request->file('certificado_proficiencia3')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado_proficiencia3');
+        }else{
+             $certificado_proficiencia3 = 0;
         }
         if ($request->hasFile('carta') && $request->file('carta')->isValid()){
             $carta = $request->file('carta')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'carta');
@@ -383,10 +477,25 @@ class CandidaturasController extends Controller
             'plano_estudo1'=> $estudo1,
             'plano_estudo2'=> $estudo2,
             'plano_estudo3'=> $estudo3,
-            'certificado'=> $certificado,
-            'status_id'=> 1,
+            'certificado_proficiencia1'=> $certificado_proficiencia1,
+            'certificado_proficiencia2'=> $certificado_proficiencia2,
+            'certificado_proficiencia3'=> $certificado_proficiencia3,
+            'status_id'=> 17,
             'carta'=> $carta,
-            'desempenho' => 0
+            'desempenho' => 0,
+            'proficiencia_id1' => null,
+            'proficiencia_id2' => null,
+            'proficiencia_id3' => null,
+            'quarta_opcao_universidade' => null,
+            'quarta_opcao_curso' => null,
+            'quarta_opcao_pais' => null,
+            'nome_professor_carta' => $request->nome_professor_carta,
+            'professor_departamento_id' => $request->professor_departamento_id,
+            'plano_trabalho4' => null,
+            'plano_estudo4' => null,
+            'ies_anfitria' => null,
+            'finalizado' => false
+
         ]);
             
             DB::commit();
@@ -426,14 +535,13 @@ class CandidaturasController extends Controller
             }
         }
 
-        $users = User::where('privilegio', 2)->orWhere('privilegio', 4)->get();
+        $isFinished = $this->checkIsFinished($candidatura);
 
-        foreach ($users as $user) {
-            $user->notify(new UserSubscription($edital->id));            
-        }
 
-        return redirect('/candidaturas')->with('message', 'INSCRIÇÃO REALIZADA COM SUCESSO!');
-
+        if($candidatura->status_id == 1)
+            return redirect('/candidaturas')->with('message', "INSCRIÇÃO REALIZADA COM SUCESSO!");
+        else
+            return redirect('/candidaturas')->with('message', "INSCRIÇÃO SALVA COM SUCESSO!");
     }
 
     public function deleteComprovante($id)
@@ -520,6 +628,17 @@ class CandidaturasController extends Controller
         return response()->file($path); 
     }
 
+    public function trabalho4(Request $request, $id)
+    {
+        $candidatura = Candidaturas::where('id', $id)->first();
+
+        $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+        $path = $storagePath.$candidatura->plano_trabalho4;
+
+        return response()->file($path); 
+    }
+
     public function estudo1(Request $request, $id)
     {
         $candidatura = Candidaturas::where('id', $id)->first();
@@ -553,6 +672,17 @@ class CandidaturasController extends Controller
         return response()->file($path); 
     }
 
+    public function estudo4(Request $request, $id)
+    {
+        $candidatura = Candidaturas::where('id', $id)->first();
+
+        $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+        $path = $storagePath.$candidatura->plano_estudo4;
+
+        return response()->file($path); 
+    }
+
     public function foto(Request $request, $id)
     {
         $candidatura = Candidaturas::where('id', $id)->first();
@@ -564,16 +694,40 @@ class CandidaturasController extends Controller
         return response()->file($path); 
     }
 
-    public function certificado(Request $request, $id)
+    public function certificado_proficiencia1(Request $request, $id)
     {
         $candidatura = Candidaturas::where('id', $id)->first();
 
         $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
 
-        $path = $storagePath.$candidatura->certificado;
+        $path = $storagePath.$candidatura->certificado_proficiencia1;
 
         return response()->file($path); 
     }
+
+    public function certificado_proficiencia2(Request $request, $id)
+    {
+        $candidatura = Candidaturas::where('id', $id)->first();
+
+        $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+        $path = $storagePath.$candidatura->certificado_proficiencia2;
+
+        return response()->file($path); 
+    }
+
+    public function certificado_proficiencia3(Request $request, $id)
+    {
+        $candidatura = Candidaturas::where('id', $id)->first();
+
+        $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+        $path = $storagePath.$candidatura->certificado_proficiencia3;
+
+        return response()->file($path); 
+    }
+
+
 
     public function carta(Request $request, $id)
     {
@@ -653,7 +807,7 @@ class CandidaturasController extends Controller
         return Redirect::back()->with('message', 'STATUS ATUALIZADO COM SUCESSO!');
     }
 
-    public function atualizarCertificado(Request $request, $id){
+    public function atualizarCandidatura(Request $request, $id){
 
         $candidaturas = Candidaturas::where('id', $id)->first();
 
@@ -664,10 +818,22 @@ class CandidaturasController extends Controller
             'carta' => 'file|max:8000',
         ]);
 
-        if ($request->hasFile('certificado') && $request->file('certificado')->isValid()){
-            $certificado = $request->file('certificado')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$candidaturas->candidato->user_id, 'certificado');
+        if ($request->hasFile('certificado_proficiencia1') && $request->file('certificado_proficiencia1')->isValid()){
+            $certificado_proficiencia1 = $request->file('certificado_proficiencia1')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado_proficiencia1');
         }else{
-             $certificado =  $candidaturas->certificado;
+             $certificado_proficiencia1 = $candidaturas->certificado_proficiencia1;
+        }
+
+        if ($request->hasFile('certificado_proficiencia2') && $request->file('certificado_proficiencia2')->isValid()){
+            $certificado_proficiencia2 = $request->file('certificado_proficiencia2')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado_proficiencia2');
+        }else{
+             $certificado_proficiencia2 = $candidaturas->certificado_proficiencia2;
+        }
+
+        if ($request->hasFile('certificado_proficiencia3') && $request->file('certificado_proficiencia3')->isValid()){
+            $certificado_proficiencia3 = $request->file('certificado_proficiencia3')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado_proficiencia3');
+        }else{
+             $certificado_proficiencia3 = $candidaturas->certificado_proficiencia3;
         }
 
         if ($request->hasFile('carta') && $request->file('carta')->isValid()){
@@ -679,13 +845,60 @@ class CandidaturasController extends Controller
         if($request->has('desempenho')){
            $desempenho = $request->desempenho;
         }else{
-            $desempenho = $request->desempenho;
+            $desempenho = $candidaturas->desempenho;
+        }
+
+        if($request->has('proficiencia_id1')){
+            $proficiencia_id1 = $request->proficiencia_id1;
+        }else{
+            $proficiencia_id1 = $candidaturas->proficiencia_id1;
+        }
+
+        if($request->has('proficiencia_id2')){
+            $proficiencia_id2 = $request->proficiencia_id2;
+        }else{
+            $proficiencia_id2 = $candidaturas->proficiencia_id2;
+        }
+
+        if($request->has('proficiencia_id3')){
+            $proficiencia_id3 = $request->proficiencia_id3;
+        }else{
+            $proficiencia_id3 = $candidaturas->proficiencia_id3;
+        }
+
+        if($request->has('opcao4universidade')){
+            $opcao4universidade = $request->opcao4universidade;
+            $opcao4curso = $request->opcao4curso;
+        }else{
+            $opcao4universidade = $candidaturas->quarta_opcao_universidade;
+            $opcao4curso = $candidaturas->quarta_opcao_curso;
+        }
+
+        if ($request->hasFile('plano_trabalho4') && $request->file('plano_trabalho4')->isValid()){
+            $plano_trabalho4 = $request->file('plano_trabalho4')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$candidaturas->candidato->user_id, 'trabalho4');
+        }else{
+             $plano_trabalho4 =  $candidaturas->plano_trabalho4;
+        }
+
+        if ($request->hasFile('plano_estudo4') && $request->file('plano_estudo4')->isValid()){
+            $plano_estudo4 = $request->file('plano_estudo4')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$candidaturas->candidato->user_id, 'estudo4');
+        }else{
+             $plano_estudo4 =  $candidaturas->plano_estudo4;
         }
 
         try{
-            $candidaturas->certificado = $certificado;
             $candidaturas->carta = $carta;
             $candidaturas->desempenho = $desempenho;
+            $candidaturas->certificado_proficiencia1 = $certificado_proficiencia1;
+            $candidaturas->certificado_proficiencia2 = $certificado_proficiencia2;
+            $candidaturas->certificado_proficiencia3 = $certificado_proficiencia3;
+            $candidaturas->proficiencia_id1 = $proficiencia_id1;
+            $candidaturas->proficiencia_id2 = $proficiencia_id2;
+            $candidaturas->proficiencia_id3 = $proficiencia_id3;
+            $candidaturas->quarta_opcao_universidade = $opcao4universidade;
+            $candidaturas->quarta_opcao_curso = $opcao4curso;
+            $candidaturas->plano_trabalho4 = $plano_trabalho4;
+            $candidaturas->plano_estudo4 = $plano_estudo4;
             $candidaturas->save();
         }
         catch(\Exception $e) {
@@ -709,6 +922,94 @@ class CandidaturasController extends Controller
         ]; 
        
           return view('candidaturas.recurso')->with($data);
+    }
+
+    public function checkIsFinished($candidatura){
+
+
+        $isFinished = true;
+
+        if($candidatura->primeira_opcao_universidade == null){
+            $isFinished = false;
+        }
+        if($candidatura->primeira_opcao_curso == null){
+            $isFinished = false;
+        }
+        if($candidatura->segunda_opcao_universidade == null){
+            $isFinished = false;
+        }
+        if($candidatura->segunda_opcao_curso == null){
+            $isFinished = false;
+        }
+        if($candidatura->terceira_opcao_universidade == null){
+            $isFinished = false;
+        }
+        if($candidatura->terceira_opcao_curso == null){
+            $isFinished = false;
+        }
+        if($candidatura->matricula == '0'){
+            $isFinished = false;
+        }
+        if($candidatura->historico == '0'){
+            $isFinished = false;
+        }
+        if($candidatura->percentual == '0'){
+            $isFinished = false;
+        }
+        if($candidatura->curriculum == '0'){
+            $isFinished = false;
+        }
+        if($candidatura->plano_trabalho1 == '0'){
+            $isFinished = false;
+        }
+        if($candidatura->plano_trabalho2 == '0'){
+            $isFinished = false;
+        }
+        if($candidatura->plano_trabalho3 == '0'){
+            $isFinished = false;
+        }
+        if($candidatura->plano_estudo1 == '0'){
+            $isFinished = false;
+        }
+        if($candidatura->plano_estudo2 == '0'){
+            $isFinished = false;
+        }
+        if($candidatura->plano_estudo3 == '0'){
+            $isFinished = false;
+        }
+        if($candidatura->professor_departamento_id == null){
+            $isFinished = false;
+        }
+        if($candidatura->nome_professor_carta == null){
+            $isFinished = false;
+        }
+
+        if($isFinished){
+            $users = User::where('privilegio', 2)->orWhere('privilegio', 4)->get();
+
+            foreach ($users as $user) {
+                $user->notify(new UserSubscription($candidatura->edital_id));            
+            }
+
+            $status_id = 1;
+        }
+        else{
+            $status_id = 17;
+        }
+
+        try{
+            $candidatura->finalizado = $isFinished;
+            $candidatura->status_id = $status_id;
+            $candidatura->save();
+        }
+        catch(\Exception $e) {
+            DB::rollback();
+            Log::error($e);
+            return $this->error($e->getMessage(), 500, $e);
+        }
+
+
+        return $isFinished;
     }
 
 }

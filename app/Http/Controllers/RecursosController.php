@@ -15,7 +15,7 @@ class RecursosController extends Controller
 {
     public function index()
     {
-    	$recursos = Recursos::where('replied', false)->paginate(10);
+    	$recursos = Recursos::where('replied', false)->orderBy('id', 'desc')->paginate(10);
         $recursosRespondidos = Recursos::where('replied', true)->orderBy('id', 'desc')->paginate(10);
 
     	$data = [
@@ -85,8 +85,8 @@ class RecursosController extends Controller
             return $this->error($e->getMessage(), 500, $e);
         }
         
-        $recursos = Recursos::where('replied', false)->get();
-        $recursosRespondidos = Recursos::where('replied', true)->get();
+        $recursos = Recursos::where('replied', false)->paginate(10);
+        $recursosRespondidos = Recursos::where('replied', true)->paginate(10);
 
         $data = [
             'recursos' => $recursos,

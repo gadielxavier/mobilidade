@@ -30,7 +30,7 @@ class ChangeStatus extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail','database'];
     }
 
     /**

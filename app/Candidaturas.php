@@ -14,7 +14,7 @@ class Candidaturas extends Model
      *
      * @var array
      */
-    protected $fillable = ['candidato_id', 'edital_id', 'primeira_opcao_universidade', 'primeira_opcao_curso', 'primeira_opcao_pais', 'segunda_opcao_universidade', 'segunda_opcao_curso', 'segunda_opcao_pais', 'terceira_opcao_universidade', 'terceira_opcao_curso', 'terceira_opcao_pais', 'matricula', 'historico', 'percentual', 'curriculum', 'plano_trabalho1', 'plano_trabalho2', 'plano_trabalho3', 'plano_estudo1', 'plano_estudo2', 'plano_estudo3', 'certificado', 'status_id', 'carta', 'desempenho'];
+    protected $fillable = ['candidato_id', 'edital_id', 'primeira_opcao_universidade', 'primeira_opcao_curso', 'primeira_opcao_pais', 'segunda_opcao_universidade', 'segunda_opcao_curso', 'segunda_opcao_pais', 'terceira_opcao_universidade', 'terceira_opcao_curso', 'terceira_opcao_pais', 'matricula', 'historico', 'percentual', 'curriculum', 'plano_trabalho1', 'plano_trabalho2', 'plano_trabalho3', 'plano_estudo1', 'plano_estudo2', 'plano_estudo3', 'certificado_proficiencia1', 'status_id', 'carta', 'desempenho', 'proficiencia_id1', 'quarta_opcao_universidade', 'quarta_opcao_curso', 'quarta_opcao_pais', 'nome_professor_carta', 'professor_departamento_id', 'plano_trabalho4', 'plano_estudo4', 'ies_anfitria', 'certificado_proficiencia2', 'certificado_proficiencia3', 'proficiencia_id2', 'proficiencia_id3', 'finalizado'];
 
     /**
      * Get the edital record associated with the candidatura.

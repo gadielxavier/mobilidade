@@ -12,6 +12,4 @@ class Proeficiencia extends Model
      * @var string
      */
     protected $table = 'proeficiencia';
-    
-    
 }

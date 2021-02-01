@@ -13,7 +13,8 @@ use App\Avaliacao_Ccint;
 use App\Convenios;
 use App\Universidade_Edital;
 use App\Notifications\ChangeStatus;
-use DB, Log;
+use App\Proeficiencia;
+use DB, Log, PDF;
 use Redirect;
 
 class EditaisController extends Controller
@@ -84,7 +85,36 @@ class EditaisController extends Controller
             'qtd_bolsas'=> $request->bolsas,
             'status_edital_id'=> '1',
             'path_anexo'=> $anexo,
-            'maior_pontuacao' => 0
+            'maior_pontuacao' => 0,
+            'inicio_inscricao' => $request->inicio_inscricao,
+            'homologacoes_inscricoes' => $request->homologacoes_inscricoes,
+            'inicio_recurso_inscricao' => $request->inicio_recurso_inscricao,
+            'fim_recurso_inscricao' => $request->fim_recurso_inscricao,
+            'homologacao_final' => $request->homologacao_final,
+            'inicio_proeficiencia' => $request->inicio_proeficiencia,
+            'fim_proeficiencia' => $request->fim_proeficiencia,
+            'aprovados_primeira_fase' => $request->aprovados_primeira_fase,
+            'inicio_recurso_primeira_fase' => $request->inicio_recurso_primeira_fase,
+            'fim_recurso_primeira_fase' => $request->fim_recurso_primeira_fase,
+            'resultado_final_primeira_fase' => $request->resultado_final_primeira_fase,
+            'inicio_ccint' => $request->inicio_ccint,
+            'fim_ccint' => $request->fim_ccint,
+            'resultado_segunda_fase' => $request->resultado_segunda_fase,
+            'inicio_recurso_segunda_fase' => $request->inicio_recurso_segunda_fase,
+            'fim_recurso_segunda_fase' => $request->fim_recurso_segunda_fase,
+            'resultado_final_segunda_fase' => $request->resultado_final_segunda_fase,
+            'reuniao_esclarecimentos' => $request->reuniao_esclarecimentos,
+            'inicio_entrega_documentos' => $request->inicio_entrega_documentos,
+            'fim_entrega_documentos' => $request->fim_entrega_documentos,
+            'inicio_avaliacao_documentos' => $request->inicio_avaliacao_documentos,
+            'fim_avaliacao_documentos' => $request->fim_avaliacao_documentos,
+            'envio_candidaturas' => $request->envio_candidaturas,
+            'inicio_recepcao_carta' => $request->inicio_recepcao_carta,
+            'fim_recepcao_carta' => $request->fim_recepcao_carta,
+            'divulgacao_resultado_terceira_fase' => $request->divulgacao_resultado_terceira_fase,
+            'inicio_aquisicoes' => $request->inicio_aquisicoes,
+            'inicio_mobilidade' => $request->inicio_mobilidade
+
         ]);
             
             DB::commit();
@@ -127,7 +157,7 @@ class EditaisController extends Controller
     public function details(Request $request, $id)
     {
         $edital = Editais::find($id);
-        $candidaturas = Candidaturas::where('edital_id', $id)->paginate(10);
+        $candidaturas = Candidaturas::where('edital_id', $id)->where('status_id', '!=', 17)->paginate(10);
         $status =  Status_Inscricao::all();
         $avaliadores = User::where('privilegio', 3)->get(); 
 
@@ -166,6 +196,132 @@ class EditaisController extends Controller
           return view('editais.atualizar')->with($data);
     }
 
+    // Generate PDF
+    public function createPDF(Request $request, $id) {
+
+
+        $edital = Editais::where('id', $id)->first();
+        $status = Status_Edital::all();
+        $avaliacoes = Avaliacao_Ccint::where('edital_id', $edital->id)
+        ->orderBy('nota_final', 'desc')->get();
+
+        $universidades = Universidade_Edital::where('edital_id', $edital->id)->get();
+
+        $universidades_nome_array = [];
+
+        foreach ($universidades as $universidade) {
+            $universidades_nome_array = array_add($universidades_nome_array, $universidade->nome, array());    
+        }
+
+        foreach ($avaliacoes as $avaliacao) {
+
+            $opcao1 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->primeira_opcao_universidade)->first();
+            $opcao2 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->segunda_opcao_universidade)->first();
+            $opcao3 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->terceira_opcao_universidade)->first();
+
+            $convenio = Convenios::where('universidade', $avaliacao->candidatura->primeira_opcao_universidade)->first();
+
+            $proficiencia_universidade = Proeficiencia::where('id', $convenio->proeficiencia_id)->first();
+
+            $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id1)->first();
+
+            $candidatura = Candidaturas::where('id', $avaliacao->candidatura->id)->first();
+
+
+            /* Se a universidade ainda tem vagas disponiveis. Se tiver, verifica se a universidade
+            exige proeficiencia. Se exigir, verifica se o aluno tem proeficiencia maior ou igual da universidade
+            */
+            if((count($universidades_nome_array[$opcao1->nome]) <  $opcao1->vagas)
+            &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
+
+                $universidades_nome_array[$opcao1->nome][] = $avaliacao->candidatura->candidato->nome;
+
+                try{
+                    $candidatura->ies_anfitria = $opcao1->nome;
+                    $candidatura->save();
+
+                }
+                catch(\Exception $e) {
+                    DB::rollback();
+                    Log::error($e);
+                    return $this->error($e->getMessage(), 500, $e);
+                }
+
+
+            }else{
+
+                //atualiza a proeficiencia da universidade
+                $convenio = Convenios::where('universidade', $avaliacao->candidatura->segunda_opcao_universidade)->first();
+
+                $proficiencia_universidade = Proeficiencia::where('id', $convenio->proeficiencia_id)->first();
+
+                $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id2)->first();
+
+                //Caso candidato não tenha conseguido primeira opção verifica 2
+                if( (count($universidades_nome_array[$opcao2->nome]) <  $opcao2->vagas )
+                &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
+
+                    $universidades_nome_array[$opcao2->nome][] = $avaliacao->candidatura->candidato->nome;
+
+                    try{
+                        $candidatura->ies_anfitria = $opcao2->nome;
+                        $candidatura->save();
+
+                    }
+                    catch(\Exception $e) {
+                        DB::rollback();
+                        Log::error($e);
+                        return $this->error($e->getMessage(), 500, $e);
+                    }
+                    
+
+                }else{
+
+                    //atualiza a proeficiencia da universidade
+                    $convenio = Convenios::where('universidade', $avaliacao->candidatura->terceira_opcao_universidade)->first();
+
+                    $proficiencia_universidade = Proeficiencia::where('id', $convenio->proeficiencia_id)->first();
+
+                    $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id3)->first();
+
+                    //Caso candidato não tenha conseguido segunda opção verifica 3
+                    if((count($universidades_nome_array[$opcao3->nome]) <  $opcao3->vagas )
+                    &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
+
+                        $universidades_nome_array[$opcao3->nome][] = $avaliacao->candidatura->candidato->nome;
+
+                        try{
+                            $candidatura->ies_anfitria = $opcao3->nome;
+                            $candidatura->save();
+
+                        }
+                        catch(\Exception $e) {
+                            DB::rollback();
+                            Log::error($e);
+                            return $this->error($e->getMessage(), 500, $e);
+                        }
+                    }
+                }
+            }
+        }
+
+        $data = [
+            'edital' => $edital,
+            'avaliacoes' => $avaliacoes,
+            'status' => $status,
+            'classificacoes' => array_divide($universidades_nome_array),
+            'universidades' => $universidades
+        ]; 
+
+        // share data to view
+        view()->share(['edital', 'avaliacoes', 'status', 'classificacoes', 'universidades'],$data);
+        $pdf = PDF::loadView('editais.pdf', $data);
+
+        // Finally, you can download the file using download function
+        return $pdf->download('tabela.pdf');
+    }
+
+
     public function resultado(Request $request, $id)
     {
         $edital = Editais::where('id', $id)->first();
@@ -173,10 +329,112 @@ class EditaisController extends Controller
         $avaliacoes = Avaliacao_Ccint::where('edital_id', $edital->id)
         ->orderBy('nota_final', 'desc')->get();
 
+        $universidades = Universidade_Edital::where('edital_id', $edital->id)->get();
+
+        $universidades_nome_array = [];
+
+        foreach ($universidades as $universidade) {
+            $universidades_nome_array = array_add($universidades_nome_array, $universidade->nome, array());    
+        }
+
+        foreach ($avaliacoes as $avaliacao) {
+
+            $opcao1 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->primeira_opcao_universidade)->first();
+            $opcao2 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->segunda_opcao_universidade)->first();
+            $opcao3 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->terceira_opcao_universidade)->first();
+
+            $convenio = Convenios::where('universidade', $avaliacao->candidatura->primeira_opcao_universidade)->first();
+
+            $proficiencia_universidade = Proeficiencia::where('id', $convenio->proeficiencia_id)->first();
+
+            $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id1)->first();
+
+            $candidatura = Candidaturas::where('id', $avaliacao->candidatura->id)->first();
+
+
+            /* Se a universidade ainda tem vagas disponiveis. Se tiver, verifica se a universidade
+            exige proeficiencia. Se exigir, verifica se o aluno tem proeficiencia maior ou igual da universidade
+            */
+            if((count($universidades_nome_array[$opcao1->nome]) <  $opcao1->vagas)
+            &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
+
+                $universidades_nome_array[$opcao1->nome][] = $avaliacao->candidatura->candidato->nome;
+
+                try{
+                    $candidatura->ies_anfitria = $opcao1->nome;
+                    $candidatura->save();
+
+                }
+                catch(\Exception $e) {
+                    DB::rollback();
+                    Log::error($e);
+                    return $this->error($e->getMessage(), 500, $e);
+                }
+
+
+            }else{
+
+                //atualiza a proeficiencia da universidade
+                $convenio = Convenios::where('universidade', $avaliacao->candidatura->segunda_opcao_universidade)->first();
+
+                $proficiencia_universidade = Proeficiencia::where('id', $convenio->proeficiencia_id)->first();
+
+                $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id2)->first();
+
+                //Caso candidato não tenha conseguido primeira opção verifica 2
+                if( (count($universidades_nome_array[$opcao2->nome]) <  $opcao2->vagas )
+                &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
+
+                    $universidades_nome_array[$opcao2->nome][] = $avaliacao->candidatura->candidato->nome;
+
+                    try{
+                        $candidatura->ies_anfitria = $opcao2->nome;
+                        $candidatura->save();
+
+                    }
+                    catch(\Exception $e) {
+                        DB::rollback();
+                        Log::error($e);
+                        return $this->error($e->getMessage(), 500, $e);
+                    }
+                    
+
+                }else{
+
+                    //atualiza a proeficiencia da universidade
+                    $convenio = Convenios::where('universidade', $avaliacao->candidatura->terceira_opcao_universidade)->first();
+
+                    $proficiencia_universidade = Proeficiencia::where('id', $convenio->proeficiencia_id)->first();
+
+                    $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id3)->first();
+
+                    //Caso candidato não tenha conseguido segunda opção verifica 3
+                    if((count($universidades_nome_array[$opcao3->nome]) <  $opcao3->vagas )
+                    &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
+
+                        $universidades_nome_array[$opcao3->nome][] = $avaliacao->candidatura->candidato->nome;
+
+                        try{
+                            $candidatura->ies_anfitria = $opcao3->nome;
+                            $candidatura->save();
+
+                        }
+                        catch(\Exception $e) {
+                            DB::rollback();
+                            Log::error($e);
+                            return $this->error($e->getMessage(), 500, $e);
+                        }
+                    }
+                }
+            }
+        }
+
         $data = [
             'edital' => $edital,
             'avaliacoes' => $avaliacoes,
-            'status' => $status
+            'status' => $status,
+            'classificacoes' => array_divide($universidades_nome_array),
+            'universidades' => $universidades
         ]; 
        
           return view('editais.resultado')->with($data);
@@ -247,6 +505,32 @@ class EditaisController extends Controller
 
     }
 
+    public function atualizarResultadoSegundaFase(Request $request, $id)
+    {
+
+        for ($i = 0; $i<count($request->input('avaliacoes'));  $i++) {
+
+
+            $avaliacao = Avaliacao_Ccint::where('id', $request->input('avaliacoes')[$i])->first();
+
+            $candidatura = Candidaturas::where('id', $avaliacao->candidatura->id)->first();
+
+            try{
+                $candidatura->ies_anfitria = $request->input('universidades')[$i];
+                $candidatura->save();
+
+            }
+            catch(\Exception $e) {
+                DB::rollback();
+                Log::error($e);
+                return $this->error($e->getMessage(), 500, $e);
+            }            
+        }
+
+        return Redirect::back()->with('message', 'RESULTADO ATUALIZADOS COM SUCESSO!');
+
+    }
+
     public function update(Request $request, $id)
     {
 
@@ -272,15 +556,41 @@ class EditaisController extends Controller
 
 
         try{
-
             $edital->nome =  $request->nome;
             $edital->numero = $request->numero;
             $edital->qtd_bolsas = $request->bolsas;
-            $edital->fim_inscricao = $request->fim_inscricao;
             $edital->status_edital_id = $request->status;
             $edital->path_anexo = $anexo;
+            $edital->inicio_inscricao = $request->inicio_inscricao;
+            $edital->fim_inscricao = $request->fim_inscricao;
+            $edital->homologacoes_inscricoes = $request->homologacoes_inscricoes;
+            $edital->inicio_recurso_inscricao = $request->inicio_recurso_inscricao;
+            $edital->fim_recurso_inscricao = $request->fim_recurso_inscricao;
+            $edital->homologacao_final = $request->homologacao_final;
+            $edital->inicio_proeficiencia = $request->inicio_proeficiencia;
+            $edital->fim_proeficiencia = $request->fim_proeficiencia;
+            $edital->aprovados_primeira_fase = $request->aprovados_primeira_fase;
+            $edital->inicio_recurso_primeira_fase = $request->inicio_recurso_primeira_fase;
+            $edital->fim_recurso_primeira_fase = $request->fim_recurso_primeira_fase;
+            $edital->resultado_final_primeira_fase = $request->resultado_final_primeira_fase;
+            $edital->inicio_ccint = $request->inicio_ccint;
+            $edital->fim_ccint = $request->fim_ccint;
+            $edital->resultado_segunda_fase = $request->resultado_segunda_fase;
+            $edital->inicio_recurso_segunda_fase = $request->inicio_recurso_segunda_fase;
+            $edital->fim_recurso_segunda_fase = $request->fim_recurso_segunda_fase;
+            $edital->resultado_final_segunda_fase = $request->resultado_final_segunda_fase;
+            $edital->reuniao_esclarecimentos = $request->reuniao_esclarecimentos;
+            $edital->inicio_entrega_documentos = $request->inicio_entrega_documentos;
+            $edital->fim_entrega_documentos = $request->fim_entrega_documentos;
+            $edital->inicio_avaliacao_documentos = $request->inicio_avaliacao_documentos;
+            $edital->fim_avaliacao_documentos = $request->fim_avaliacao_documentos;
+            $edital->envio_candidaturas = $request->envio_candidaturas;
+            $edital->inicio_recepcao_carta = $request->inicio_recepcao_carta;
+            $edital->fim_recepcao_carta = $request->fim_recepcao_carta;
+            $edital->divulgacao_resultado_terceira_fase = $request->divulgacao_resultado_terceira_fase;
+            $edital->inicio_aquisicoes = $request->inicio_aquisicoes;
+            $edital->inicio_mobilidade = $request->inicio_mobilidade;
             $edital->save();
-
         }
         catch(\Exception $e) {
             DB::rollback();
@@ -321,10 +631,14 @@ class EditaisController extends Controller
     {
         $candidatura =  Candidaturas::find($id);
         $status =  Status_Inscricao::all();
+        $proeficiencias = Proeficiencia::all();
+        $universidades = Universidade_Edital::where('edital_id', $candidatura->edital_id)->get();
 
         $data = [
             'candidatura' => $candidatura,
-            'status' => $status
+            'status' => $status,
+            'proeficiencias' => $proeficiencias,
+            'universidades' => $universidades,
         ]; 
 
         return view('editais.candidatura')->with($data);

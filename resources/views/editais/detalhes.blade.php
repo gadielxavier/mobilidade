@@ -53,7 +53,7 @@
 							        <td>
 							          	<a href="/editais/atualizar/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Editar</a>
 							        </td>
-							       	@if($edital->status->id == 3)
+							       	@if($edital->status->id >= 9)
 							        <td>
 							          	<a href="/editais/resultado/{{ $edital->id }}"  class="btn btn-success btn-sm"> Resultado Parcial</a>
 							        </td>
@@ -135,7 +135,7 @@
 	     <div class="card">
 	    	<div class="card-body">
 	    		<div class="row">
-	    			@if($edital->status->id == 3)
+	    			@if($edital->status->id == 9)
 		                <div class="col-md-5">
 		                	<label>Avaliador Ccint:</label>
 				          	@isset($candidatura->status->titulo)

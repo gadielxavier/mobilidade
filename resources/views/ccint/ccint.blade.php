@@ -34,27 +34,26 @@
                     </tr>
                   </thead>
                   <tbody>
-                  
                     @foreach ($avaliacoes as $avaliacao)
-                    @if($avaliacao->candidatura->carta != '0')
-                      <tr>
-                          <td>
-                          @isset($avaliacao->candidatura->candidato->nome)
-                            {{ $avaliacao->candidatura->candidato->nome }}</td>
-                          @endif
+                      @if($avaliacao->candidatura->carta != '0')
+                        <tr>
+                            <td>
+                            @isset($avaliacao->candidatura->candidato->nome)
+                              {{ $avaliacao->candidatura->candidato->nome }}</td>
+                            @endif
+                            </td>
+                            <td>
+                            @isset($avaliacao->candidatura->edital->nome)
+                              {{ $avaliacao->candidatura->edital->nome.'  '.$avaliacao->candidatura->edital->numero }}</td>
+                            @endif
+                            </td>
+                            <td>
+                            <a  href="ccint/detalhes/{{ $avaliacao->candidatura->id }}" class="btn btn-success btn-sm">
+                                Visualizar
+                            </a>
                           </td>
-                          <td>
-                          @isset($avaliacao->candidatura->edital->nome)
-                            {{ $avaliacao->candidatura->edital->nome.'  '.$avaliacao->candidatura->edital->numero }}</td>
-                          @endif
-                          </td>
-                          <td>
-                          <a  href="ccint/detalhes/{{ $avaliacao->candidatura->id }}" class="btn btn-success btn-sm">
-                              Visualizar
-                          </a>
-                        </td>
-                      </tr>
-                      @endif
+                        </tr>
+                        @endif
                     @endforeach
                   @else
                   <p>Não existe nenhum candidato para ser avaliado no momento!</p>

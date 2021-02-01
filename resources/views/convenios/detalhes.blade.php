@@ -35,9 +35,13 @@
 					<label>Proeficiência</label>
 					<div class="dropdown">
 					   <select id="proeficiencia" name="proeficiencia" class="form-control custom-select">
-					   		<option selected value="{{ $convenio->proeficiencia->id }}">{{ $convenio->proeficiencia->nome }}</option>
+					   		 $convenio->proeficiencia->nome }}</option>
 					        @foreach($proeficiencias as $proeficiencia)
-					            <option value="{{ $proeficiencia->id }}">{{ $proeficiencia->nome }}</option>
+					        	@if($convenio->proeficiencia->id == $proeficiencia->id)
+					        		<option value="{{ $proeficiencia->id }}" selected="">{{ $proeficiencia->lingua.' '.$proeficiencia->nivel }}</option>
+					        	@else	
+					            	<option value="{{ $proeficiencia->id }}">{{ $proeficiencia->lingua.' '.$proeficiencia->nivel }}</option>
+					            @endif
 					        @endforeach
 					  </select>
 					</div>

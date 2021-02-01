@@ -53,7 +53,7 @@
                       </div>
                     </div>
                     @foreach (Auth::user()->unreadNotifications as $notification)
-                      <a class="dropdown-item" href="notification/{{ $notification->id }}">
+                      <a class="dropdown-item" href="{{ route('notification', $notification->id) }}">
                         <div class="item-thumbnail">
                           <div class="item-icon {{ $notification->data['bg'] }}">
                             <i class="{{ $notification->data['icon'] }} mx-0"></i>

@@ -24,6 +24,8 @@ class CcintController extends Controller
         $data = [
             'avaliacoes' => $avaliacoes
         ];
+
+        //dd($avaliacoes);
         
         return view('ccint.ccint')->with($data);
     }
@@ -141,9 +143,9 @@ class CcintController extends Controller
 
         $curriculum_lattes = $participacao +  $indicadores + $representacao + $institucional;
 
-        $complemento = ($request->ideias + $request->persistencia + $request->interesse + $request->problema + $request->escrita + $request->oral) / 7;  
+        $complemento = ($request->ideias + $request->persistencia + $request->interesse + $request->problema + $request->criatividade + $request->escrita + $request->oral) / 7;  
 
-        $carta =  $complemento + $request->objetividade + $request->clareza;
+        $carta =  $complemento + $request->adicionais + $request->merito;
 
         $edital = Editais::where('id', $avaliacao->edital_id)->first();
 

@@ -13,158 +13,272 @@
            <strong>Erro no envio!!! Tamanho máximo dos arquivos somados é de 8 Mb</strong>
         @endif
         <div class="modal-body">
-          <div class="form-group">
-            <label><b>Primeira Opção Universidade</b></label>
-            <div class="input-group">
-              <select name="opcao1universidade" class="form-control custom-select" required>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><b>Primeira Opção Universidade *</b></label>
+                <div class="input-group">
+                  <select name="opcao1universidade" class="form-control">
                     @foreach($universidades as $universidade)
-                        <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) "}}</option>
+                      <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.") "}}</option>
                     @endforeach
-              </select>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><b>Primeira Opção Curso *</b></label>
+                <div class="input-group">
+                  <input id="opcao1curso" name="opcao1curso" type="text" class="form-control">
+                  @if ($errors->has('opcao1curso'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('opcao1curso') }}</strong>
+                  </span>
+                  @endif
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label data-toggle="tooltip" title="Caso a universidade exija proficiência e você já tenha um certificado"><b>Certificado de proficiência 1</b></label>
+                <div class="input-group">
+                  <input type="file" accept="application/pdf" id="certificado_proficiencia1" name="certificado_proficiencia1" class="form-control">
+                  @if ($errors->has('proficiencia'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('proficiencia') }}</strong>
+                  </span>
+                  @endif
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label><b>Primeira Opção Curso</b></label>
-            <div class="input-group">
-              <input id="opcao1curso" name="opcao1curso" type="text" class="form-control" required>
-              @if ($errors->has('opcao1curso'))
-              <span class="help-block">
-                <strong>{{ $errors->first('opcao1curso') }}</strong>
-              </span>
-              @endif
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><b>Segunda Opção Universidade *</b></label>
+                <div class="input-group">
+                  <select name="opcao2universidade" class="form-control">
+                        @foreach($universidades as $universidade)
+                          <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.") "}}</option>
+                        @endforeach
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><b>Segunda Opção Curso *</b></label>
+                <div class="input-group">
+                  <input id="opcao2curso" name="opcao2curso" type="text" class="form-control">
+                  @if ($errors->has('opcao2curso'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('opcao2curso') }}</strong>
+                  </span>
+                  @endif
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label data-toggle="tooltip" title="Caso a universidade exija proficiência e você já tenha um certificado"><b>Certificado de proficiência 2</b></label>
+                <div class="input-group">
+                  <input type="file" accept="application/pdf" id="certificado_proficiencia2" name="certificado_proficiencia2" class="form-control">
+                  @if ($errors->has('proficiencia'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('proficiencia') }}</strong>
+                  </span>
+                  @endif
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label><b>Segunda Opção Universidade</b></label>
-            <div class="input-group">
-              <select name="opcao2universidade" class="form-control custom-select" required>
-                    @foreach($universidades as $universidade)
-                        <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) "}}</option>
-                    @endforeach
-              </select>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><b>Terceira Opção Universidade *</b></label>
+                <div class="input-group">
+                  <select name="opcao3universidade" class="form-control">
+                        @foreach($universidades as $universidade)
+                          <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.") "}}</option>
+                        @endforeach
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><b>Terceira Opção Curso *</b></label>
+                <div class="input-group">
+                  <input id="opcao3curso" name="opcao3curso" type="text" class="form-control">
+                  @if ($errors->has('opcao3curso'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('opcao3curso') }}</strong>
+                  </span>
+                  @endif
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label data-toggle="tooltip" title="Caso a universidade exija proficiência e você já tenha um certificado"><b>Certificado de proficiência 3</b></label>
+                <div class="input-group">
+                  <input type="file" accept="application/pdf" id="certificado_proficiencia3" name="certificado_proficiencia3" class="form-control">
+                  @if ($errors->has('proficiencia'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('proficiencia') }}</strong>
+                  </span>
+                  @endif
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label><b>Segunda Opção Curso</b></label>
-            <div class="input-group">
-              <input id="opcao2curso" name="opcao2curso" type="text" class="form-control" required>
-              @if ($errors->has('opcao2curso'))
-              <span class="help-block">
-                <strong>{{ $errors->first('opcao2curso') }}</strong>
-              </span>
-              @endif
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Departamento do professor da carta de recomendação *</b></label>
+                <div class="input-group">
+                  <select name="professor_departamento_id" class="form-control">
+                        @foreach($departamentos as $departamento)
+                            <option value='{{ $departamento->id }}'>{{ $departamento->nome }}</option>
+                        @endforeach
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Nome do professor *</b></label>
+                <div class="input-group">
+                  <input id="nome_professor_carta" name="nome_professor_carta" type="text" class="form-control">
+                  @if ($errors->has('opcao3curso'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('opcao3curso') }}</strong>
+                  </span>
+                  @endif
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label><b>Terceira Opção Universidade</b></label>
-            <div class="input-group">
-              <select name="opcao3universidade" class="form-control custom-select" required>
-                    @foreach($universidades as $universidade)
-                        <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) "}}</option>
-                    @endforeach
-              </select>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Guia de matrícula *</b></label>
+                <input type="file" accept="application/pdf" accept="application/pdf" id="matricula" name="matricula" class="form-control" >
+                @if ($errors->has('matricula'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('matricula') }}</strong>
+                </span>
+                @endif
+              </div>
             </div>
-          </div> 
-          <div class="form-group">
-            <label><b>Terceira Opção Curso</b></label>
-            <div class="input-group">
-              <input id="opcao3curso" name="opcao3curso" type="text" class="form-control" required>
-              @if ($errors->has('opcao3curso'))
-              <span class="help-block">
-                <strong>{{ $errors->first('opcao3curso') }}</strong>
-              </span>
-              @endif
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Histórico escolar *</b></label>
+                <input type="file" accept="application/pdf" id="historico" name="historico" class="form-control" >
+                @if ($errors->has('historico'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('historico') }}</strong>
+                </span>
+                @endif
+              </div>
             </div>
-          </div>  
-          <div class="form-group">
-            <label><b>Guia de matrícula</b></label>
-            <input type="file" accept="application/pdf" accept="application/pdf" id="matricula" name="matricula" class="form-control" >
-            @if ($errors->has('matricula'))
-            <span class="help-block">
-              <strong>{{ $errors->first('matricula') }}</strong>
-            </span>
-            @endif
           </div>
-          <div class="form-group">
-            <label><b>Histórico escolar</b></label>
-            <input type="file" accept="application/pdf" id="historico" name="historico" class="form-control" >
-            @if ($errors->has('historico'))
-            <span class="help-block">
-              <strong>{{ $errors->first('historico') }}</strong>
-            </span>
-            @endif
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Percentual de carga horária concluída *</b></label>
+                <input type="file" accept="application/pdf" id="percentual" name="percentual" class="form-control" >
+                @if ($errors->has('percentual'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('percentual') }}</strong>
+                </span>
+                @endif
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Curriculum Lattes *</b></label>
+                <input type="file" accept="application/pdf" id="curriculum" name="curriculum" class="form-control" >
+                @if ($errors->has('curriculum'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('curriculum') }}</strong>
+                </span>
+                @endif 
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label><b>Percentual de carga horária concluída</b></label>
-            <input type="file" accept="application/pdf" id="percentual" name="percentual" class="form-control" >
-            @if ($errors->has('percentual'))
-            <span class="help-block">
-              <strong>{{ $errors->first('percentual') }}</strong>
-            </span>
-            @endif
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Plano de trabalho 1 *</b></label>
+                <input type="file" accept="application/pdf" id="trabalho1" name="trabalho1" class="form-control" >
+                @if ($errors->has('trabalho1'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('trabalho1') }}</strong>
+                </span>
+                @endif
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Plano de estudo 1 *</b></label>
+                <input type="file" accept="application/pdf" id="estudo1" name="estudo1" class="form-control" >
+                @if ($errors->has('estudo1'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('estudo1') }}</strong>
+                </span>
+                @endif
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label><b>Curriculum Lattes</b></label>
-            <input type="file" accept="application/pdf" id="curriculum" name="curriculum" class="form-control" >
-            @if ($errors->has('curriculum'))
-            <span class="help-block">
-              <strong>{{ $errors->first('curriculum') }}</strong>
-            </span>
-            @endif 
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Plano de trabalho 2 *</b></label>
+                <input type="file" accept="application/pdf" id="trabalho2" name="trabalho2" class="form-control" >
+                @if ($errors->has('trabalho2'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('trabalho2') }}</strong>
+                </span>
+                @endif 
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Plano de estudo 2 *</b></label>
+                <input type="file" accept="application/pdf" id="estudo2" name="estudo2" class="form-control" >
+                @if ($errors->has('estudo2'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('estudo2') }}</strong>
+                </span>
+                @endif
+              </div>
+            </div>  
           </div>
-          <div class="form-group">
-            <label><b>Plano de trabalho 1</b></label>
-            <input type="file" accept="application/pdf" id="trabalho1" name="trabalho1" class="form-control" >
-            @if ($errors->has('trabalho1'))
-            <span class="help-block">
-              <strong>{{ $errors->first('trabalho1') }}</strong>
-            </span>
-            @endif
-          </div>
-          <div class="form-group">
-            <label><b>Plano de trabalho 2</b></label>
-            <input type="file" accept="application/pdf" id="trabalho2" name="trabalho2" class="form-control" >
-            @if ($errors->has('trabalho2'))
-            <span class="help-block">
-              <strong>{{ $errors->first('trabalho2') }}</strong>
-            </span>
-            @endif 
-          </div>
-          <div class="form-group">
-            <label><b>Plano de trabalho 3</b></label>
-            <input type="file" accept="application/pdf" id="trabalho3" name="trabalho3" class="form-control" >
-            @if ($errors->has('trabalho3'))
-            <span class="help-block">
-              <strong>{{ $errors->first('trabalho3') }}</strong>
-            </span>
-            @endif
-          </div>
-          <div class="form-group">
-            <label><b>Plano de estudo 1</b></label>
-            <input type="file" accept="application/pdf" id="estudo1" name="estudo1" class="form-control" >
-            @if ($errors->has('estudo1'))
-            <span class="help-block">
-              <strong>{{ $errors->first('estudo1') }}</strong>
-            </span>
-            @endif
-          </div>
-          <div class="form-group">
-            <label><b>Plano de estudo 2</b></label>
-            <input type="file" accept="application/pdf" id="estudo2" name="estudo2" class="form-control" >
-            @if ($errors->has('estudo2'))
-            <span class="help-block">
-              <strong>{{ $errors->first('estudo2') }}</strong>
-            </span>
-            @endif
-          </div>
-          <div class="form-group">
-            <label><b>Plano de estudo 3</b></label>
-            <input type="file" accept="application/pdf" id="estudo3" name="estudo3" class="form-control" > 
-            @if ($errors->has('estudo3'))
-            <span class="help-block">
-              <strong>{{ $errors->first('estudo3') }}</strong>
-            </span>
-            @endif
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Plano de trabalho 3 *</b></label>
+                <input type="file" accept="application/pdf" id="trabalho3" name="trabalho3" class="form-control" >
+                @if ($errors->has('trabalho3'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('trabalho3') }}</strong>
+                </span>
+                @endif
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label><b>Plano de estudo 3 *</b></label>
+                <input type="file" accept="application/pdf" id="estudo3" name="estudo3" class="form-control" > 
+                @if ($errors->has('estudo3'))
+                <span class="help-block">
+                  <strong>{{ $errors->first('estudo3') }}</strong>
+                </span>
+                @endif
+              </div>
+            </div>
           </div>
           <div class="table-responsive">
              <label>Comprovação Lattes</label>
@@ -192,7 +306,15 @@
           <div class="modal-footer">
             <div class="form-group">
               <div class="input-group">
-                <button id="btnFetch" type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits">
+                <button name="action" value="save" type="submit" class="btn btn-light ml-auto button-prevent-multiple-submits">
+                  <i class="ti-save"></i>
+                  {{ __('Salvar') }}
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <button id="btnFetch" name="action" value="subscribe" type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits">
                   {{ __('Inscrever') }}
                 </button>
               </div>
@@ -248,5 +370,12 @@ $(document).ready(function(){
 
 } ) ;
 </script>
+
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+
 <script src="js/submit.js"></script>
 @endsection

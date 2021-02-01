@@ -41,14 +41,18 @@ Route::group(['prefix' => 'editais',  'middleware' => ['auth','staff']], functio
     Route::get('detalhes/candidatura/trabalho1/{id}', 'CandidaturasController@trabalho1')->name('editais.trabalho1');
     Route::get('detalhes/candidatura/trabalho2/{id}', 'CandidaturasController@trabalho2')->name('editais.trabalho2');
     Route::get('detalhes/candidatura/trabalho3/{id}', 'CandidaturasController@trabalho3')->name('editais.trabalho3');
+    Route::get('detalhes/candidatura/trabalho4/{id}', 'CandidaturasController@trabalho4')->name('editais.trabalho4');
     Route::get('detalhes/candidatura/estudo1/{id}', 'CandidaturasController@estudo1')->name('editais.estudo1');
     Route::get('detalhes/candidatura/estudo2/{id}', 'CandidaturasController@estudo2')->name('editais.estudo2');
     Route::get('detalhes/candidatura/estudo3/{id}', 'CandidaturasController@estudo3')->name('editais.estudo3');
+    Route::get('detalhes/candidatura/estudo4/{id}', 'CandidaturasController@estudo4')->name('editais.estudo4');
     Route::get('detalhes/candidatura/foto/{id}', 'CandidaturasController@foto')->name('editais.foto');
     Route::get('detalhes/candidatura/comprovacao/{id}', 'CandidaturasController@comprovacao')->name('editais.comprovacao');
-    Route::get('detalhes/candidatura/certificado/{id}', 'CandidaturasController@certificado')->name('editais.certificado');
+    Route::get('detalhes/candidatura/certificado_proficiencia1/{id}', 'CandidaturasController@certificado_proficiencia1')->name('editais.certificado_proficiencia1');
+    Route::get('detalhes/candidatura/certificado_proficiencia2/{id}', 'CandidaturasController@certificado_proficiencia2')->name('editais.certificado_proficiencia2');
+    Route::get('detalhes/candidatura/certificado_proficiencia3/{id}', 'CandidaturasController@certificado_proficiencia3')->name('editais.certificado_proficiencia3');
     Route::get('detalhes/candidatura/carta/{id}', 'CandidaturasController@carta')->name('editais.carta');
-    Route::post('detalhes/candidatura/atualizar/certificado/{id}', 'CandidaturasController@atualizarCertificado');
+    Route::post('detalhes/candidatura/atualizar/certificado/{id}', 'CandidaturasController@atualizarCandidatura');
     Route::post('detalhes/candidatura/atualizar/{id}', 'CandidaturasController@atualizarStatus');
 
     Route::get('detalhes/candidatura/{id}', 'EditaisController@candidatura');
@@ -56,6 +60,8 @@ Route::group(['prefix' => 'editais',  'middleware' => ['auth','staff']], functio
     Route::get('detalhes/{id}', 'EditaisController@details');
     Route::post('atualizar/update/{id}', 'EditaisController@update')->name('editais.update');
     Route::post('atualizar/resultado/update/{id}', 'EditaisController@atualizarResultado')->name('resultado.update');
+    Route::post('atualizar/resultado/segundafase/{id}', 'EditaisController@atualizarResultadoSegundaFase')->name('resultado.segundafase');
+    Route::get('atualizar/resultado/pdf/{id}', 'EditaisController@createPDF')->name('resultado.pdf');
     Route::get('atualizar/universidade/delete/{id}', 'EditaisController@deleteUniversidade');
     Route::get('atualizar/{id}', 'EditaisController@atualizar');
     Route::get('resultado/{id}', 'EditaisController@resultado');
@@ -73,7 +79,9 @@ Route::group(['prefix' => 'candidaturas',  'middleware' => ['auth','candidato']]
     Route::get('inscricao/{id}', 'CandidaturasController@inscricao');
     Route::get('atualizacao/candidaturas/comprovacao/{id}', 'CandidaturasController@comprovacao');
     Route::get('atualizacao/{id}', 'CandidaturasController@atualizacao');
-    Route::get('certificado/{id}', 'CandidaturasController@certificado')->name('candidaturas.certificado');
+    Route::get('certificado1/{id}', 'CandidaturasController@certificado_proficiencia1')->name('candidaturas.certificado1');
+    Route::get('certificado2/{id}', 'CandidaturasController@certificado_proficiencia2')->name('candidaturas.certificado2');
+    Route::get('certificado3/{id}', 'CandidaturasController@certificado_proficiencia3')->name('candidaturas.certificado3');
     Route::get('/', 'CandidaturasController@index')->middleware('candidato');
     Route::get('atualizacao/comprovante/delete/{id}','CandidaturasController@deleteComprovante');
     Route::get('atualizar/matricula/{id}', 'CandidaturasController@matricula')->name('candidaturas.matricula');
@@ -86,6 +94,9 @@ Route::group(['prefix' => 'candidaturas',  'middleware' => ['auth','candidato']]
     Route::get('candidaturas/estudo1/{id}', 'CandidaturasController@estudo1')->name('candidaturas.estudo1');
     Route::get('candidaturas/estudo2/{id}', 'CandidaturasController@estudo2')->name('candidaturas.estudo2');
     Route::get('candidaturas/estudo3/{id}', 'CandidaturasController@estudo3')->name('candidaturas.estudo3');
+    Route::get('candidaturas/certificado_proficiencia1/{id}', 'CandidaturasController@certificado_proficiencia1')->name('candidaturas.certificado_proficiencia1');
+    Route::get('candidaturas/certificado_proficiencia2/{id}', 'CandidaturasController@certificado_proficiencia2')->name('candidaturas.certificado_proficiencia2');
+    Route::get('candidaturas/certificado_proficiencia3/{id}', 'CandidaturasController@certificado_proficiencia3')->name('candidaturas.certificado_proficiencia3');
     Route::get('recurso/{id}', 'CandidaturasController@recursoDetalhes')->name('candidaturas.recurso');
 
 });

@@ -54,8 +54,8 @@
 			          @endif
 			        </td>
 			        <td>
-			          @isset($convenio->proeficiencia->nome)
-			            {{ $convenio->proeficiencia->nome }}
+			          @isset($convenio->proeficiencia->lingua)
+			            {{ $convenio->proeficiencia->lingua.' '.$convenio->proeficiencia->nivel }}
 			          @endif
 			        </td>
 			        @if($convenio->status == '1')
@@ -112,7 +112,7 @@
 						<div class="dropdown">
 						   <select id="proeficiencia" name="proeficiencia" class="form-control custom-select">
 						        @foreach($proeficiencias as $proeficiencia)
-						            <option value="{{ $proeficiencia->id }}">{{ $proeficiencia->nome }}</option>
+						            <option value="{{ $proeficiencia->id }}">{{ $proeficiencia->lingua.' '.$proeficiencia->nivel }}</option>
 						        @endforeach
 						  </select>
 						</div>

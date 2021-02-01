@@ -46,7 +46,7 @@
 					      	@endforeach
 			             </tbody>
 			         </table>
-			         {{ $recurso->links("pagination::bootstrap-4") }}
+			         {{ $recursos->links("pagination::bootstrap-4") }}
 			         @else
 			          <p>Não existe nenhum recurso aberto no momento!</p>
 			         @endif
