@@ -42,7 +42,7 @@
 			      	@if(isset($candidatura->professor_departamento_id))
 			      	<p>
 			      		<b>Professor Departamento</b>
-			      		{{ $candidatura->professor_departamento_id }}
+			      		{{ $candidatura->departamento->nome }}
 			      	</p>
 			      	@endif                  
 			    </div>  

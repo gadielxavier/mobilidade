@@ -40,4 +40,8 @@ class Candidaturas extends Model
         return $this->belongsTo('App\Candidato', 'candidato_id');
     }
 
+    public function departamento(){
+        return $this->belongsTo('App\Departamento', 'professor_departamento_id');
+    }
+
 }
