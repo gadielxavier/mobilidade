@@ -294,7 +294,7 @@
 			               <thead>
 			                <tr>
 			                  <th width="35%">Universidade</th>
-			                  <th width="35%">Vagas</th>
+			                  <th width="35%">Bolsas</th>
 			                  <th width="30%">Ação</th>
 			                </tr>
 			              </thead>

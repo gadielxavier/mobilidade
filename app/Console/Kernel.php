@@ -115,7 +115,7 @@ class Kernel extends ConsoleKernel
 
             //dd($editais);
 
-        })->everyMinute();
+        })->daily();
     }
 
     /**

@@ -35,7 +35,7 @@
 				<tr>
 					 <th>Universidade</th>
                       <th>País</th>
-                      <th>Proeficiência</th>
+                      <th>Proficiência</th>
                       <th>Status</th>
 				</tr>
 	    </thead>
