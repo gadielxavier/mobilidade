@@ -42,6 +42,7 @@ class ChangeStatus extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->subject('Alteração de Status')
                     ->line('O Status da sua inscrição foi atualizado.')
                     ->action('Ir para o site', url('candidaturas/detalhes/'.$this->inscricaoId));
     }

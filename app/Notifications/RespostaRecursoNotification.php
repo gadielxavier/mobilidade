@@ -42,6 +42,7 @@ class RespostaRecursoNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->subject('Resposta Recurso')
                     ->line('O seu recurso foi respondido.')
                     ->action('Ir para o site', url('candidaturas'));
     }

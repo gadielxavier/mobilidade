@@ -42,6 +42,7 @@ class RecursoNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->subject('Recurso Aberto')
                     ->line('Um recurso foi solicitado.')
                     ->action('Ir para o site', url('recursos'));
     }
