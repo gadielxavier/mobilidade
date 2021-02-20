@@ -427,7 +427,9 @@
                   @foreach($arquivos as $arquivo)
                     <tr>
                       <td>
+                        @isset( $comprovacoes[$arquivo->comprovacao_lattes_id]->titulo )
                         <label>{{ $comprovacoes[$arquivo->comprovacao_lattes_id]->titulo }}</label>
+                        @endisset
                       </td>
                       <td>
                         <a  href="candidaturas/comprovacao/{{ $arquivo->id }}" target="_blank">
