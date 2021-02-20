@@ -427,7 +427,7 @@
                   @foreach($arquivos as $arquivo)
                     <tr>
                       <td>
-                        @isset( $comprovacoes[$arquivo->comprovacao_lattes_id]->titulo )
+                        @isset( $comprovacoes[$arquivo->comprovacao_lattes_id] )
                         <label>{{ $comprovacoes[$arquivo->comprovacao_lattes_id]->titulo }}</label>
                         @endisset
                       </td>
