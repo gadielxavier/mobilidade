@@ -515,7 +515,7 @@ $(document).ready(function(){
                       +"@endforeach"
                   +'</select></td>';
         html += '<td><input type="file" name="comprovacao[]" accept="application/pdf" class="form-control"></td>';
-        if(number > 1 && files < 15)
+        if(number > 1 && files < 50)
         {
             html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove</button></td></tr>';
             $('tbody').append(html);
@@ -523,7 +523,7 @@ $(document).ready(function(){
         }
         else if(number > 1) 
         {
-          alert('Máximo de 15 comprovantes por envio. Para adicionar mais  comprovantes finalize a Inscrição e depois clique em Editar')
+          alert('Máximo de 50 comprovantes por envio. Para adicionar mais  comprovantes finalize a Inscrição e depois clique em Editar')
 
         }
  }
