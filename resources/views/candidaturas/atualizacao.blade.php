@@ -424,11 +424,12 @@
                   </tr>
                 </thead>
                 <tbody>
+
                   @foreach($arquivos as $arquivo)
                     <tr>
                       <td>
-                        @isset( $comprovacoes[$arquivo->comprovacao_lattes_id] )
-                        <label>{{ $comprovacoes[$arquivo->comprovacao_lattes_id]->titulo }}</label>
+                        @isset( $comprovacoes[$arquivo->comprovacao_lattes_id - 1] )
+                        <label>{{ $comprovacoes[$arquivo->comprovacao_lattes_id - 1]->titulo }}</label>
                         @endisset
                       </td>
                       <td>
