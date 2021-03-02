@@ -157,7 +157,7 @@ class EditaisController extends Controller
     public function details(Request $request, $id)
     {
         $edital = Editais::find($id);
-        $candidaturas = Candidaturas::where('edital_id', $id)->where('status_id', '!=', 17)->paginate(10);
+        $candidaturas = Candidaturas::where('edital_id', $id)->where('status_id', '!=', 17)->paginate(30);
         $status =  Status_Inscricao::all();
         $avaliadores = User::where('privilegio', 3)->get(); 
 
