@@ -56,7 +56,7 @@ class CandidaturasController extends Controller
 
         $edital = Editais::find($id);
         $comprovacoes =  Comprovacao_Lattes::all();
-        $universidades = Universidade_Edital::where('edital_id', $edital->id)->get();
+        $universidades = Universidade_Edital::where('edital_id', $edital->id)->orderBy('nome')->get();
         $departamentos = DB::table('departamento')->get();
 
         $data = [
@@ -78,7 +78,7 @@ class CandidaturasController extends Controller
        $comprovacoes =  Comprovacao_Lattes::all();
        $arquivos = Comprovacao_Lattes_Arquivos::where('candidatura_id', $candidatura->id)->get();
        $departamentos = DB::table('departamento')->get();
-       $universidades = Universidade_Edital::where('edital_id', $candidatura->edital_id)->get();
+       $universidades = Universidade_Edital::where('edital_id', $candidatura->edital_id)->orderBy('nome')->get();
 
        $count = 0;
 
@@ -135,16 +135,19 @@ class CandidaturasController extends Controller
     {
 
         $this->validate($request, [
-            'matricula' => 'file|max:8000',
-            'historico' => 'file|max:8000',
-            'percentual' => 'file|max:8000',
-            'curriculum' => 'file|max:8000',
-            'trabalho1' => 'file|max:8000',
-            'trabalho2' => 'file|max:8000',
-            'trabalho3' => 'file|max:8000',
-            'estudo1' => 'file|max:8000',
-            'estudo2' => 'file|max:8000',
-            'estudo3' => 'file|max:8000',
+            'matricula' => 'file|max:5000',
+            'historico' => 'file|max:5000',
+            'percentual' => 'file|max:5000',
+            'curriculum' => 'file|max:5000',
+            'trabalho1' => 'file|max:5000',
+            'trabalho2' => 'file|max:5000',
+            'trabalho3' => 'file|max:5000',
+            'estudo1' => 'file|max:5000',
+            'estudo2' => 'file|max:5000',
+            'estudo3' => 'file|max:5000',
+            'certificado_proficiencia1' => 'required|file|max:5000',
+            'certificado_proficiencia2' => 'required|file|max:5000',
+            'certificado_proficiencia3' => 'required|file|max:5000',
         ]);
 
         $candidaturas = Candidaturas::find($id);
@@ -264,7 +267,6 @@ class CandidaturasController extends Controller
             $candidaturas->certificado_proficiencia3 = $certificado_proficiencia3;
             $candidaturas->nome_professor_carta = $request->nome_professor_carta;
             $candidaturas->professor_departamento_id = $request->professor_departamento_id;
-            $candidaturas->finalizado = false;
             $candidaturas->status_id = 17;
             $candidaturas->save();
 
@@ -347,19 +349,19 @@ class CandidaturasController extends Controller
             case 'subscribe':
 
                 $this->validate($request, [
-                    'matricula' => 'required|file|max:8000',
-                    'historico' => 'required|file|max:8000',
-                    'percentual' => 'required|file|max:8000',
-                    'curriculum' => 'required|file|max:8000',
-                    'trabalho1' => 'required|file|max:8000',
-                    'trabalho2' => 'required|file|max:8000',
-                    'trabalho3' => 'required|file|max:8000',
-                    'estudo1' => 'required|file|max:8000',
-                    'estudo2' => 'required|file|max:8000',
-                    'estudo3' => 'required|file|max:8000',
-                    'certificado_proficiencia1' => 'required|file|max:8000',
-                    'certificado_proficiencia2' => 'required|file|max:8000',
-                    'certificado_proficiencia3' => 'required|file|max:8000',
+                    'matricula' => 'required|file|max:5000',
+                    'historico' => 'required|file|max:5000',
+                    'percentual' => 'required|file|max:5000',
+                    'curriculum' => 'required|file|max:5000',
+                    'trabalho1' => 'required|file|max:5000',
+                    'trabalho2' => 'required|file|max:5000',
+                    'trabalho3' => 'required|file|max:5000',
+                    'estudo1' => 'required|file|max:5000',
+                    'estudo2' => 'required|file|max:5000',
+                    'estudo3' => 'required|file|max:5000',
+                    'certificado_proficiencia1' => 'required|file|max:5000',
+                    'certificado_proficiencia2' => 'required|file|max:5000',
+                    'certificado_proficiencia3' => 'required|file|max:5000',
                 ]);
             break;
         }
@@ -987,8 +989,12 @@ class CandidaturasController extends Controller
         if($isFinished){
             $users = User::where('privilegio', 2)->orWhere('privilegio', 4)->get();
 
-            foreach ($users as $user) {
-                $user->notify(new UserSubscription($candidatura->edital_id));            
+            //Se ainda não foi notificado
+            if(!$candidatura->finalizado){
+
+                foreach ($users as $user) {
+                    $user->notify(new UserSubscription($candidatura->id));            
+                }
             }
 
             $status_id = 1;

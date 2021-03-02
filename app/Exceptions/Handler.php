@@ -57,8 +57,7 @@ class Handler extends ExceptionHandler
          }
 
         if($exception instanceof PostTooLargeException){
-            return response('Arquivo muito grande! Tamanho máximo por arquivo é de 5mb.
-                E tamanho máximo da soma dos arquivos por envio é de 20 mb. Você pode salvar sua inscrição e finalizar depois' , 422);
+            return response('O tamanho máximo por arquivo é de 5mb, e o de upload (arquivos combinados) 20mb. Caso o total de upload exceda 20mb, você deverá clicar em salvar inscrição e depois editar para incluir mais arquivos.' , 422);
         }
         else{
             return parent::render($request, $exception);
