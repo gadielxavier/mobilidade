@@ -44,9 +44,13 @@
 		      @foreach ($convenios as $convenio)
 			      <tr>
 			        <td>
-			          @isset($convenio->universidade)
-			            {{ $convenio->universidade }}
-			          @endif
+			        @isset($convenio->universidade)
+			          	@if(strlen($convenio->universidade) > 35 )
+                            {{ substr($convenio->universidade,0,35).('...')}}
+                         @else
+                            {{ $convenio->universidade }}
+                         @endif
+                    @endif
 			        </td>  
 			        <td> 
 			          @isset($convenio->pais)

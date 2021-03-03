@@ -68,6 +68,11 @@
 		<div class="card">
 	    	<div class="card-body">
 	      		<h4 class="card-title">Candidatos Inscritos</h4>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" class="check" id="checkAll"> Selecionar Todos
+					</label>
+				</div>
       			<div class="row table-responsive">
       				<table class="table table-striped">
       					<thead>
@@ -84,7 +89,7 @@
 
 			             		<tr>
 			             			<td>
-										<input name="candidatura[]" type="checkbox" value="{{ $candidatura->id }}" id="candidatura">
+										<input name="candidatura[]" class="check" type="checkbox" value="{{ $candidatura->id }}" id="candidatura">
 			             			</td>
 						        	<td>
 						          		@isset($candidatura->candidato->nome)
@@ -166,6 +171,12 @@
 @endsection
 
 @section('scripts')
+	<script>
+		$("#checkAll").click(function () {
+		    $(".check").prop('checked', $(this).prop('checked'));
+		});
+		
+	</script>
 
 	<script src="js/submit.js"></script>
 

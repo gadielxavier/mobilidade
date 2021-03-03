@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 use App\Editais;
 use App\Candidaturas;
 use App\Status_Inscricao;
@@ -686,7 +687,13 @@ class EditaisController extends Controller
                         $notification->markAsRead();
                     }
 
-                    $user->notify(new ChangeStatus($candidatura->id));
+                    $user->notify(
+                        (new ChangeStatus($candidatura->id))->delay(Carbon::now()->addMinutes(1))
+                    );
+
+                    if(env('MAIL_HOST', false) == 'smtp.mailtrap.io'){
+                        sleep(1); //use usleep(500000) for half a second or less
+                    }
 
                 }
                 catch(\Exception $e) {
