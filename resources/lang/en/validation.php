@@ -85,7 +85,7 @@ return [
     'string'               => 'O :attribute deve ser uma string.',
     'timezone'             => 'O :attribute deve ser uma zona  válida.',
     'unique'               => 'O :attribute já foi usado.',
-    'uploaded'             => 'O :attribute falhou no envio.',
+    'uploaded'             => 'O :attribute falhou no envio. Tamanho máximo do arquivo é de 5mb',
     'url'                  => 'O formato do :attribute é inválido.',
 
     /*

@@ -8,11 +8,7 @@
 
       <form class="form-horizontal form-prevent-multiple-submits" method="POST" action="update/{{ $candidatura->id }}" enctype="multipart/form-data">
         {!! csrf_field() !!}
-        @if($errors->any())
-            <strong>Erro no envio!!! Tamanho máximo dos arquivos somados é de 8 Mb</strong>
-        @endif
         <div class="div">
-
           <div class="padding">
             <div class="row container d-flex justify-content-center">
               <div class="col-xl-12">
@@ -104,9 +100,9 @@
                 @endif
                 <div class="input-group">
                   <input type="file" accept="application/pdf" id="certificado_proficiencia1" name="certificado_proficiencia1" class="form-control">
-                  @if ($errors->has('proficiencia'))
+                  @if ($errors->has('certificado_proficiencia1'))
                   <span class="help-block">
-                    <strong>{{ $errors->first('proficiencia') }}</strong>
+                    <strong>{{ $errors->first('certificado_proficiencia1') }}</strong>
                   </span>
                   @endif
                 </div>
@@ -153,9 +149,9 @@
                 @endif
                 <div class="input-group">
                   <input type="file" accept="application/pdf" id="certificado_proficiencia2" name="certificado_proficiencia2" class="form-control">
-                  @if ($errors->has('proficiencia'))
+                  @if ($errors->has('certificado_proficiencia2'))
                   <span class="help-block">
-                    <strong>{{ $errors->first('proficiencia') }}</strong>
+                    <strong>{{ $errors->first('certificado_proficiencia2') }}</strong>
                   </span>
                   @endif
                 </div>
@@ -202,9 +198,9 @@
                 @endif
                 <div class="input-group">
                   <input type="file" accept="application/pdf" id="certificado_proficiencia3" name="certificado_proficiencia3" class="form-control">
-                  @if ($errors->has('proficiencia'))
+                  @if ($errors->has('certificado_proficiencia3'))
                   <span class="help-block">
-                    <strong>{{ $errors->first('proficiencia') }}</strong>
+                    <strong>{{ $errors->first('certificado_proficiencia3') }}</strong>
                   </span>
                   @endif
                 </div>

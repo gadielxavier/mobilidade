@@ -46,7 +46,8 @@
 			        <td>
 			        @isset($convenio->universidade)
 			          	@if(strlen($convenio->universidade) > 35 )
-                            {{ substr($convenio->universidade,0,35).('...')}}
+			          		<label data-toggle="tooltip" title="{{ $convenio->universidade  }}">{{ substr($convenio->universidade,0,35).('...')}}</label>
+                            
                          @else
                             {{ $convenio->universidade }}
                          @endif
@@ -147,6 +148,12 @@
 	@if (count($errors) > 0)
 	$('#convenioModal ').modal('show');
 	@endif
+</script>
+
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>
 
 @endsection

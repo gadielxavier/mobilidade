@@ -145,9 +145,9 @@ class CandidaturasController extends Controller
             'estudo1' => 'file|max:5000',
             'estudo2' => 'file|max:5000',
             'estudo3' => 'file|max:5000',
-            'certificado_proficiencia1' => 'required|file|max:5000',
-            'certificado_proficiencia2' => 'required|file|max:5000',
-            'certificado_proficiencia3' => 'required|file|max:5000',
+            'certificado_proficiencia1' => 'file|max:5000',
+            'certificado_proficiencia2' => 'file|max:5000',
+            'certificado_proficiencia3' => 'file|max:5000',
         ]);
 
         $candidaturas = Candidaturas::find($id);
@@ -359,9 +359,9 @@ class CandidaturasController extends Controller
                     'estudo1' => 'required|file|max:5000',
                     'estudo2' => 'required|file|max:5000',
                     'estudo3' => 'required|file|max:5000',
-                    'certificado_proficiencia1' => 'required|file|max:5000',
-                    'certificado_proficiencia2' => 'required|file|max:5000',
-                    'certificado_proficiencia3' => 'required|file|max:5000',
+                    'certificado_proficiencia1' => 'file|max:5000',
+                    'certificado_proficiencia2' => 'file|max:5000',
+                    'certificado_proficiencia3' => 'file|max:5000',
                 ]);
             break;
         }
@@ -814,11 +814,6 @@ class CandidaturasController extends Controller
         $candidaturas = Candidaturas::where('id', $id)->first();
 
         $edital = Editais::where('id', $candidaturas->edital_id)->first();
-
-        $this->validate($request, [
-            'certificado' => 'file|max:8000',
-            'carta' => 'file|max:8000',
-        ]);
 
         if ($request->hasFile('certificado_proficiencia1') && $request->file('certificado_proficiencia1')->isValid()){
             $certificado_proficiencia1 = $request->file('certificado_proficiencia1')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'certificado_proficiencia1');
