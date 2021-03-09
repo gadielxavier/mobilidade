@@ -164,7 +164,7 @@
 		</div>
 	</div>
 
-	@if($edital->status->id == 9)
+<!-- 	@if($edital->status->id == 9)
 	<div class="card">
 		@php
 			$count = 0;
@@ -200,7 +200,7 @@
 			@endphp
 		@endforeach
 	</div>
-	@endif
+	@endif -->
 </div>
 
 @endsection
