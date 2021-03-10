@@ -335,7 +335,8 @@ class EditaisController extends Controller
         $universidades_nome_array = [];
 
         foreach ($universidades as $universidade) {
-            $universidades_nome_array = array_add($universidades_nome_array, $universidade->nome, array());    
+            // $universidades_nome_array = array_add($universidades_nome_array, $universidade->nome, array()); 
+            $universidades_nome_array[$universidade->nome] = array();   
         }
 
         foreach ($avaliacoes as $avaliacao) {
@@ -356,7 +357,8 @@ class EditaisController extends Controller
             /* Se a universidade ainda tem vagas disponiveis. Se tiver, verifica se a universidade
             exige proeficiencia. Se exigir, verifica se o aluno tem proeficiencia maior ou igual da universidade
             */
-            if((count($universidades_nome_array[$opcao1->nome]) <  $opcao1->vagas)
+            if( isset($universidades_nome_array[$opcao1->nome]) 
+            && (count($universidades_nome_array[$opcao1->nome]) <  $opcao1->vagas)
             &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
 
                 $universidades_nome_array[$opcao1->nome][] = $avaliacao->candidatura->candidato->nome;
@@ -383,7 +385,8 @@ class EditaisController extends Controller
                 $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id2)->first();
 
                 //Caso candidato não tenha conseguido primeira opção verifica 2
-                if( (count($universidades_nome_array[$opcao2->nome]) <  $opcao2->vagas )
+                if( isset($universidades_nome_array[$opcao2->nome]) 
+                && (count($universidades_nome_array[$opcao2->nome]) <  $opcao2->vagas )
                 &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
 
                     $universidades_nome_array[$opcao2->nome][] = $avaliacao->candidatura->candidato->nome;
@@ -410,8 +413,9 @@ class EditaisController extends Controller
                     $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id3)->first();
 
                     //Caso candidato não tenha conseguido segunda opção verifica 3
-                    if((count($universidades_nome_array[$opcao3->nome]) <  $opcao3->vagas )
-                    &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
+                    if( isset($universidades_nome_array[$opcao3->nome]) 
+                        && (count($universidades_nome_array[$opcao3->nome]) <  $opcao3->vagas )
+                        &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
 
                         $universidades_nome_array[$opcao3->nome][] = $avaliacao->candidatura->candidato->nome;
 

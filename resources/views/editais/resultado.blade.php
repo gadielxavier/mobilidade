@@ -83,7 +83,6 @@
 							<tr>
 								<th>#</th>
 								<th>Nome</th>
-								<th>Avaliador</th>
 								<th>Plano de Trabalho</th>
 								<th>Curriculum</th>
 								<th>Carta</th>
@@ -106,11 +105,6 @@
 						            	{{ $avaliacao->candidatura->candidato->nome }}
 						          	@endif
 						          	</td>
-						          	<td>
-						          	@isset($avaliacao->id)
-						            	{{ $avaliacao->avaliador->name }}
-						            @endif
-						            </td>
 						            @if($avaliacao->candidatura->carta == '0')
 						            	<td>Carta de Recomendação não anexada</td>
 							        	<td></td>
@@ -164,7 +158,7 @@
 		</div>
 	</div>
 
-<!-- 	@if($edital->status->id == 9)
+	@if($edital->status->id == 9)
 	<div class="card">
 		@php
 			$count = 0;
@@ -200,7 +194,7 @@
 			@endphp
 		@endforeach
 	</div>
-	@endif -->
+	@endif
 </div>
 
 @endsection

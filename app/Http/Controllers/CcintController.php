@@ -131,7 +131,7 @@ class CcintController extends Controller
 
         $institucional = 0;
 
-        if($request->representacao != null){
+        if($request->institucional != null){
             foreach ($request->institucional as $valor) {
                 $institucional += $valor;
             }
