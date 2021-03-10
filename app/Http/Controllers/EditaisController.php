@@ -335,7 +335,6 @@ class EditaisController extends Controller
         $universidades_nome_array = [];
 
         foreach ($universidades as $universidade) {
-            // $universidades_nome_array = array_add($universidades_nome_array, $universidade->nome, array()); 
             $universidades_nome_array[$universidade->nome] = array();   
         }
 
