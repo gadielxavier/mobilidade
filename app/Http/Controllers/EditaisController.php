@@ -640,12 +640,14 @@ class EditaisController extends Controller
         $status =  Status_Inscricao::all();
         $proeficiencias = Proeficiencia::all();
         $universidades = Universidade_Edital::where('edital_id', $candidatura->edital_id)->get();
+        $avaliacao = Avaliacao_Ccint::where('candidatura_id', $candidatura->id)->first();
 
         $data = [
-            'candidatura' => $candidatura,
-            'status' => $status,
+            'candidatura'    => $candidatura,
+            'status'         => $status,
             'proeficiencias' => $proeficiencias,
-            'universidades' => $universidades,
+            'universidades'  => $universidades,
+            'avaliacao'      => $avaliacao
         ]; 
 
         return view('editais.candidatura')->with($data);

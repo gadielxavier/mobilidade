@@ -67,7 +67,7 @@
 
 		<div class="card">
 	    	<div class="card-body">
-	      		<h4 class="card-title">Candidatos Inscritos</h4>
+	      		<h4 class="card-title">Candidatos Inscritos: {{ count($candidaturas) }}</h4>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" class="check" id="checkAll"> Selecionar Todos
