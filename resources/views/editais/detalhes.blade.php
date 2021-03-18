@@ -67,12 +67,14 @@
 
 		<div class="card">
 	    	<div class="card-body">
-	      		<h4 class="card-title">Candidatos Inscritos: {{ count($candidaturas) }}</h4>
+	      		<h4 class="card-title">Candidatos Inscritos: {{ count($candidaturasTamanho) }}</h4>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" class="check" id="checkAll"> Selecionar Todos
 					</label>
 				</div>
+				<input class="form-control" id="myInput" type="text" placeholder="Pesquisar..">
+
       			<div class="row table-responsive">
       				<table class="table table-striped">
       					<thead>
@@ -84,7 +86,7 @@
 			                    <th></th>
 			                 </tr>
 			             </thead>
-			             <tbody>
+			             <tbody id="myTable">
 			             	@foreach ($candidaturas as $candidatura)
 
 			             		<tr>
@@ -176,6 +178,17 @@
 		    $(".check").prop('checked', $(this).prop('checked'));
 		});
 		
+	</script>
+
+	<script>
+	$(document).ready(function(){
+	  $("#myInput").on("keyup", function() {
+	    var value = $(this).val().toLowerCase();
+	    $("#myTable tr").filter(function() {
+	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	    });
+	  });
+	});
 	</script>
 
 	<script src="js/submit.js"></script>

@@ -159,14 +159,16 @@ class EditaisController extends Controller
     {
         $edital = Editais::find($id);
         $candidaturas = Candidaturas::where('edital_id', $id)->where('status_id', '!=', 17)->paginate(30);
+        $candidaturasTamanho = Candidaturas::where('edital_id', $id)->where('status_id', '!=', 17)->get();
         $status =  Status_Inscricao::all();
         $avaliadores = User::where('privilegio', 3)->get(); 
 
         $data = [
-            'edital' => $edital,
-            'candidaturas' => $candidaturas,
-            'status' => $status,
-            'avaliadores' => $avaliadores
+            'edital'                => $edital,
+            'candidaturas'          => $candidaturas,
+            'status'                => $status,
+            'avaliadores'           => $avaliadores,
+            'candidaturasTamanho'   => $candidaturasTamanho
         ]; 
        
           return view('editais.detalhes')->with($data);
