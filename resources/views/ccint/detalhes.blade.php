@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="ccontainer-fluid">
-	<form class="form-prevent-multiple-submits" method="POST" action="/ccint/store/{{ $candidatura->id }}" enctype="multipart/form-data">
+	<form class="form-prevent-multiple-submits" method="POST" action="/ccint/store/{{ $candidatura->id }}" enctype="multipart/form-data" id="myForm">
 		{!! csrf_field() !!}
 		<div class="row">
 		    <div class="col-md-12 grid-margin">
@@ -438,6 +438,25 @@
 		                        <td id="clareza_modal"></td>
 		                    </tr>
 		                </table>
+		                <label class="card-title">Currículo Lattes</label>
+		                <table class="table">
+		                	<tr>
+		                        <th>Participações</th>
+		                        <td id="participacao_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Indicadores</th>
+		                        <td id="indicadores_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Representação</th>
+		                        <td id="representacao_modal"></td>
+		                    </tr>
+		                    <tr>
+		                        <th>Institucional</th>
+		                        <td id="institucional_modal"></td>
+		                    </tr>
+		                </table>
 		                <label class="card-title">Carta de Recomendação</label>
 		                <table class="table">
 		                    <tr>
@@ -503,10 +522,61 @@
 </script>
 
 <script>
+
+
 	$('#submitButton').click(function() {
+
+		var participacao_array = document.getElementsByName('participacao[]');
+		var participacao = 0;
+
+		for(key=0; key < participacao_array.length; key++)  {
+		    participacao += parseInt(participacao_array[key].value);
+		}
+
+		if(participacao > 10){
+			participacao = 10;
+		}
+
+		var indicadores_array = document.getElementsByName('indicadores[]');
+		var indicadores = 0;
+
+		for(key=0; key < indicadores_array.length; key++)  {
+		    indicadores += parseInt(indicadores_array[key].value);
+		}
+
+		if(indicadores > 10){
+			indicadores = 10;
+		}
+
+		var representacao_array = document.getElementsByName('representacao[]');
+		var representacao = 0;
+
+		for(key=0; key < representacao_array.length; key++)  {
+		    representacao += parseInt(representacao_array[key].value);
+		}
+
+		if(representacao > 10){
+			representacao = 10;
+		}
+
+		var institucional_array = document.getElementsByName('institucional[]');
+		var institucional = 0;
+
+		for(key=0; key < institucional_array.length; key++)  {
+		    institucional += parseInt(institucional_array[key].value);
+		}
+
+		if(institucional > 10){
+			institucional = 10;
+		}
+
 		$('#estrutura_modal').text($('#estrutura').val());
 		$('#objetividade_modal').text($('#objetividade').val());
 		$('#clareza_modal').text($('#clareza').val());
+		$('#participacao_modal').text(participacao);
+		$('#indicadores_modal').text(indicadores);
+		$('#representacao_modal').text(representacao);
+		$('#institucional_modal').text(institucional);
 		$('#ideias_modal').text($('#ideias').val());
 		$('#persistencia_modal').text($('#persistencia').val());
 		$('#interesse_modal').text($('#interesse').val());
