@@ -20,7 +20,8 @@
                 <div class="input-group">
                   <select name="opcao1universidade" class="form-control">
                     @foreach($universidades as $universidade)
-                      <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.") "}}</option>
+                      <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->convenio->pais.")  (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.")
+                      (".$universidade->vagas." vagas) "}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -60,7 +61,8 @@
                 <div class="input-group">
                   <select name="opcao2universidade" class="form-control">
                         @foreach($universidades as $universidade)
-                          <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.") "}}</option>
+                          <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->convenio->pais.")  (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.")
+                          (".$universidade->vagas." vagas) "}}</option>
                         @endforeach
                   </select>
                 </div>
@@ -100,7 +102,8 @@
                 <div class="input-group">
                   <select name="opcao3universidade" class="form-control">
                         @foreach($universidades as $universidade)
-                          <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.") "}}</option>
+                          <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->convenio->pais.")  (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.")
+                          (".$universidade->vagas." vagas) "}}</option>
                         @endforeach
                   </select>
                 </div>

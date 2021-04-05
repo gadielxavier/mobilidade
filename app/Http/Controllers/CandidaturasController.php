@@ -56,7 +56,14 @@ class CandidaturasController extends Controller
 
         $edital = Editais::find($id);
         $comprovacoes =  Comprovacao_Lattes::all();
-        $universidades = Universidade_Edital::where('edital_id', $edital->id)->orderBy('nome')->get();
+
+        $universidades = Universidade_Edital::where('edital_id', $edital->id)
+        ->select('universidade_edital.*')
+        ->join('convenios', 'convenios.universidade', '=', 'universidade_edital.nome')
+        ->orderBy('convenios.pais')
+        ->orderBy('convenios.universidade')
+        ->get();
+
         $departamentos = DB::table('departamento')->get();
 
         $data = [
@@ -78,7 +85,13 @@ class CandidaturasController extends Controller
        $comprovacoes =  Comprovacao_Lattes::all();
        $arquivos = Comprovacao_Lattes_Arquivos::where('candidatura_id', $candidatura->id)->get();
        $departamentos = DB::table('departamento')->get();
-       $universidades = Universidade_Edital::where('edital_id', $candidatura->edital_id)->orderBy('nome')->get();
+
+       $universidades = Universidade_Edital::where('edital_id', $candidatura->edital_id)
+        ->select('universidade_edital.*')
+        ->join('convenios', 'convenios.universidade', '=', 'universidade_edital.nome')
+        ->orderBy('convenios.pais')
+        ->orderBy('convenios.universidade')
+        ->get();
 
        $count = 0;
 

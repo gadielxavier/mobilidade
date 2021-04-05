@@ -14,7 +14,7 @@ class ConveniosController extends Controller
     {
         $paises = DB::table('pais')
             ->get();
-        $convenios = Convenios::orderBy('universidade')->paginate(10);
+        $convenios = Convenios::orderBy('pais')->orderBy('universidade')->paginate(10);
         $proeficiencias = Proeficiencia::all();
 
         $data = [

@@ -68,9 +68,11 @@
                   <select name="opcao1universidade" class="form-control">
                         @foreach($universidades as $universidade)
                           @if($candidatura->primeira_opcao_universidade == $universidade->nome)
-                            <option value='{{ $universidade->nome }}' selected>{{ $universidade->nome." (".$universidade->vagas." vagas) (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.") "}}</option>
+                            <option value='{{ $universidade->nome }}' selected>{{ $universidade->nome." (".$universidade->convenio->pais.")   (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.")
+                            (".$universidade->vagas." vagas) "}}</option>
                           @else
-                            <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->vagas." vagas) (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.") "}}</option>
+                            <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->convenio->pais.")  (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.")
+                            (".$universidade->vagas." vagas) "}}</option>
                           @endif
                         @endforeach
                   </select>
@@ -117,9 +119,11 @@
                   <select name="opcao2universidade" class="form-control">
                         @foreach($universidades as $universidade)
                           @if($candidatura->segunda_opcao_universidade == $universidade->nome)
-                            <option value='{{ $universidade->nome }}' selected>{{ $universidade->nome }}</option>
+                            <option value='{{ $universidade->nome }}' selected>{{ $universidade->nome." (".$universidade->convenio->pais.")   (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.")
+                            (".$universidade->vagas." vagas) "}}</option>
                           @else
-                            <option value='{{ $universidade->nome }}'>{{ $universidade->nome }}</option>
+                            <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->convenio->pais.")  (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.")
+                            (".$universidade->vagas." vagas) "}}</option>
                           @endif
                         @endforeach
                   </select>
@@ -166,9 +170,11 @@
                   <select name="opcao3universidade" class="form-control">
                         @foreach($universidades as $universidade)
                           @if($candidatura->terceira_opcao_universidade == $universidade->nome)
-                            <option value='{{ $universidade->nome }}' selected>{{ $universidade->nome }}</option>
+                            <option value='{{ $universidade->nome }}' selected>{{ $universidade->nome." (".$universidade->convenio->pais.")   (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.")
+                            (".$universidade->vagas." vagas) "}}</option>
                           @else
-                            <option value='{{ $universidade->nome }}'>{{ $universidade->nome }}</option>
+                            <option value='{{ $universidade->nome }}'>{{ $universidade->nome." (".$universidade->convenio->pais.")  (".$universidade->convenio->proeficiencia->lingua." ".$universidade->convenio->proeficiencia->nivel.")
+                            (".$universidade->vagas." vagas) "}}</option>
                           @endif
                         @endforeach
                   </select>

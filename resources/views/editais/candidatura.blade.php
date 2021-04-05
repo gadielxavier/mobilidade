@@ -327,6 +327,60 @@
 		</div>
 	</div>
 
+	@if(isset($avaliacao->finalizado))
+	<div class="row">
+		<div class="col-md-12 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<p class="card-title mb-0">Avaliação Ccint</p>
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Plano de Trabalho</th>
+									<th>Curriculum</th>
+									<th>Carta</th>
+									<th>Desempenho</th>
+									<th>Nota Final</th>
+								</tr>
+				    		</thead>
+				    		<tbody>
+				    			<tr>
+				    				<th>
+				    					@isset($avaliacao->plano_trabalho)
+							            	{{ $avaliacao->plano_trabalho }}
+							            @endif
+				    				</th>
+				    				<th>
+				    					@isset($avaliacao->curriculum_lattes)
+							            	{{ $avaliacao->curriculum_lattes }}
+							            @endif
+				    				</th>
+				    				<th>
+				    					@isset($avaliacao->carta)
+							            	{{ $avaliacao->carta }}
+							            @endif
+				    				</th>
+				    				<th>
+				    					@isset($avaliacao->candidatura->desempenho)
+							            	{{ $avaliacao->candidatura->desempenho }}
+							            @endif
+				    				</th>
+				    				<th>
+				    					@isset($avaliacao->nota_final)
+							            	{{ $avaliacao->nota_final }}
+							            @endif
+				    				</th>
+				    			</tr>
+				    		</tbody>
+				    	</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	@endif
+
 	<div class="row">
 		<div class="col-md-12 grid-margin stretch-card">
 			<div class="card">
@@ -493,60 +547,6 @@
 			</div>
 		</div>
 	</div>
-
-	@if($avaliacao->finalizado)
-	<div class="row">
-		<div class="col-md-12 grid-margin stretch-card">
-			<div class="card">
-				<div class="card-body">
-					<p class="card-title mb-0">Avaliação Ccint</p>
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th>Plano de Trabalho</th>
-									<th>Curriculum</th>
-									<th>Carta</th>
-									<th>Desempenho</th>
-									<th>Nota Final</th>
-								</tr>
-				    		</thead>
-				    		<tbody>
-				    			<tr>
-				    				<th>
-				    					@isset($avaliacao->plano_trabalho)
-							            	{{ $avaliacao->plano_trabalho }}
-							            @endif
-				    				</th>
-				    				<th>
-				    					@isset($avaliacao->curriculum_lattes)
-							            	{{ $avaliacao->curriculum_lattes }}
-							            @endif
-				    				</th>
-				    				<th>
-				    					@isset($avaliacao->carta)
-							            	{{ $avaliacao->carta }}
-							            @endif
-				    				</th>
-				    				<th>
-				    					@isset($avaliacao->candidatura->desempenho)
-							            	{{ $avaliacao->candidatura->desempenho }}
-							            @endif
-				    				</th>
-				    				<th>
-				    					@isset($avaliacao->nota_final)
-							            	{{ $avaliacao->nota_final }}
-							            @endif
-				    				</th>
-				    			</tr>
-				    		</tbody>
-				    	</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	@endif
 @endsection
 
 @section('scripts')

@@ -158,7 +158,15 @@ class EditaisController extends Controller
     public function details(Request $request, $id)
     {
         $edital = Editais::find($id);
-        $candidaturas = Candidaturas::where('edital_id', $id)->where('status_id', '!=', 17)->paginate(30);
+        //$candidaturas = Candidaturas::where('edital_id', $id)->where('status_id', '!=', 17)->paginate(30);
+
+        $candidaturas = Candidaturas::where('edital_id', $id)
+        ->where('status_id', '!=', 17)
+        ->select('candidaturas.*')
+        ->join('candidatos', 'candidatos.id', '=', 'candidaturas.candidato_id')
+        ->orderBy('candidatos.nome')
+        ->paginate(100);
+
         $candidaturasTamanho = Candidaturas::where('edital_id', $id)->where('status_id', '!=', 17)->get();
         $status =  Status_Inscricao::all();
         $avaliadores = User::where('privilegio', 3)->get(); 
@@ -611,7 +619,7 @@ class EditaisController extends Controller
         $vagas = $request->vagas;
 
 
-        for($count = 0; $count < count($universidades); $count++)
+        for($count = 0; $count < count((array)$universidades); $count++)
         {
 
             DB::beginTransaction();
