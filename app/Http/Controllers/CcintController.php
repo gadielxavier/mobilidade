@@ -30,6 +30,19 @@ class CcintController extends Controller
         return view('ccint.ccint')->with($data);
     }
 
+    public function avaliacoesFinalizadas()
+    {
+        $avaliacoes = Avaliacao_Ccint::where('avaliador_id', Auth::user()->id)->where('finalizado', 1)->orderBy('id', 'desc')->paginate(30);
+
+        $data = [
+            'avaliacoes' => $avaliacoes
+        ];
+
+        //dd($avaliacoes);
+        
+        return view('ccint.avaliacoesFinalizadas')->with($data);
+    }
+
 
     public function details(Request $request, $id)
     {

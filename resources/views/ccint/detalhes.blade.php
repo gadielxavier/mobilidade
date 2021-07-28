@@ -26,64 +26,77 @@
 		@endif
 
 		<div class="card">
-	    	<div class="card-body">
-	    		<label class="card-title">Plano de trabalho 1</label>
-	          	<a  href="{{ route('ccint.trabalho1', $candidatura->id) }}" target="_blank">
-                	Visualizar
-                </a>
-                <br>
-                <label class="card-title">Plano de trabalho 2</label>
-	          	<a  href="{{ route('ccint.trabalho2', $candidatura->id) }}" target="_blank">
-                	Visualizar
-                </a>
-                <br>
-                <label class="card-title">Plano de trabalho 3</label>
-	          	<a  href="{{ route('ccint.trabalho3', $candidatura->id) }}" target="_blank">
-                	Visualizar
-                </a>
-                <br>
-	          	<div class="form-group">
-	            	<label>Estrutura do texto, contemplando os itens propostos (até 2,0)</label>
-	            	<div class="input-group">
-	              		<div class="input-group-prepend bg-transparent">
-	              	</div>
-	              	<input id="estrutura" name="estrutura" type="text" class="form-control" value="{{ old('estrutura') }}" required autofocus>
-	              	@if ($errors->has('estrutura'))
-                    <span class="help-block">
-                      <strong>{{ $errors->first('estrutura') }}</strong>
-                    </span>
-                    @endif
-	            	</div>
-	          	</div>
-	          	<div class="form-group">
-	            	<label>Objetividade (até 6,0)</label>
-	            	<div class="input-group">
-	              		<div class="input-group-prepend bg-transparent">
-	              		</div>
-	              		<input id="objetividade" name="objetividade" type="text" class="form-control" value="{{ old('objetividade') }}" required autofocus>
-		              	@if ($errors->has('objetividade'))
-	                    <span class="help-block">
-	                      <strong>{{ $errors->first('objetividade') }}</strong>
-	                    </span>
-	                    @endif
-	            	</div>
-	          	</div>
-	          	<div class="form-group">
-	            	<label>Clareza na escolha da IES e das disciplinas (até 2,0)</label>
-	            	<div class="input-group">
-	              		<div class="input-group-prepend bg-transparent">
-	              		</div>
-	              	<input id="clareza" name="clareza" type="text" class="form-control" value="{{ old('clareza') }}" required autofocus>
-	              	@if ($errors->has('clareza'))
-                    <span class="help-block">
-                      <strong>{{ $errors->first('clareza') }}</strong>
-                    </span>
-                    @endif
-	            	</div>
-	          	</div>
-	      	</div>
-	  	</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="card-body">
+						<h4 class="card-title">Formulário</h4>
+
+						<div class="template-demo">
+							
+							<label>Estrutura do texto, contemplando os itens propostos (até 2.0)</label>	          			
+							<div class="form-group row">
+		          				<div class="col-sm-12">
+		          					<input id="estrutura" name="estrutura" type="text" class="form-control" value="{{ old('estrutura') }}" required autofocus>
+					              	@if ($errors->has('estrutura'))
+				                    <span class="help-block">
+				                      <strong>{{ $errors->first('estrutura') }}</strong>
+				                    </span>
+				                    @endif
+		          				</div>
+						    </div>
+
+						    <label>Objetividade (até 6.0)</label>
+		          			<div class="form-group row">
+		          				<div class="col-sm-12">
+		          					<input id="objetividade" name="objetividade" type="text" class="form-control" value="{{ old('objetividade') }}" required autofocus>
+					              	@if ($errors->has('objetividade'))
+				                    <span class="help-block">
+				                      <strong>{{ $errors->first('objetividade') }}</strong>
+				                    </span>
+				                    @endif
+		          				</div>
+						    </div>
+
+						    <label>Clareza na escolha da IES e das disciplinas (até 2.0)</label>
+		          			<div class="form-group row">
+		          				<div class="col-sm-12">
+		          					<input id="clareza" name="clareza" type="text" class="form-control" value="{{ old('clareza') }}" required autofocus>
+		          					@if ($errors->has('clareza'))
+		          						<span class="help-block">
+		          							<strong>{{ $errors->first('clareza') }}</strong>
+		          						</span>
+		          					@endif
+		          				</div>
+						    </div>
+
+			        	</div>
+			        </div>
+			    </div>
+			    <div class="col-md-6">
+			    	<div class="card-body">
+			    		<h4 class="card-title">Arquivos</h4>
+			    		<p class="card-description">Baixo os planos de trabalho abaixo. Faça a média dos três e preencha o formulário ao lado.</p>
+			    		<div class="template-demo">
+			    			<a href="{{ route('ccint.trabalho1', $candidatura->id) }}" target="_blank"  type="button" class="btn btn-info btn-lg btn-block">
+			    				Plano de Trabalho 1
+			    				<i class="ti-printer float-right"></i>
+		                    </a>
+		                    <a href="{{ route('ccint.trabalho2', $candidatura->id) }}" target="_blank" type="button" class="btn btn-dark btn-lg btn-block">
+		                    	Plano de Trabalho 2
+		                    	<i class="ti-printer float-right"></i>
+		                    </a>
+		                    <a href="{{ route('ccint.trabalho3', $candidatura->id) }}" target="_blank" type="button" class="btn btn-primary btn-lg btn-block">                     
+		                    	Plano de Trabalho 3
+		                    	<i class="ti-printer float-right"></i>
+		                    </a>
+			        	</div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+
 	  	<br>
+
 	  	<div class="card">
 	    	<div class="card-body">
 				<label class="card-title">Currículo Lattes</label>
@@ -112,23 +125,19 @@
 							            </div>
 					          		</td>
 					          		<td>
-					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
-					                		Visualizar
-					                	</a>
-					          		</td>
-					          	</tr>
-					          	<tr>
-					          		<td>
 					          			<input id="participacao[]" name="participacao[]" type="text" class="form-control" value="{{ old('participacao[]') }}" required autofocus>
-					          		</td>
-					          		<td>
-						            	@if ($errors->has('participacao'))
+					          			@if ($errors->has('participacao'))
 					                    <span class="help-block">
 					                      <strong>{{ $errors->first('participacao') }}</strong>
 					                    </span>
 					                    @endif
 					          		</td>
-					        	</tr>
+					          		<td>
+					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
+					                		Visualizar
+					                	</a>
+					          		</td>
+					          	</tr>
 					    	@endforeach
 					    </tbody>
 					</table>
@@ -157,23 +166,19 @@
 								        </div>
 						          	</td>
 						          	<td>
+					          			<input id="indicadores[]" name="indicadores[]" type="text" class="form-control" value="{{ old('indicadores[]') }}" required autofocus>
+					          			@if ($errors->has('indicadores'))
+				                    	<span class="help-block">
+				                      		<strong>{{ $errors->first('indicadores') }}</strong>
+				                    	</span>
+				                    	@endif
+					          		</td>
+						          	<td>
 					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
 					                		Visualizar
 					                	</a>
 						          	</td>
 						        </tr>
-					          	<tr>
-					          		<td>
-					          			<input id="indicadores[]" name="indicadores[]" type="text" class="form-control" value="{{ old('indicadores[]') }}" required autofocus>
-					          		</td>
-					          		<td>
-					            		@if ($errors->has('indicadores'))
-				                    	<span class="help-block">
-				                      		<strong>{{ $errors->first('indicadores') }}</strong>
-				                    	</span>
-				                    	@endif
-				          			</td>
-				        		</tr>
 					    	@endforeach
 						</tbody>
 					</table>
@@ -202,23 +207,19 @@
 							            </div>
 					          		</td>
 					          		<td>
-					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
-					                		Visualizar
-					                	</a>
-					          		</td>
-					          	</tr>
-					          	<tr>
-					          		<td>
 					          			<input id="representacao[]" name="representacao[]" type="text" class="form-control" value="{{ old('representacao[]') }}" required autofocus>
-					          		</td>
-					          		<td>
-						      			@if ($errors->has('representacao'))
+					          			@if ($errors->has('representacao'))
 					                    <span class="help-block">
 					                      <strong>{{ $errors->first('representacao') }}</strong>
 					                    </span>
 					                    @endif
 					          		</td>
-					        	</tr>
+					          		<td>
+					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
+					                		Visualizar
+					                	</a>
+					          		</td>
+					          	</tr>
 					    	@endforeach
 					    </tbody>
 					</table>
@@ -246,23 +247,19 @@
 							            </div>
 					          		</td>
 					          		<td>
-					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
-					                		Visualizar
-					                	</a>
-					          		</td>
-					          	</tr>
-					          	<tr>
-					          		<td>
 					          			<input id="institucional[]" name="institucional[]" type="text" class="form-control" value="{{ old('institucional[]') }}" required autofocus>
-					          		</td>
-					          		<td>
-						            	@if ($errors->has('institucional'))
+					          			@if ($errors->has('institucional'))
 					                    <span class="help-block">
 					                      <strong>{{ $errors->first('institucional') }}</strong>
 					                    </span>
 					                    @endif
 					          		</td>
-					        	</tr>
+					          		<td>
+					          			<a  href="{{ route('ccint.comprovacao', $arquivo->id) }}" target="_blank">
+					                		Visualizar
+					                	</a>
+					          		</td>
+					          	</tr>
 					    	@endforeach
 				   		</tbody>
 					</table>
@@ -270,7 +267,9 @@
 				<br> 
 	      	</div>
 	  	</div>
+
 	  	<br>
+	  	
 	    <div class="card">
 	    	<div class="card-body">
 	    		<label class="card-title">Carta de Recomendação</label>

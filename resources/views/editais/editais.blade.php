@@ -129,14 +129,12 @@
 			<div class="modal-body">
 				<form class="form-horizontal" method="POST" action="editais/store" enctype="multipart/form-data">
 					{{ csrf_field() }}
-					<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
-			          <label>Nome</label>
-			          <div class="input-group">
-			            <div class="input-group-prepend bg-transparent">
-			            </div>
-			            <input id="nome" name="nome" type="text" class="form-control" placeholder="Nome do edital" required>
-			          </div>
-			        </div>
+					<label>Programa</label>
+					<select name="nome" class="form-control">
+	                    @foreach($programas as $programa)
+	                      <option value='{{ $programa->nome }}'>{{ $programa->nome }}</option>
+	                    @endforeach
+	                </select>
 			        <div class="form-group">
 			          <label>Número</label>
 			          <div class="input-group">

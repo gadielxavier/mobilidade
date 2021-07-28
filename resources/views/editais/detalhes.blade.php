@@ -53,9 +53,9 @@
 							        <td>
 							          	<a href="/editais/atualizar/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Editar</a>
 							        </td>
-							       	@if($edital->status->id >= 9)
+							       	@if($edital->status->id > 1)
 							        <td>
-							          	<a href="/editais/resultado/{{ $edital->id }}"  class="btn btn-success btn-sm"> Resultado Parcial</a>
+							          	<a href="/editais/resultado/{{ $edital->id }}"  class="btn btn-success btn-sm"> Resultado</a>
 							        </td>
 							        @endif
 						      	</tr>

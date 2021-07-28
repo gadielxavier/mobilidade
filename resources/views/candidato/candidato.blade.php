@@ -119,7 +119,7 @@
             <div class="form-group">
               <div class="input-group">
                 <button id="btnFetch" type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits">
-                  {{ __('Atuaizar Dados') }}
+                  {{ __('Atualizar Dados') }}
                 </button>
               </div>
             </div>

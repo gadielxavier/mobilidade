@@ -12,8 +12,10 @@ use App\Status_Edital;
 use App\User;
 use App\Avaliacao_Ccint;
 use App\Convenios;
+use App\Programa;
 use App\Universidade_Edital;
 use App\Notifications\ChangeStatus;
+use App\Notifications\CcintNotification;
 use App\Proeficiencia;
 use DB, Log, PDF;
 use Redirect;
@@ -32,12 +34,14 @@ class EditaisController extends Controller
 
     public function index()
     {
-    	$editais = Editais::orderBy('id', 'desc')->paginate(10);
+    	$editais = Editais::orderBy('id', 'desc')->paginate(30);
         $convenios = Convenios::where('status', '1')->get();
+        $programas = Programa::all();
 
     	$data = [
             'editais' => $editais,
-            'convenios' => $convenios
+            'convenios' => $convenios,
+            'programas' => $programas
         ];
 
         return view('editais.editais')->with($data);
@@ -165,7 +169,7 @@ class EditaisController extends Controller
         ->select('candidaturas.*')
         ->join('candidatos', 'candidatos.id', '=', 'candidaturas.candidato_id')
         ->orderBy('candidatos.nome')
-        ->paginate(100);
+        ->paginate(30);
 
         $candidaturasTamanho = Candidaturas::where('edital_id', $id)->where('status_id', '!=', 17)->get();
         $status =  Status_Inscricao::all();
@@ -210,13 +214,17 @@ class EditaisController extends Controller
     // Generate PDF
     public function createPDF(Request $request, $id) {
 
-
         $edital = Editais::where('id', $id)->first();
         $status = Status_Edital::all();
         $avaliacoes = Avaliacao_Ccint::where('edital_id', $edital->id)
         ->orderBy('nota_final', 'desc')->get();
-
         $universidades = Universidade_Edital::where('edital_id', $edital->id)->get();
+
+        if($edital->status_edital_id < 5 ){
+            $candidaturas = Candidaturas::where('edital_id', $edital->id)->get();
+        }else{
+            $candidaturas = Candidaturas::where('edital_id', $edital->id)->where('status_id', '!=' , 3)->where('status_id', '!=', 5)->get();
+        }
 
         $universidades_nome_array = [];
 
@@ -319,24 +327,27 @@ class EditaisController extends Controller
         $data = [
             'edital' => $edital,
             'avaliacoes' => $avaliacoes,
+            'candidaturas' => $candidaturas,
             'status' => $status,
             'classificacoes' => array_divide($universidades_nome_array),
-            'universidades' => $universidades
+            'universidades' => $universidades,
+            'instrucoes'    => $request->instrucoes
         ]; 
 
         // share data to view
-        view()->share(['edital', 'avaliacoes', 'status', 'classificacoes', 'universidades'],$data);
+        view()->share(['edital', 'avaliacoes', 'status', 'classificacoes', 'universidades', 'instrucoes'],$data);
         $pdf = PDF::loadView('editais.pdf', $data);
 
         // Finally, you can download the file using download function
         return $pdf->download('tabela.pdf');
     }
 
+    public function alocarIesAnfitria($id){
 
-    public function resultado(Request $request, $id)
-    {
         $edital = Editais::where('id', $id)->first();
+
         $status = Status_Edital::all();
+
         $avaliacoes = Avaliacao_Ccint::where('edital_id', $edital->id)
         ->orderBy('nota_final', 'desc')->get();
 
@@ -445,16 +456,77 @@ class EditaisController extends Controller
                 }
             }
         }
+    }
 
-        $data = [
-            'edital' => $edital,
-            'avaliacoes' => $avaliacoes,
-            'status' => $status,
-            'classificacoes' => array_divide($universidades_nome_array),
-            'universidades' => $universidades
-        ]; 
-       
-          return view('editais.resultado')->with($data);
+
+    public function resultado(Request $request, $id)
+    {
+        $edital = Editais::where('id', $id)->first();
+
+        if($edital->status->id > 9){
+
+            $avaliacoes = Avaliacao_Ccint::where('edital_id', $edital->id)
+                ->orderBy('nota_final', 'desc')->get();
+
+            $candidaturas = Candidaturas::where('edital_id', $edital->id)
+            ->where('status_id', '!=' , 3)
+            ->where('status_id', '!=', 5)
+            ->where('status_id', '!=', 7)
+            ->where('status_id', '!=', 9)
+            ->where('status_id', '!=', 11)
+            ->where('status_id', '!=', 13)
+            ->where('status_id', '!=', 15)
+            ->where('status_id', '!=', 17)
+            ->get();
+
+            $universidades = Universidade_Edital::where('edital_id', $edital->id)->get();
+
+            $data = [
+                'edital'              => $edital,
+                'universidades'       => $universidades,
+                'candidaturas'       => $candidaturas,
+                'avaliacoes'          => $avaliacoes
+            ]; 
+           
+            return view('editais.resultado')->with($data);
+
+        }
+        elseif ($edital->status->id == 9) {
+
+            $avaliacoes = Avaliacao_Ccint::where('edital_id', $edital->id)
+            ->orderBy('nota_final', 'desc')->get();
+
+            $data = [
+                'edital'       => $edital,
+                'avaliacoes'   => $avaliacoes
+            ]; 
+           
+            return view('editais.resultado')->with($data);
+            
+        }
+        else{
+
+            if($edital->status_edital_id < 5 ){
+                $candidaturas = Candidaturas::where('edital_id', $edital->id)
+                ->where('status_id', '!=', 17)
+                ->get();
+            }else{
+                $candidaturas = Candidaturas::where('edital_id', $edital->id)
+                ->where('status_id', '!=' , 3)
+                ->where('status_id', '!=', 5)
+                ->where('status_id', '!=', 17)
+                ->get();
+            }
+
+            $data = [
+                'edital'       => $edital,
+                'candidaturas' => $candidaturas
+            ]; 
+           
+            return view('editais.resultado')->with($data);
+
+        }
+        
     }
 
     public function atualizarResultado(Request $request, $id)
@@ -516,7 +588,7 @@ class EditaisController extends Controller
             
         }
 
-
+        $this->alocarIesAnfitria($edital->id);
 
         return Redirect::back()->with('message', 'RESULTADO ATUALIZADOS COM SUCESSO!');
 
@@ -524,9 +596,7 @@ class EditaisController extends Controller
 
     public function atualizarResultadoSegundaFase(Request $request, $id)
     {
-
         for ($i = 0; $i<count($request->input('avaliacoes'));  $i++) {
-
 
             $avaliacao = Avaliacao_Ccint::where('id', $request->input('avaliacoes')[$i])->first();
 
@@ -535,7 +605,6 @@ class EditaisController extends Controller
             try{
                 $candidatura->ies_anfitria = $request->input('universidades')[$i];
                 $candidatura->save();
-
             }
             catch(\Exception $e) {
                 DB::rollback();
@@ -676,7 +745,7 @@ class EditaisController extends Controller
         return redirect('/editais');
     }
 
-     public function ccint(Request $request)
+    public function ccint(Request $request)
     {
 
         if($request->input('candidatura') == null){
@@ -745,6 +814,12 @@ class EditaisController extends Controller
                     'edital_id' => $candidatura->edital_id,
                     'posicao' => 0,
                 ]);
+
+                    $avaliador = User::where('id', $request->avaliador)->first();
+
+                    $avaliador->notify(
+                        (new CcintNotification($candidatura->id))->delay(Carbon::now()->addMinutes(1))
+                    );
                     
                     DB::commit();
                 }

@@ -61,7 +61,7 @@ Route::group(['prefix' => 'editais',  'middleware' => ['auth','staff']], functio
     Route::post('atualizar/update/{id}', 'EditaisController@update')->name('editais.update');
     Route::post('atualizar/resultado/update/{id}', 'EditaisController@atualizarResultado')->name('resultado.update');
     Route::post('atualizar/resultado/segundafase/{id}', 'EditaisController@atualizarResultadoSegundaFase')->name('resultado.segundafase');
-    Route::get('atualizar/resultado/pdf/{id}', 'EditaisController@createPDF')->name('resultado.pdf');
+    Route::post('atualizar/resultado/pdf/{id}', 'EditaisController@createPDF')->name('resultado.pdf');
     Route::get('atualizar/universidade/delete/{id}', 'EditaisController@deleteUniversidade');
     Route::get('atualizar/{id}', 'EditaisController@atualizar');
     Route::get('resultado/{id}', 'EditaisController@resultado');
@@ -129,8 +129,10 @@ Route::group(['prefix' => 'ccint',  'middleware' => ['auth','ccint']], function(
     Route::get('detalhes/candidatura/comprovacao/{id}', 'CandidaturasController@comprovacao')->name('ccint.comprovacao');
     Route::get('detalhes/candidatura/certificado/{id}', 'CandidaturasController@certificado')->name('ccint.certificado');
     Route::get('detalhes/candidatura/carta/{id}', 'CandidaturasController@carta')->name('ccint.carta');
+
+    Route::get('avaliacoesFinalizadas', 'CcintController@avaliacoesFinalizadas')->name('ccint.avaliacoesFinalizadas');
     Route::get('/', 'CcintController@index');
-    Route::get('detalhes/{id}', 'CcintController@details');
+    Route::get('detalhes/{id}', 'CcintController@details')->name('ccint.detalhes');
     Route::post('store/{id}', 'CcintController@store');
 });
 
@@ -139,6 +141,17 @@ Route::group(['prefix' => 'convenios',  'middleware' => ['auth','staff']], funct
     Route::get('detalhes/{id}', 'ConveniosController@details');
     Route::post('atualizar/{id}', 'ConveniosController@update')->name('convenios.update');
     Route::get('/', 'ConveniosController@index');
+});
+
+Route::group(['prefix' => 'relatorios',  'middleware' => ['auth','staff']], function() {
+    Route::post('create', 'RelatoriosController@createRelatorio')->name('relatorios.create');
+    Route::get('/', 'RelatoriosController@index');
+});
+
+Route::group(['prefix' => 'programas',  'middleware' => ['auth','staff']], function() {
+    Route::post('store', 'ProgramaController@store')->name('programa.store');
+    Route::post('update/{id}','ProgramaController@update');
+    Route::get('/', 'ProgramaController@index');
 });
 
 Route::get('/clear-cache', function() {

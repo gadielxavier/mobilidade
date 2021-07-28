@@ -7,7 +7,10 @@
 		<div class="card-body table-responsive">
       		<h4 class="card-title">Resultado Parcial</h4>
       		<div class="d-flex justify-content-end mb-4">
-	            <a class="btn btn-primary" href="{{ route('resultado.pdf', $edital->id) }}">Exportar PDF</a>
+      			<button type="submit" data-toggle="modal" data-target="#exportarPdfModal" class="btn btn-primary ml-auto">
+                  {{ __('Exportar PDF') }}
+                </button>
+                <!-- <a class="btn btn-primary" href="{{ route('resultado.pdf', $edital->id) }}">Exportar PDF</a> -->
 	        </div>
       		@if(session()->has('message'))
 			    <div class="alert alert-success alert-dismissible fade show">
@@ -69,13 +72,13 @@
 						<div class="form-group">
 					  		<div class="input-group">
 					    		<button type="submit" class="btn btn-primary ml-auto">
-					      			{{ __('Atuaizar') }}
+					      			{{ __('Atualizar') }}
 					    		</button>
 					  		</div>
 						</div>
 					</div>
 		        </form>
-			@else
+		    @elseif($edital->status->id == 9)
 				<form method="POST" action="{{ route('resultado.update', $edital->id) }}" enctype="multipart/form-data">
 		            {{ csrf_field() }}
 		            <table class="table table-striped">
@@ -148,53 +151,80 @@
 						<div class="form-group">
 					  		<div class="input-group">
 					    		<button type="submit" class="btn btn-primary ml-auto">
-					      			{{ __('Atuaizar') }}
+					      			{{ __('Atualizar') }}
 					    		</button>
 					  		</div>
 						</div>
 					</div>
 		        </form>
+			@else
+	            <table class="table table-striped">
+	            	<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Matrícula</th>
+							<th>Status</th>
+						</tr>
+			    	</thead>
+			    	<tbody>
+				    	@foreach ($candidaturas as $candidatura)
+					     	<tr>
+					    		<td>
+					          	@isset($candidatura->candidato->nome)
+					            	{{ $candidatura->candidato->nome }}
+					          	@endif
+					          	</td>
+					          	<td>
+					          	@isset($candidatura->candidato->matricula)
+					            	{{ $candidatura->candidato->matricula }}
+					          	@endif
+					          	</td>
+					          	<td>
+					            @isset($candidatura->status->titulo)
+					            	{{ $candidatura->status->titulo }}
+					            @endif
+					        	</td>
+					      	</tr>
+				      	@endforeach
+				    </tbody>
+				</table>
 	        @endif
 		</div>
 	</div>
+</div>
 
-<!-- 	@if($edital->status->id == 9)
-	<div class="card">
-		@php
-			$count = 0;
-		@endphp
-		@foreach ($classificacoes[1] as $classificacao)
-			<div class="card-body table-responsive">
-				<h4 class="card-title">Resultado Parcial {{ $classificacoes[0][$count] }} </h4>
-				<table class="table table-striped">
-	            	<thead>
-						<tr>
-							<th>#</th>
-							<th>Nome</th>
-						</tr>
-			    	</thead>
-			    	@php
-						$posicao = 1;
-					@endphp
-			    	<tbody>
-						@foreach($classificacao as $candidatos)
-							<tr>
-								<td>{{ $posicao }}</td>
-								<td>{{ $candidatos }}</td>
-							</tr>
-							@php
-								$posicao++;
-							@endphp
-						@endforeach
-					</tbody>
-				</table>
+<!-- Modal-->
+<div class="modal fade" id="exportarPdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Instruções para próxima etapa</h5>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
 			</div>
-			@php
-				$count++;
-			@endphp
-		@endforeach
+			<div class="modal-body">
+				<form class="form-horizontal" method="POST" action="{{ route('resultado.pdf', $edital->id) }}" enctype="multipart/form-data">
+					{{ csrf_field() }}
+					<div class="form-group">
+						<label for="instrucoes" class="col-form-label">Mensagem:</label>
+						<textarea class="form-control" rows="5" name="instrucoes" id="instrucoes"></textarea>
+					</div>
+			        <div class="modal-footer">
+				        <div class="mt-3">
+				          <div class="form-group">
+				            <div class="input-group">
+				              <button type="submit" class="btn btn-primary ml-auto">
+				                {{ __('Exportar') }}
+				              </button>
+				            </div>
+				          </div>
+				        </div>
+				    </div>
+				</form>
+			</div>
+		</div>
 	</div>
-	@endif -->
 </div>
 
 @endsection

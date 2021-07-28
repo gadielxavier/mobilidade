@@ -153,6 +153,18 @@
               <span class="menu-title">Convênios</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/relatorios">
+             <i class="ti-bar-chart menu-icon"></i>
+              <span class="menu-title">Relatórios</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/programas">
+             <i class="ti-files menu-icon"></i>
+              <span class="menu-title">Programas</span>
+            </a>
+          </li>
           @endif
           @if(Auth::user()->privilegio == 1)
           <li class="nav-item">

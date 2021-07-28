@@ -17,7 +17,7 @@
     	<div class="card-body" style="background-color:powderblue;">
     		<h4 class="card-title">{{ $recurso->candidato->nome }}</h4>
     		<p>
-    			{{ $recurso->description }}
+    			<pre>{{ $recurso->description }}</pre>
     		</p>
       	</div>
      </div>
@@ -64,12 +64,21 @@
     	<div class="card-body">
     		<h4 class="card-title">Resposta</h4>
     		<p>
-    			{{ $resposta->description }}
+    			<pre>{{ $resposta->description }}</pre>
     		</p>
       	</div>
      </div>
      @endif
 
+     <style>
+	    pre {
+	       white-space: pre-wrap;       /* Since CSS 2.1 */
+	       white-space: -moz-pre-wrap;  /* Mozilla */
+	       white-space: -pre-wrap;      /* Opera 4-6 */
+	       white-space: -o-pre-wrap;    /* Opera 7 */
+	       word-wrap: break-word;       /* Internet Explorer */
+	    }
+	</style>
 
 </div>
 

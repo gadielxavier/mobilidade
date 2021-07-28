@@ -14,8 +14,21 @@
     <div class="row">
        <div class="col-md-12 grid-margin stretch-card">
           <div class="card">
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active"href="/home">Abertas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('ccint.avaliacoesFinalizadas') }}">
+                  Avaliações Finalizadas
+                </a>
+              </li>
+            </ul>
+
+
             <div class="card-body">
-              <p class="card-title mb-0">Candidatos para Avaliação</p>
+              <p class="card-title mb-0">Candidatos</p>
               <div class="table-responsive">
                 @if(session()->has('message'))
                     <div class="alert alert-success alert-dismissible fade show">
@@ -38,20 +51,20 @@
                       @if($avaliacao->candidatura->carta != '0')
                         <tr>
                             <td>
-                            @isset($avaliacao->candidatura->candidato->nome)
-                              {{ $avaliacao->candidatura->candidato->nome }}</td>
-                            @endif
+                              @isset($avaliacao->candidatura->candidato->nome)
+                                {{ $avaliacao->candidatura->candidato->nome }}
+                              @endif
                             </td>
                             <td>
-                            @isset($avaliacao->candidatura->edital->nome)
-                              {{ $avaliacao->candidatura->edital->nome.'  '.$avaliacao->candidatura->edital->numero }}</td>
-                            @endif
+                              @isset($avaliacao->candidatura->edital->nome)
+                                {{ $avaliacao->candidatura->edital->nome.'  '.$avaliacao->candidatura->edital->numero }}
+                              @endif
                             </td>
                             <td>
-                            <a  href="ccint/detalhes/{{ $avaliacao->candidatura->id }}" class="btn btn-success btn-sm">
-                                Visualizar
-                            </a>
-                          </td>
+                              <a  href="ccint/detalhes/{{ $avaliacao->candidatura->id }}" class="btn btn-success btn-sm">
+                                  Visualizar
+                              </a>
+                            </td>
                         </tr>
                         @endif
                     @endforeach
@@ -65,5 +78,12 @@
           </div>
         </div>
     </div>
+
+@endsection
+
+
+@section('scripts')
+
+
 
 @endsection

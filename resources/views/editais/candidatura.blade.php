@@ -309,8 +309,8 @@
 							</div>
 						</div>
 						@endif
-						@if($candidatura->status_id == 1 || $candidatura->status_id == 6 ||
-						$candidatura->status_id == 8 || $candidatura->status_id == 18)
+						{{-- @if($candidatura->status_id == 1 || $candidatura->status_id == 6 ||
+																		$candidatura->status_id == 8 || $candidatura->status_id == 18) --}}
 						<div class="mt-3">
 				          <div class="form-group">
 				            <div class="input-group">
@@ -320,7 +320,7 @@
 				            </div>
 				          </div>
 				        </div>
-				        @endif
+				        {{--@endif--}}
 				    </form>
 				</div>
 			</div>
