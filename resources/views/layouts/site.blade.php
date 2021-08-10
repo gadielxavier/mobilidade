@@ -154,14 +154,20 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/relatorios">
+            <a class="nav-link" href="/relatorios/in">
+             <i class="ti-bar-chart-alt menu-icon"></i>
+              <span class="menu-title">Relatórios In</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/relatorios/out">
              <i class="ti-bar-chart menu-icon"></i>
-              <span class="menu-title">Relatórios</span>
+              <span class="menu-title">Relatórios Out</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/programas">
-             <i class="ti-files menu-icon"></i>
+             <i class="ti-gallery menu-icon"></i>
               <span class="menu-title">Programas</span>
             </a>
           </li>

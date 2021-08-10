@@ -145,7 +145,11 @@ Route::group(['prefix' => 'convenios',  'middleware' => ['auth','staff']], funct
 
 Route::group(['prefix' => 'relatorios',  'middleware' => ['auth','staff']], function() {
     Route::post('create', 'RelatoriosController@createRelatorio')->name('relatorios.create');
-    Route::get('/', 'RelatoriosController@index');
+    Route::post('candidatura', 'RelatoriosController@candidatura')->name('relatorios.candidatura');
+    Route::post('/estudante_internacional', 'RelatoriosController@estudanteInternacional');
+    Route::post('/relatorio_internacional', 'RelatoriosController@relatorioInternacional');
+    Route::get('in', 'RelatoriosController@in');
+    Route::get('out', 'RelatoriosController@out');
 });
 
 Route::group(['prefix' => 'programas',  'middleware' => ['auth','staff']], function() {

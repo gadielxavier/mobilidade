@@ -16,10 +16,12 @@ class ProgramaController extends Controller
      */
     public function index()
     {
-        $programas = Programa::orderBy('nome')->paginate(30);
+        $programasIn = Programa::where('tipo', '1')->orderBy('nome')->paginate(30);
+        $programasOut = Programa::where('tipo', '2')->orderBy('nome')->paginate(30);
 
         $data = [
-            'programas' => $programas
+            'programasIn' => $programasIn,
+            'programasOut' => $programasOut
         ];
 
         return view('programas.programas')->with($data);
@@ -43,7 +45,8 @@ class ProgramaController extends Controller
         DB::beginTransaction();
         try{
             $programa = Programa::create([
-            'nome' => $request->nome
+            'nome' => $request->nome,
+            'tipo' => $request->tipo
 
         ]);
             
@@ -86,6 +89,7 @@ class ProgramaController extends Controller
         try{
 
             $programa->nome =  $request->nome;
+            $programa->tipo =  $request->tipo;
             $programa->save();
 
         }

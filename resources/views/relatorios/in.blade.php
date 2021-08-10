@@ -2,81 +2,77 @@
 
 @section('content')
 
-
-
-<div class="ccontainer-fluid">
+<div class="container-fluid">
 	<div class="row">
 	    <div class="col-md-12 grid-margin">
-	      <div class="d-flex justify-content-between align-items-center">
-	        <div>
-	          <h4 class="font-weight-bold mb-0">Relatórios</h4>
-	        </div>
-	      </div>
+	      	<div class="d-flex justify-content-between align-items-center">
+	        	<div>
+	          		<h4 class="font-weight-bold mb-0">Relatórios</h4>
+	        	</div>
+	        	<div>
+	        		<button type="submit" data-toggle="modal" data-target="#candidaturaModal" class="btn btn-success btn-icon-text btn-rounded">
+		           		<i class="ti-user btn-icon-prepend"></i>Adicionar Estudante
+		        	</button>
+	        		<button type="submit" data-toggle="modal" data-target="#relatorioModal" class="btn btn-primary btn-icon-text btn-rounded">
+		           		<i class="ti-clipboard btn-icon-prepend"></i>{{ __('Novo Relatório') }}
+		        	</button>
+	        	</div>
+	      	</div>
 	    </div>
 	</div>
 
-	<div class="row table-responsive">
-		@if(session()->has('message'))
-		    <div class="alert alert-success alert-dismissible fade show">
-		        {{ session()->get('message') }}
-		        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    <span aria-hidden="true">&times;</span>
-				</button>
-		    </div>
-		@endif
-		<div class="input-group">
-            <button type="submit" data-toggle="modal" data-target="#relatorioModal" class="btn btn-primary ml-auto">
-                {{ __('Novo Relatório') }}
-            </button>
-		</div>
-		<div class="main-panel">
-        	<div class="content-wrapper">
-        		<div class="row">
-		            <div class="col-lg-12 grid-margin stretch-card">
-		              <div class="card">
-		                <div class="card-body">
-		                  <h4 class="card-title">Anos</h4>
-		                  <canvas id="lineChart"></canvas>
-		                </div>
-		              </div>
-		            </div>
-		        </div>
-          		<div class="row">
-		            <div class="col-lg-12 grid-margin grid-margin stretch-card">
-		              <div class="card">
-		                <div class="card-body">
-		                  <h4 class="card-title">Cursos</h4>
-		                  <canvas id="pieChart"></canvas>
-		                </div>
-		              </div>
-		            </div>
-		        </div>
-		        <div class="row">
-		            <div class="col-lg-12 grid-margin grid-margin stretch-card">
-		              	<div class="card">
-		                	<div class="card-body">
-		                  		<h4 class="card-title">Países</h4>
-		                  		<canvas id="barChart"></canvas>
-		                	</div>
-		              	</div>
-		            </div>
-          		</div>
-          		<div class="row">
-		            <div class="col-lg-12 grid-margin grid-margin stretch-card">
-		              <div class="card">
-		                <div class="card-body">
-		                  <h4 class="card-title">Programas</h4>
-		                  <canvas id="areaChart"></canvas>
-		                </div>
-		              </div>
-		            </div>
-		        </div>
+	@if(session()->has('message'))
+	    <div class="alert alert-success alert-dismissible fade show">
+	        {{ session()->get('message') }}
+	        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			</button>
+	    </div>
+	@endif
+
+	<div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Anos</h4>
+              <canvas id="anosChart"></canvas>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 grid-margin grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Modalidade</h4>
+              <canvas id="modalidadeChart"></canvas>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 grid-margin grid-margin stretch-card">
+          	<div class="card">
+            	<div class="card-body">
+              		<h4 class="card-title">Países</h4>
+              		<canvas id="paisesChart"></canvas>
+            	</div>
           	</div>
+        </div>
+	</div>
+	<div class="row">
+        <div class="col-lg-12 grid-margin grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Programas</h4>
+              <canvas id="programasChart"></canvas>
+            </div>
+          </div>
         </div>
     </div>
 </div>
 
-<!-- Modal-->
+<!-- Modal Relatorio-->
 <div class="modal fade" id="relatorioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -87,31 +83,104 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="{{ route('relatorios.create') }}" enctype="multipart/form-data">
+				<form class="form-horizontal" method="POST" action="relatorio_internacional" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="form-group">
-					  	<label>Tipo</label>
+					  	<label>Programas</label>
 					    <div class="dropdown">
-						   <select id="tipo" name="tipo" class="form-control custom-select">
-						        <option selected value="1">Cursos</option>
-					 			<option value="2">Países</option>
+						   <select id="programa" name="programa" class="form-control custom-select">
+						        <option selected value="1">Todos</option>
+						        @foreach($programas as $programa)
+		                      		<option value='{{ $programa->nome }}'>{{ $programa->nome }}</option>"
+		                  		@endforeach
 						  </select>
 						</div>
 					</div>
-
-					<div class="form-group" id="auth-rows">
-
-						
-					</div>
-
 					<div class="modal-footer">
 				        <div class="mt-3">
 				          <div class="form-group">
 				            <div class="input-group">
-				            	<button  type="button" name="add" id="add" class="btn btn-success">Próximo</button>
 				            	
-				              	<button type="submit" id="gerar" class="btn btn-primary ml-auto" style="display:none;">
+				              	<button type="submit" id="gerar" class="btn btn-primary ml-auto">
 				                	{{ __('Gerar') }}
+				              	</button>
+				            </div>
+				          </div>
+				        </div>
+				    </div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Candidatura-->
+<div class="modal fade" id="candidaturaModal" tabindex="-1" role="dialog" aria-labelledby="candidaturaModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="candidaturaModalLabel">Adicionar Estudante Internacional</h5>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" method="POST" action="estudante_internacional" enctype="multipart/form-data">
+					{{ csrf_field() }}
+					<div class="form-group">
+						<label>Nome</label>
+						<div class="input-group">
+							<input type="text" placeholder="Nome do Aluno" class="form-control" name="nome" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>País</label>
+						<div class="input-group">
+							<select name="pais" class="form-control" required>
+		                    @foreach($paises as $pais)
+		                      <option value='{{ $pais->pais_nome }}'>{{ $pais->pais_nome }}</option>
+		                    @endforeach
+		                  </select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Programa</label>
+						<div class="input-group">
+							<select name="programa" class="form-control" required>
+			                    @foreach($programas as $programa)
+			                      <option value='{{ $programa->nome }}'>{{ $programa->nome }}</option>
+			                    @endforeach
+	               			 </select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Modalidade</label>
+						<div class="input-group">
+							<select name="modalidade" class="form-control" required>
+			                      <option value='Mestrado'>Mestrado</option>
+			                      <option value='Doutorado'>Doutorado</option>
+			                      <option value='Curso de Português'>Curso de Português</option>
+	               			 </select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Início</label>
+						<div class="input-group">
+							<input type="date" class="form-control" name="inicio">
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Final</label>
+						<div class="input-group">
+							<input type="date" class="form-control" name="final">
+						</div>
+					</div>
+					<div class="modal-footer">
+				        <div class="mt-3">
+				          <div class="form-group">
+				            <div class="input-group">
+				              	<button type="submit" id="gerar" class="btn btn-primary ml-auto">
+				                	{{ __('Adicionar') }}
 				              	</button>
 				            </div>
 				          </div>
@@ -128,57 +197,6 @@
 
 @section('scripts')
 
-<script>
-$(document).ready(function(){
-
-	function cursos_dynamic_field()
-	{
-		html = '<div class="dropdown">';
-		html += '<label>Curso</label><select name="dados" class="form-control custom-select" required>'
-						  +"<option selected value='0'>Todos</option>"
-		                  +"@foreach($cursos as $curso)"
-		                      +"<option value='{{ $curso->codigo }}'>{{ $curso->nome }}</option>"
-		                  +"@endforeach"
-		    	+'</select>';
-		html += '</div>';
-
-		$('#auth-rows').append(html);
-
-		document.getElementById("add").style.display = "none";
-		document.getElementById("gerar").style.display = "block";
-	    
-	}
-
-	function paises_dynamic_field()
-	{
-		html = '<div class="dropdown">';
-		html += '<label>País</label><select name="dados" class="form-control custom-select" required>'
-						  +"<option selected value='0'>Todos</option>"
-		                  +"@foreach($paises as $pais)"
-		                      +"<option value='{{ $pais->pais_id }}'>{{ $pais->pais_nome }}</option>"
-		                  +"@endforeach"
-		    	+'</select>';
-		html += '</div>';
-
-		$('#auth-rows').append(html);
-
-		document.getElementById("add").style.display = "none";
-		document.getElementById("gerar").style.display = "block";
-	    
-	}
-
-	$(document).on('click', '#add', function(){
-		if(	document.getElementById("tipo").value == 1){
-			cursos_dynamic_field();
-		}
-		else{
-			paises_dynamic_field();
-		}
-	});
-});
-
-</script>
-
 <script type="text/javascript">
 	$(function() {
 	  /* ChartJS
@@ -188,14 +206,14 @@ $(document).ready(function(){
 	  'use strict';
 	  var paises = {
 	    labels: [
-	    		@foreach ($candidaturasPais->keys() as $key)
-	      		[ "{{ $key }}", ],
-	      	@endforeach
+	    		@foreach ($estudantesPais->keys() as $key)
+	      			[ "{{ $key }}", ],
+	      		@endforeach
 	    	],
 	    datasets: [{
 	      label: '# Intercambistas',
 	      data: [
-	      	@foreach ($candidaturasPais as $pais)
+	      	@foreach ($estudantesPais as $pais)
 	      		[ "{{ count($pais) }}", ],
 	      	@endforeach
 	      ],
@@ -268,11 +286,11 @@ $(document).ready(function(){
 	    }
 
 	  };
-	  var cursos = {
+	  var modalidades = {
 	    datasets: [{
 	      data: [
-	      	@foreach ($candidaturasCurso as $curso)
-	      		[ "{{ count($curso) }}", ],
+	      	@foreach ($estudantesModalidade as $modalidade)
+	      		[ "{{ count($modalidade) }}", ],
 	      	@endforeach
 	      ],
 	      backgroundColor: [
@@ -295,7 +313,7 @@ $(document).ready(function(){
 
 	    // These labels appear in the legend and in the tooltips when hovering different arcs
 	    labels: [
-	    	@foreach ($candidaturasCurso->keys() as $key)
+	    	@foreach ($estudantesModalidade->keys() as $key)
 	      		[ "{{ $key }}", ],
 	      	@endforeach
 	    ]
@@ -309,14 +327,14 @@ $(document).ready(function(){
 	  };
 	  var anos = {
 	    labels: [
-	    		@foreach ($candidaturasAno->keys() as $key)
+	    		@foreach ($estudantesAnos->keys() as $key)
 	      			[ "{{ $key }}", ],
 	      		@endforeach
 	    	],
 	    datasets: [{
 	      label: '# Intercambistas',
 	      data: [
-	      			@foreach ($candidaturasAno as $ano)
+	      			@foreach ($estudantesAnos as $ano)
 			      		[ "{{ count($ano) }}", ],
 			      	@endforeach
 	      		],
@@ -343,15 +361,15 @@ $(document).ready(function(){
 
 	  var programas = {
 	    labels: [
-	    		@foreach ($candidaturasEdital->keys() as $key )
+	    		@foreach ($estudantesProgramas->keys() as $key )
 	      			[ "{{ $key }}", ],
 	      		@endforeach
 	    	],
 	    datasets: [{
 	      label: '# Intercambistas',
 	      data: [
-	      			@foreach ($candidaturasEdital as $edital)
-			      		[ "{{ count($edital) }}", ],
+	      			@foreach ($estudantesProgramas as $programa)
+			      		[ "{{ count($programa) }}", ],
 			      	@endforeach
 	      		],
 	      backgroundColor: [
@@ -504,19 +522,19 @@ $(document).ready(function(){
 	    }
 	  }
 	  // Get context with jQuery - using jQuery's .get() method.
-	  if ($("#barChart").length) {
-	    var barChartCanvas = $("#barChart").get(0).getContext("2d");
+	  if ($("#paisesChart").length) {
+	    var paisesChartCanvas = $("#paisesChart").get(0).getContext("2d");
 	    // This will get the first returned node in the jQuery collection.
-	    var barChart = new Chart(barChartCanvas, {
+	    var paisesChart = new Chart(paisesChartCanvas, {
 	      type: 'bar',
 	      data: paises,
 	      options: options
 	    });
 	  }
 
-	  if ($("#lineChart").length) {
-	    var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
-	    var lineChart = new Chart(lineChartCanvas, {
+	  if ($("#anosChart").length) {
+	    var anosChartCanvas = $("#anosChart").get(0).getContext("2d");
+	    var anosChart = new Chart(anosChartCanvas, {
 	      type: 'bar',
 	      data: anos,
 	      options: options
@@ -550,18 +568,18 @@ $(document).ready(function(){
 	    });
 	  }
 
-	  if ($("#pieChart").length) {
-	    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-	    var pieChart = new Chart(pieChartCanvas, {
+	  if ($("#modalidadeChart").length) {
+	    var modalidadeChartCanvas = $("#modalidadeChart").get(0).getContext("2d");
+	    var modalidadeChart = new Chart(modalidadeChartCanvas, {
 	      type: 'pie',
-	      data: cursos,
+	      data: modalidades,
 	      options: doughnutPieOptions
 	    });
 	  }
 
-	  if ($("#areaChart").length) {
-	    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
-	    var areaChart = new Chart(areaChartCanvas, {
+	  if ($("#programasChart").length) {
+	    var programasChartCanvas = $("#programasChart").get(0).getContext("2d");
+	    var programasChart = new Chart(programasChartCanvas, {
 	      type: 'doughnut',
 	      data: programas,
 	      options: doughnutPieOptions
