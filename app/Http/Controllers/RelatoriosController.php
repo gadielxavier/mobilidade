@@ -104,18 +104,18 @@ class RelatoriosController extends Controller
     {
         if($request->tipo == 1){
             if($request->dados == 0)
-                $arquivo = $this->createRelatorioCurso();
+                $this->createRelatorioCurso();
             else
-                $arquivo = $this->createRelatorioEspecificoCurso($request->dados);
+                $this->createRelatorioEspecificoCurso($request->dados);
         }
         else{
             if($request->dados == 0)
-                $arquivo = $this->createRelatorioPaises();
+                $this->createRelatorioPaises();
             else
-                $arquivo = $this->createRelatorioEspecificoPais($request->dados);
+                $this->createRelatorioEspecificoPais($request->dados);
         }
 
-        return redirect('/relatorios/out')->with('message', 'Relatório GERADO COM SUCESSO!');
+        return back()->with('message', 'Relatório GERADO COM SUCESSO!');
     }
 
     protected function relatorioInternacional(Request $request)
@@ -140,11 +140,11 @@ class RelatoriosController extends Controller
 
                 $sheet->loadView('relatorios.relatorioInternacional', $data);
 
-            })->setTitle('Our new awesome title')->export('csv');;
+            })->setTitle('estatistica_estudantes_internacionais')->export('csv');
 
         });
 
-        return redirect('/relatorios/out')->with('message', 'Relatório GERADO COM SUCESSO!');
+        return back()->with('message', 'Relatório GERADO COM SUCESSO!');
     }
 
     protected function createRelatorioCurso(){
@@ -200,11 +200,11 @@ class RelatoriosController extends Controller
 
                 $sheet->loadView('relatorios.relatorioGeral', $data);
 
-            })->setTitle('Our new awesome title')->export('csv');;
+            })->setTitle('estatistica_intercambistas')->export('csv');
 
         });
 
-        return redirect('/relatorios/out')->with('message', 'Relatório GERADO COM SUCESSO!');
+        return back()->with('message', 'Relatório GERADO COM SUCESSO!');
     }
 
     protected function createRelatorioEspecificoCurso($id){
@@ -227,11 +227,11 @@ class RelatoriosController extends Controller
 
                 $sheet->loadView('relatorios.relatorioEspecifico', $data);
 
-            })->setTitle('Our new awesome title')->export('csv');;
+            })->setTitle('estatistica_intercambistas')->export('csv');
 
         });
 
-        return redirect('/relatorios/out')->with('message', 'Relatório GERADO COM SUCESSO!');
+        return back()->with('message', 'Relatório GERADO COM SUCESSO!');
 
     }
 
@@ -255,11 +255,11 @@ class RelatoriosController extends Controller
 
                 $sheet->loadView('relatorios.relatorioEspecifico', $data);
 
-            })->setTitle('Our new awesome title')->export('csv');;
+            })->setTitle('estatistica_intercambistas')->export('csv');
 
         });
 
-        return redirect('/relatorios/out')->with('message', 'Relatório GERADO COM SUCESSO!');
+        return back()->with('message', 'Relatório GERADO COM SUCESSO!');
 
     }
 
@@ -316,11 +316,11 @@ class RelatoriosController extends Controller
 
                 $sheet->loadView('relatorios.relatorioGeral', $data);
 
-            })->setTitle('Our new awesome title')->export('csv');;
+            })->setTitle('estatistica_intercambistas')->export('csv');
 
         });
 
-        return redirect('/relatorios/out')->with('message', 'Relatório GERADO COM SUCESSO!');
+        return back()->with('message', 'Relatório GERADO COM SUCESSO!');
     }
 
     function candidatura(Request $request){

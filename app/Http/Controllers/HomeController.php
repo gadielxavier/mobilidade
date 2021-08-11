@@ -90,7 +90,7 @@ class HomeController extends Controller
             $notification->markAsRead();
         }
 
-        return redirect('/home');
+        return back();
     }
 
     public function notification(Request $request, $id){

@@ -12,11 +12,13 @@
 		            <table  border="0.3px">
 		            	<thead>
 							<tr>
-								<th>Candidato</th>
+								<th>Aluno</th>
 								<th>Curso</th>
 								<th>Matrícula</th>
 								<th>Edital</th>
+								<th>Início Mobilidade</th>
 								<th>Ies Anfitriã</th>
+								<th>País</th>
 							</tr>
 				    	</thead>
 				    	<tbody>
@@ -43,8 +45,21 @@
 						          	@endif
 						          	</td>
 						          	<td>
+						          	@isset($candidatura->edital->inicio_mobilidade)
+						            	{{ 
+						            		\Carbon\Carbon::parse($candidatura->edital->inicio_mobilidade)->format('m/Y') 
+						            		
+						            	}}
+						          	@endif
+						          	</td>
+						          	<td>
 						          	@isset($candidatura->ies_anfitria)
 						            	{{ $candidatura->ies_anfitria }}
+						          	@endif
+						          	</td>
+						          	<td>
+						          	@isset($candidatura->convenio)
+						            	{{ $candidatura->convenio->pais }}
 						          	@endif
 						          	</td>
 						      	</tr>

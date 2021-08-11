@@ -44,7 +44,7 @@
 						          	</td>
 						          	<td>
 						          	@isset($estudante->final)
-						            	{{ $estudante->final }}
+						            	{{ \Carbon\Carbon::parse($estudante->final)->format('m/Y') }}
 						          	@endif
 						          	</td>
 						      	</tr>
