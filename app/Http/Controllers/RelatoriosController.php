@@ -140,7 +140,7 @@ class RelatoriosController extends Controller
 
                 $sheet->loadView('relatorios.relatorioInternacional', $data);
 
-            })->setTitle('estatistica_estudantes_internacionais')->export('csv');
+            })->setTitle('estatistica_estudantes_internacionais')->export('xlsx');
 
         });
 
@@ -200,7 +200,7 @@ class RelatoriosController extends Controller
 
                 $sheet->loadView('relatorios.relatorioGeral', $data);
 
-            })->setTitle('estatistica_intercambistas')->export('csv');
+            })->setTitle('estatistica_intercambistas')->export('xlsx');
 
         });
 
@@ -227,7 +227,7 @@ class RelatoriosController extends Controller
 
                 $sheet->loadView('relatorios.relatorioEspecifico', $data);
 
-            })->setTitle('estatistica_intercambistas')->export('csv');
+            })->setTitle('estatistica_intercambistas')->export('xlsx');
 
         });
 
@@ -255,7 +255,7 @@ class RelatoriosController extends Controller
 
                 $sheet->loadView('relatorios.relatorioEspecifico', $data);
 
-            })->setTitle('estatistica_intercambistas')->export('csv');
+            })->setTitle('estatistica_intercambistas')->export('xlsx');
 
         });
 
@@ -316,7 +316,7 @@ class RelatoriosController extends Controller
 
                 $sheet->loadView('relatorios.relatorioGeral', $data);
 
-            })->setTitle('estatistica_intercambistas')->export('csv');
+            })->setTitle('estatistica_intercambistas')->export('xlsx');
 
         });
 
