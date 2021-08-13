@@ -126,7 +126,7 @@ class RelatoriosController extends Controller
             $programa = 'Todos os Programas';
         }
         else{
-            $estudantes = EstudantesInternacionais::where('programa', $request->programa)->get();
+            $estudantes = EstudantesInternacionais::where('programa', $request->programa)->orderBy("nome")->get();
             $programa = $request->programa;
         }
 
@@ -213,7 +213,9 @@ class RelatoriosController extends Controller
         $curso = Cursos::where('codigo', $id)->first();
 
         $candidaturas = Candidaturas::where('status_id', 14)
-        ->with('candidato')
+        ->select('candidaturas.*')
+        ->join('candidatos', 'candidatos.id', '=', 'candidaturas.candidato_id')
+        ->orderBy('candidatos.nome')
         ->get()
         ->where('candidato.curso', $curso->nome);
 
@@ -242,6 +244,9 @@ class RelatoriosController extends Controller
 
         $candidaturas = Candidaturas::where('status_id', 14)
         ->with('convenio')
+        ->select('candidaturas.*')
+        ->join('candidatos', 'candidatos.id', '=', 'candidaturas.candidato_id')
+        ->orderBy('candidatos.nome')
         ->get()
         ->where('convenio.pais', $pais->pais_nome);
 
