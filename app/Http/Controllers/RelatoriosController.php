@@ -121,7 +121,8 @@ class RelatoriosController extends Controller
     protected function relatorioInternacional(Request $request)
     {
         if($request->programa == 1){
-            $estudantes = EstudantesInternacionais::all();
+            $estudantes = EstudantesInternacionais::
+            orderBy("nome")->get();
             $programa = 'Todos os Programas';
         }
         else{
