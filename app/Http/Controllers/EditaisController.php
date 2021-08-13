@@ -169,7 +169,7 @@ class EditaisController extends Controller
         ->select('candidaturas.*')
         ->join('candidatos', 'candidatos.id', '=', 'candidaturas.candidato_id')
         ->orderBy('candidatos.nome')
-        ->paginate(30);
+        ->paginate(100);
 
         $candidaturasTamanho = Candidaturas::where('edital_id', $id)->where('status_id', '!=', 17)->get();
         $status =  Status_Inscricao::all();
