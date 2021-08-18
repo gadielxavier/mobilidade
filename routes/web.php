@@ -23,6 +23,7 @@ Route::get('/configuracoes', 'HomeController@configuracoes')->name('configuracoe
 Route::get('/markasread', 'HomeController@markAsRead')->name('markasread');
 Route::post('/update/{id}', 'HomeController@update')->name('update');
 Route::get('/notification/{id}', 'HomeController@notification')->name('notification');
+Route::get('/teste', 'RelatoriosController@indexRelatorioInternacional');
 
 Route::group(['prefix' => 'candidato',  'middleware' => ['auth','candidato']], function() {
     Route::get('download/{id}', 'EditaisController@download')->name('candidato.edital');
@@ -145,10 +146,8 @@ Route::group(['prefix' => 'convenios',  'middleware' => ['auth','staff']], funct
 
 Route::group(['prefix' => 'relatorios',  'middleware' => ['auth','staff']], function() {
     Route::post('create', 'RelatoriosController@createRelatorio')->name('relatorios.create');
-    Route::post('candidatura', 'RelatoriosController@candidatura')->name('relatorios.candidatura');
-    Route::post('/estudante_internacional', 'RelatoriosController@estudanteInternacional');
     Route::post('/relatorio_internacional', 'RelatoriosController@relatorioInternacional');
-    Route::get('in', 'RelatoriosController@in');
+    Route::get('estrangeiros', 'RelatoriosController@in')->name('relatorios.in');
     Route::get('out', 'RelatoriosController@out');
 });
 
@@ -156,6 +155,15 @@ Route::group(['prefix' => 'programas',  'middleware' => ['auth','staff']], funct
     Route::post('store', 'ProgramaController@store')->name('programa.store');
     Route::post('update/{id}','ProgramaController@update');
     Route::get('/', 'ProgramaController@index');
+});
+
+Route::group(['prefix' => 'estudantes',  'middleware' => ['auth','staff']], function() {
+    Route::get('internacionais', 'EstudanteController@estudantesInternacionais')->name("estudantes.internacionais");
+    Route::get('uefs', 'EstudanteController@estudantesUefs');
+    Route::post('addEstudanteInternacional', 'EstudanteController@addEstudanteInternacional');
+    Route::post('update/internacional/{id}', 'EstudanteController@updateInternacionais')->name('estudantes.updateInternacionais');
+    Route::post('addEstudanteUefs', 'EstudanteController@addEstudanteUefs');
+    Route::post('update/uefs/{id}', 'EstudanteController@updateEstudanteUefs')->name('estudantes.updateUefs');
 });
 
 Route::get('/clear-cache', function() {

@@ -154,7 +154,19 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/relatorios/in">
+            <a class="nav-link" href="{{ route('estudantes.internacionais') }}">
+             <i class="ti-shift-left menu-icon"></i>
+              <span class="menu-title">Estudantes In</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/estudantes/uefs">
+             <i class="ti-shift-right menu-icon"></i>
+              <span class="menu-title">Estudantes Out</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/relatorios/estrangeiros">
              <i class="ti-bar-chart-alt menu-icon"></i>
               <span class="menu-title">Relatórios In</span>
             </a>

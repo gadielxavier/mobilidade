@@ -7,12 +7,9 @@
 	    <div class="col-md-12 grid-margin">
 	      <div class="d-flex justify-content-between align-items-center">
 	        <div>
-	          <h4 class="font-weight-bold mb-0">Relatórios</h4>
+	          <h4 class="font-weight-bold mb-0">Relatórios Out</h4>
 	        </div>
 	        <div>
-	        	<button type="submit" data-toggle="modal" data-target="#candidaturaModal" class="btn btn-success btn-icon-text btn-rounded">
-		           <i class="ti-user btn-icon-prepend"></i>Adicionar Candidatura
-		        </button>
 	        	<button type="submit" data-toggle="modal" data-target="#relatorioModal" class="btn btn-primary btn-icon-text btn-rounded">
 		           <i class="ti-clipboard btn-icon-prepend"></i>{{ __('Novo Relatório') }}
 		        </button>
@@ -118,101 +115,6 @@
 		</div>
 	</div>
 </div>
-
-<!-- Modal Candidatura-->
-<div class="modal fade" id="candidaturaModal" tabindex="-1" role="dialog" aria-labelledby="candidaturaModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="candidaturaModalLabel">Adicionar candidatura</h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="{{ route('relatorios.candidatura') }}" enctype="multipart/form-data">
-					{{ csrf_field() }}
-					<div class="form-group">
-						<label>Programa</label>
-						<div class="input-group">
-							<select name="programa" class="form-control">
-			                    @foreach($programas as $programa)
-			                      <option value='{{ $programa->nome }}'>{{ $programa->nome }}</option>
-			                    @endforeach
-	               			 </select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Número</label>
-						<div class="input-group">
-							<input type="text" placeholder="Número do Edital" class="form-control" name="numero">
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Data do Edital</label>
-						<div class="input-group">
-							<input type="date" class="form-control" name="data_edital">
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Aluno</label>
-						<div class="input-group">
-							<input type="text" placeholder="Nome do Aluno" class="form-control" name="aluno">
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Sexo</label>
-						<div class="input-group">
-							<select id="sexo" name="sexo" class="form-control">
-			                    <option value="Masculino">Masculino</option>
-			                    <option value="Feminino">Feminino</option>
-			                    <option value="Outro">Outro</option>
-			                </select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Matrícula</label>
-						<div class="input-group">
-							<input type="text" placeholder="Matrícula do Aluno" class="form-control" name="matricula">
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Curso</label>
-						<div class="input-group">
-							<select id="curso" name="curso" class="form-control">
-		                    	@foreach($cursos as $curso)
-		                        	<option value="{{ $curso->nome }}">{{ $curso->nome }}</option>
-		                    	@endforeach
-			              	</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Universidade</label>
-						<div class="input-group">
-							<select name="universidade" class="form-control">
-		                    @foreach($convenios as $convenio)
-		                      <option value='{{ $convenio->universidade }}'>{{ $convenio->universidade." (".$convenio->pais.") "}}</option>
-		                    @endforeach
-		                  </select>
-						</div>
-					</div>
-					<div class="modal-footer">
-				        <div class="mt-3">
-				          <div class="form-group">
-				            <div class="input-group">
-				              	<button type="submit" id="gerar" class="btn btn-primary ml-auto">
-				                	{{ __('Adicionar') }}
-				              	</button>
-				            </div>
-				          </div>
-				        </div>
-				    </div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-
 
 @endsection
 

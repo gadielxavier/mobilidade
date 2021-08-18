@@ -7,12 +7,9 @@
 	    <div class="col-md-12 grid-margin">
 	      	<div class="d-flex justify-content-between align-items-center">
 	        	<div>
-	          		<h4 class="font-weight-bold mb-0">Relatórios</h4>
+	          		<h4 class="font-weight-bold mb-0">Relatórios In</h4>
 	        	</div>
 	        	<div>
-	        		<button type="submit" data-toggle="modal" data-target="#candidaturaModal" class="btn btn-success btn-icon-text btn-rounded">
-		           		<i class="ti-user btn-icon-prepend"></i>Adicionar Estudante
-		        	</button>
 	        		<button type="submit" data-toggle="modal" data-target="#relatorioModal" class="btn btn-primary btn-icon-text btn-rounded">
 		           		<i class="ti-clipboard btn-icon-prepend"></i>{{ __('Novo Relatório') }}
 		        	</button>
@@ -113,86 +110,6 @@
 		</div>
 	</div>
 </div>
-
-<!-- Modal Candidatura-->
-<div class="modal fade" id="candidaturaModal" tabindex="-1" role="dialog" aria-labelledby="candidaturaModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="candidaturaModalLabel">Adicionar Estudante Internacional</h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="estudante_internacional" enctype="multipart/form-data">
-					{{ csrf_field() }}
-					<div class="form-group">
-						<label>Nome</label>
-						<div class="input-group">
-							<input type="text" placeholder="Nome do Aluno" class="form-control" name="nome" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>País</label>
-						<div class="input-group">
-							<select name="pais" class="form-control" required>
-		                    @foreach($paises as $pais)
-		                      <option value='{{ $pais->pais_nome }}'>{{ $pais->pais_nome }}</option>
-		                    @endforeach
-		                  </select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Programa</label>
-						<div class="input-group">
-							<select name="programa" class="form-control" required>
-			                    @foreach($programas as $programa)
-			                      <option value='{{ $programa->nome }}'>{{ $programa->nome }}</option>
-			                    @endforeach
-	               			 </select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Modalidade</label>
-						<div class="input-group">
-							<select name="modalidade" class="form-control" required>
-			                      <option value='Mestrado'>Mestrado</option>
-			                      <option value='Doutorado'>Doutorado</option>
-			                      <option value='Curso de Português'>Curso de Português</option>
-	               			 </select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Início</label>
-						<div class="input-group">
-							<input type="date" class="form-control" name="inicio">
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Final</label>
-						<div class="input-group">
-							<input type="date" class="form-control" name="final">
-						</div>
-					</div>
-					<div class="modal-footer">
-				        <div class="mt-3">
-				          <div class="form-group">
-				            <div class="input-group">
-				              	<button type="submit" id="gerar" class="btn btn-primary ml-auto">
-				                	{{ __('Adicionar') }}
-				              	</button>
-				            </div>
-				          </div>
-				        </div>
-				    </div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-
-
 @endsection
 
 @section('scripts')
