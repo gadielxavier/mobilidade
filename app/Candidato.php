@@ -22,6 +22,6 @@ class Candidato extends Model
      *
      * @var array
      */
-    protected $fillable = ['nome', 'sexo', 'matricula', 'cpf', 'rg', 'orgao_expedidor', 'data_nascimento', 'curso', 'celular', 'user_id', 'email', 'foto_perfil'];
+    protected $fillable = ['nome', 'sexo', 'matricula', 'cpf', 'rg', 'orgao_expedidor', 'data_nascimento', 'curso', 'celular', 'user_id', 'email', 'foto_perfil', 'cotista'];
 
 }

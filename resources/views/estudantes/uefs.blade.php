@@ -27,6 +27,43 @@
 	    </div>
 	@endif
 
+	<form method="get" action="{{ route('estudantes.uefs') }}">
+		<div class="row">
+	        <div class="col-sm-4">
+	            <div class="form-group">
+	                <label for="filtro-curso">Cursos</label>
+	                <select id="filtro-curso" name="filtro-curso" class="form-control">
+	                    <option value=""></option>
+	                    @foreach($cursos as $curso)
+	                        <option value="{{ $curso->nome }}">
+	                            {{ $curso->nome }}
+	                        </option>
+	                    @endforeach
+	                </select>
+	            </div>
+	        </div>
+	        <div class="col-sm-2">
+	            <div class="form-group">
+	                <label for="filtro-programa">Programas</label>
+	                <select id="filtro-programa" name="filtro-programa" class="form-control">
+	                	<option value=""></option>
+	                    @foreach($programas as $programa)
+	                        <option value="{{ $programa->nome }}">
+	                            {{ $programa->nome }}
+	                        </option>
+	                    @endforeach
+	                </select>
+	            </div>
+	        </div>
+	        <div class="col-sm-2">
+	            <div class="form-group">
+	                <label>&nbsp;</label>
+	                <button type="submit" class="btn btn-block btn-success"><i class="fa fa-search"></i> Buscar</button>
+	            </div>
+	        </div>
+	    </div>
+	</form>
+
 	<div class="row">
 		<div class="col-lg-12 grid-margin stretch-card">
           <div class="card">
@@ -39,7 +76,6 @@
 						<thead>
 							<tr>
 								 <th>Nome</th>
-								 <th>Matrícula</th>
 								 <th>Curso</th>
 								 <th>Universidade</th>
 							</tr>
@@ -53,11 +89,6 @@
 				                        	{{ $estudante->candidato->nome }}
 				                    	@endif
 							        	</td> 
-							        	<td>
-							        	@isset($estudante->candidato->matricula)
-				                        	{{ $estudante->candidato->matricula }}
-				                    	@endif
-							        	</td>
 							        	<td>
 							        	@isset($estudante->candidato->curso)
 				                        	{{ $estudante->candidato->curso }}
@@ -88,35 +119,23 @@
 														<div class="form-group">
 															<label>Aluno</label>
 															<div class="input-group">
-																<input type="text" placeholder="Nome do Aluno" value="{{ $estudante->candidato->nome }}" class="form-control" name="aluno">
+																<input type="text" placeholder="Nome do Aluno" value="{{ $estudante->candidato->nome }}" class="form-control" name="aluno" required>
 															</div>
 														</div>
 														<div class="form-group">
 															<label>Sexo</label>
 															<div class="input-group">
 																<select id="sexo" name="sexo" class="form-control">
-																	@if($estudante->candidato->sexo == 'Masculino')
-												                    	<option selected value="Masculino">Masculino</option>
-												                    @else
-												                    	<option value="Masculino">Masculino</option>
-												                    @endif
-												                    @if($estudante->candidato->sexo == 'Feminino')
-												                    	<option selected value="Feminino">Feminino</option>
-												                    @else
-												                    	<option value="Feminino">Feminino</option>
-												                    @endif
-												                    @if($estudante->candidato->sexo == 'Outro')
-												                    	<option selected value="Masculino">Outro</option>
-												                    @else
-												                    	<option value="Outro">Masculino</option>
-												                    @endif
+											                    	<option value="Masculino" @if($estudante->candidato->sexo == 'Masculino') {{'selected'}} @endif >Masculino</option>
+												                    <option value="Feminino" @if($estudante->candidato->sexo == 'Feminino') {{'selected'}} @endif>Feminino</option>
+												                    <option value="Outro" @if($estudante->candidato->sexo == 'Outro') {{'selected'}} @endif>Outro</option>
 												                </select>
 															</div>
 														</div>
 														<div class="form-group">
 															<label>Matrícula</label>
 															<div class="input-group">
-																<input type="text" placeholder="Matrícula do Aluno" class="form-control" value="{{ $estudante->candidato->matricula }}" name="matricula">
+																<input type="text" placeholder="Matrícula do Aluno" class="form-control" value="{{ $estudante->candidato->matricula }}" name="matricula" required>
 															</div>
 														</div>
 														<div class="form-group">
@@ -147,6 +166,27 @@
 											                  </select>
 															</div>
 														</div>
+														<div class="form-group">
+												          <label>Cotista</label>
+												          <div class="input-group">
+												            <div class="col-3">
+												              <div class="form-check">
+												                <label class="form-check-label" for="cotista1">
+												                	<input class="form-check-input" type="radio" name="cotista" id="cotista1" value="1" @if($estudante->candidato->cotista == '1') {{'checked'}} @endif>
+												                  	Sim
+												                </label>
+												              </div>
+												          	</div>
+												          	<div class="col-3">
+												              <div class="form-check">
+												                <label class="form-check-label" for="cotista2">
+												                	<input class="form-check-input" type="radio" name="cotista" id="cotista2" value="0" @if($estudante->candidato->cotista == '0') {{'checked'}} @endif>
+												                  	Não
+												                </label>
+												              </div>
+												            </div>
+												          </div>
+												        </div>
 												        <div class="modal-footer">
 													        <div class="mt-3">
 													        	<div class="form-group">
@@ -202,19 +242,19 @@
 					<div class="form-group">
 						<label>Número</label>
 						<div class="input-group">
-							<input type="text" placeholder="Número do Edital" class="form-control" name="numero">
+							<input type="text" placeholder="Número do Edital" class="form-control" name="numero" required>
 						</div>
 					</div>
 					<div class="form-group">
 						<label>Data do Edital</label>
 						<div class="input-group">
-							<input type="date" class="form-control" name="data_edital">
+							<input type="date" class="form-control" name="data_edital" required>
 						</div>
 					</div>
 					<div class="form-group">
 						<label>Aluno</label>
 						<div class="input-group">
-							<input type="text" placeholder="Nome do Aluno" class="form-control" name="aluno">
+							<input type="text" placeholder="Nome do Aluno" class="form-control" name="aluno" required>
 						</div>
 					</div>
 					<div class="form-group">
@@ -230,7 +270,7 @@
 					<div class="form-group">
 						<label>Matrícula</label>
 						<div class="input-group">
-							<input type="text" placeholder="Matrícula do Aluno" class="form-control" name="matricula">
+							<input type="text" placeholder="Matrícula do Aluno" class="form-control" name="matricula" required>
 						</div>
 					</div>
 					<div class="form-group">
@@ -244,7 +284,28 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label>Universidade</label>
+			          <label>Cotista</label>
+			          <div class="input-group">
+			            <div class="col-3">
+			              <div class="form-check">
+			                <label class="form-check-label" for="cotista1">
+			                	<input class="form-check-input" type="radio" name="cotista" id="cotista1" value="1">
+			                  	Sim
+			                </label>
+			              </div>
+			          	</div>
+			          	<div class="col-3">
+			              <div class="form-check">
+			                <label class="form-check-label" for="cotista2">
+			                	<input class="form-check-input" type="radio" name="cotista" id="cotista2" value="0" checked>
+			                  	Não
+			                </label>
+			              </div>
+			            </div>
+			          </div>
+			        </div>
+					<div class="form-group">
+						<label>Universidade de Destino</label>
 						<div class="input-group">
 							<select name="universidade" class="form-control">
 		                    @foreach($convenios as $convenio)

@@ -14,32 +14,63 @@ use DB, Log;
 
 class EstudanteController extends Controller
 {
-    public function estudantesInternacionais()
+    public function estudantesInternacionais(Request $request)
     {
 
+        // Filtros
+        $filtroPais = $request->input('filtro-pais');
+        $filtroPrograma = $request->input('filtro-programa');
 
-    	$estudantes = EstudantesInternacionais::orderBy('nome')->paginate(50);
-    	$paises = DB::table('pais')->get();
-    	$programas = Programa::where('tipo', '1')->get();
+    	$estudantes = EstudantesInternacionais::orderBy('nome');
+
+        if($filtroPais) {
+            $estudantes = $estudantes->where('pais', $filtroPais);
+         }
+
+         if($filtroPrograma) {
+            $estudantes = $estudantes->where('programa', $filtroPrograma);
+         }
+
+         $estudantes = $estudantes->paginate(50);
+         $paises = DB::table('pais')->get();
+         $programas = Programa::where('tipo', '1')->get();
+         $cursos = Cursos::all();
+         $departamentos = DB::table('departamento')->get(); 
+         $posGraduacoes = DB::table('pos_graduacao')->get(); 
 
     	$data = [
-            'estudantes' => $estudantes,
-            'paises'     => $paises,
-            'programas'  => $programas,
+            'estudantes'    => $estudantes,
+            'paises'        => $paises,
+            'programas'     => $programas,
+            'cursos'        => $cursos,
+            'departamentos' => $departamentos,
+            'posGraduacoes' => $posGraduacoes
         ];
         
         return view('estudantes.internacionais')->with($data);
     }
 
-    public function estudantesUefs()
+    public function estudantesUefs(Request $request)
     {
+        // Filtros
+        $filtroCurso = $request->input('filtro-curso');
+        $filtroPrograma = $request->input('filtro-programa');
 
         $estudantes = Candidaturas::where('status_id', 14)
-        ->with('candidato')
-        ->select('candidaturas.*')
-        ->join('candidatos', 'candidatos.id', '=', 'candidaturas.candidato_id')
-        ->orderBy('candidatos.nome')
-        ->paginate(50);
+            ->with('candidato')
+            ->select('candidaturas.*')
+            ->join('candidatos', 'candidatos.id', '=', 'candidaturas.candidato_id')
+            ->orderBy('candidatos.nome');
+
+        if($filtroCurso) {
+            $estudantes = $estudantes->where('candidatos.curso', $filtroCurso);
+         }
+
+         if($filtroPrograma) {
+            $estudantes = $estudantes->join('editais', 'editais.id', '=', 'candidaturas.edital_id')->where('editais.nome', $filtroPrograma);
+         }
+
+        $estudantes = $estudantes->paginate(50);
 
         $cursos = Cursos::all();
 
@@ -75,7 +106,9 @@ class EstudanteController extends Controller
                     'programa'=> $request->programa,
                     'modalidade'=> $request->modalidade,
                     'inicio'=> $request->inicio,
-                    'final' => $request->final
+                    'final' => $request->final,
+                    'sexo'  => $request->sexo,
+                    'vinculo' => $request->vinculo
                 ]);
                 
                 DB::commit();
@@ -102,6 +135,8 @@ class EstudanteController extends Controller
             $estudante->modalidade =  $request->modalidade;
             $estudante->inicio =  $request->inicio;
             $estudante->final =  $request->final;
+            $estudante->sexo = $request->sexo;
+            $estudante->vinculo = $request->vinculo;
             $estudante->save();
         }
         catch(\Exception $e) {
@@ -187,7 +222,8 @@ class EstudanteController extends Controller
                 'celular' => '000',
                 'user_id' => 0,
                 'email' => "teste@gmail.com",
-                'foto_perfil' => "avatars/0/face.jpg"
+                'foto_perfil' => "avatars/0/face.jpg",
+                'cotista'     => $request->cotista
             ]);
                 DB::commit();
             }
@@ -257,7 +293,7 @@ class EstudanteController extends Controller
                 return $this->error($e->getMessage(), 500, $e);
             }
         }
-        return redirect('/estudantes/uefs')->with('message', 'CANDIDATURA ADICIONADA COM SUCESSO!');
+        return redirect('/estudantes/Uefs')->with('message', 'CANDIDATURA ADICIONADA COM SUCESSO!');
     }
 
     function updateEstudanteUefs(Request $request, $id){
@@ -271,6 +307,7 @@ class EstudanteController extends Controller
             $candidato->sexo = $request->sexo;
             $candidato->matricula = $request->matricula;
             $candidato->curso = $request->curso;
+            $candidato->cotista = $request->cotista;
             $candidato->save();
         }
          catch(\Exception $e) {
@@ -291,6 +328,6 @@ class EstudanteController extends Controller
         }
 
         
-        return redirect('/estudantes/uefs')->with('message', 'CANDIDATURA ATUALIZADA COM SUCESSO!');
+        return redirect('/estudantes/Uefs')->with('message', 'CANDIDATURA ATUALIZADA COM SUCESSO!');
     }
 }

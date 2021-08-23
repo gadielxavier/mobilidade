@@ -84,7 +84,8 @@ class CandidatoController extends Controller
             'celular' => $request->phone,
             'user_id' => Auth::user()->id,
             'email' => Auth::user()->email,
-            'foto_perfil' => $foto_perfil
+            'foto_perfil' => $foto_perfil,
+            'cotista' => $request->cotista
         ]);
             DB::commit();
         }
@@ -139,7 +140,8 @@ class CandidatoController extends Controller
 	            'data_nascimento' => $request->data,
 	            'curso' => $request->curso,
 	            'celular' => $request->phone,
-                'foto_perfil' => $foto_perfil
+                'foto_perfil' => $foto_perfil,
+                'cotista' => $request->cotista
 
 	        ]);
             DB::commit();

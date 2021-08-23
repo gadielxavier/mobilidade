@@ -19,12 +19,11 @@ class RelatoriosController extends Controller
 {
     public function in()
     {
-        $estudantesAnos = EstudantesInternacionais::all()
+        $estudantesAnos = EstudantesInternacionais::orderBy('inicio')
+        ->get()
         ->groupBy(function($val) {
             return Carbon::parse($val->inicio)->format('Y');
         });
-
-        $estudantesAnos = $estudantesAnos->sort();
 
         $estudantesModalidade = EstudantesInternacionais::all()
                     ->groupBy('modalidade');
@@ -65,12 +64,12 @@ class RelatoriosController extends Controller
 
         $candidaturasAno = Candidaturas::where('status_id', 14)
         ->with('edital')
+        ->join('editais', 'editais.id', '=', 'candidaturas.edital_id')
+        ->orderBy('editais.inicio_mobilidade')
         ->get()
         ->groupBy(function($candidatura) {
              return Carbon::parse($candidatura->edital->inicio_mobilidade)->format('Y');
          });
-
-        $candidaturasAno = $candidaturasAno->sort();
 
         $candidaturasEdital = Candidaturas::where('status_id', 14)
         ->with('edital')

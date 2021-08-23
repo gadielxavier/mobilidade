@@ -159,7 +159,7 @@ Route::group(['prefix' => 'programas',  'middleware' => ['auth','staff']], funct
 
 Route::group(['prefix' => 'estudantes',  'middleware' => ['auth','staff']], function() {
     Route::get('internacionais', 'EstudanteController@estudantesInternacionais')->name("estudantes.internacionais");
-    Route::get('uefs', 'EstudanteController@estudantesUefs');
+    Route::get('Uefs', 'EstudanteController@estudantesUefs')->name("estudantes.uefs");
     Route::post('addEstudanteInternacional', 'EstudanteController@addEstudanteInternacional');
     Route::post('update/internacional/{id}', 'EstudanteController@updateInternacionais')->name('estudantes.updateInternacionais');
     Route::post('addEstudanteUefs', 'EstudanteController@addEstudanteUefs');

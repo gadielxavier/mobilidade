@@ -115,6 +115,25 @@
               <input type="text" value="{{ $candidato->celular }}" id="phone" name="phone" class="form-control form-control-lg border-left-0" placeholder="Celular" required>
             </div>
           </div>
+          <div class="form-group">
+            <label>Cotista</label>
+            <div class="input-group">
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="cotista" id="cotista1" value="1" @if($candidato->cotista == '1') {{'checked'}} @endif>
+                  <label class="form-check-label" for="cotista1">
+                    Sim
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="cotista" id="cotista2" value="0" @if($candidato->cotista == '0') {{'checked'}} @endif>
+                  <label class="form-check-label" for="cotista2">
+                    Não
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="mt-3">
             <div class="form-group">
               <div class="input-group">
@@ -233,6 +252,25 @@
               </span>
             </div>
             <input type="text" id="phone" name="phone" class="form-control form-control-lg border-left-0" placeholder="Celular" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Cotista</label>
+          <div class="input-group">
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="cotista" id="cotista1" value="1">
+                <label class="form-check-label" for="cotista1">
+                  Sim
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="cotista" id="cotista2" value="0" checked>
+                <label class="form-check-label" for="cotista2">
+                  Não
+                </label>
+              </div>
+            </div>
           </div>
         </div>
         <div class="mt-3">

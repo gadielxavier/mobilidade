@@ -18,5 +18,5 @@ class EstudantesInternacionais extends Model
      *
      * @var array
      */
-    protected $fillable = ['nome', 'pais', 'programa', 'modalidade', 'inicio', 'final'];
+    protected $fillable = ['nome', 'pais', 'programa', 'modalidade', 'inicio', 'final', 'sexo', 'vinculo'];
 }

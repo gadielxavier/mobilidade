@@ -15,6 +15,8 @@
 								<th>Aluno</th>
 								<th>Curso</th>
 								<th>Matrícula</th>
+								<th>Gênero</th>
+								<th>Cotista</th>
 								<th>Edital</th>
 								<th>Início Mobilidade</th>
 								<th>Ies Anfitriã</th>
@@ -37,6 +39,20 @@
 						          	<td>
 						          	@isset($candidatura->candidato->matricula)
 						            	{{ $candidatura->candidato->matricula }}
+						          	@endif
+						          	</td>
+						          	<td>
+						          	@isset($candidatura->candidato->sexo)
+						            	{{ $candidatura->candidato->sexo }}
+						          	@endif
+						          	</td>
+						          	<td>
+						          	@isset($candidatura->candidato->cotista)
+						            	@if($candidatura->candidato->cotista)
+						            		Sim
+						            	@else
+						            		Não
+						            	@endif
 						          	@endif
 						          	</td>
 						          	<td>

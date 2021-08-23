@@ -7,7 +7,7 @@
 	    <div class="col-md-12 grid-margin">
 	      <div class="d-flex justify-content-between align-items-center">
 	        <div>
-	          <h4 class="font-weight-bold mb-0">Relatórios Out</h4>
+	          <h4 class="font-weight-bold mb-0">Relatórios Estudantes Uefs</h4>
 	        </div>
 	        <div>
 	        	<button type="submit" data-toggle="modal" data-target="#relatorioModal" class="btn btn-primary btn-icon-text btn-rounded">
@@ -82,7 +82,7 @@
 			<div class="modal-body">
 				<form class="form-horizontal" method="POST" action="{{ route('relatorios.create') }}" enctype="multipart/form-data">
 					{{ csrf_field() }}
-					<div class="form-group">
+					<div class="form-group" id="tipoFormGroup">
 					  	<label>Tipo</label>
 					    <div class="dropdown">
 						   <select id="tipo" name="tipo" class="form-control custom-select">
@@ -102,6 +102,10 @@
 				          <div class="form-group">
 				            <div class="input-group">
 				            	<button  type="button" name="add" id="add" class="btn btn-success">Próximo</button>
+
+				            	<button type="button" id="voltar" class="btn btn-success mr-2" style="display:none;">
+				                	{{ __('Voltar') }}
+				                </button>
 				            	
 				              	<button type="submit" id="gerar" class="btn btn-primary ml-auto" style="display:none;">
 				                	{{ __('Gerar') }}
@@ -125,7 +129,7 @@ $(document).ready(function(){
 
 	function cursos_dynamic_field()
 	{
-		html = '<div class="dropdown">';
+		html = '<div class="dropdown" id="dropdown">';
 		html += '<label>Curso</label><select name="dados" class="form-control custom-select" required>'
 						  +"<option selected value='0'>Todos</option>"
 		                  +"@foreach($cursos as $curso)"
@@ -137,13 +141,15 @@ $(document).ready(function(){
 		$('#auth-rows').append(html);
 
 		document.getElementById("add").style.display = "none";
+		document.getElementById("tipoFormGroup").style.display = "none";
+		document.getElementById("voltar").style.display = "block";
 		document.getElementById("gerar").style.display = "block";
 	    
 	}
 
 	function paises_dynamic_field()
 	{
-		html = '<div class="dropdown">';
+		html = '<div class="dropdown" id="dropdown">';
 		html += '<label>País</label><select name="dados" class="form-control custom-select" required>'
 						  +"<option selected value='0'>Todos</option>"
 		                  +"@foreach($paises as $pais)"
@@ -155,6 +161,8 @@ $(document).ready(function(){
 		$('#auth-rows').append(html);
 
 		document.getElementById("add").style.display = "none";
+		document.getElementById("tipoFormGroup").style.display = "none";
+		document.getElementById("voltar").style.display = "block";
 		document.getElementById("gerar").style.display = "block";
 	    
 	}
@@ -166,6 +174,14 @@ $(document).ready(function(){
 		else{
 			paises_dynamic_field();
 		}
+	});
+
+	$(document).on('click', '#voltar', function(){
+		$('#dropdown').remove();
+		document.getElementById("add").style.display = "block";
+		document.getElementById("tipoFormGroup").style.display = "block";
+		document.getElementById("voltar").style.display = "none";
+		document.getElementById("gerar").style.display = "none";
 	});
 });
 
@@ -192,12 +208,26 @@ $(document).ready(function(){
 	      	@endforeach
 	      ],
 	      backgroundColor: [
-	        'rgba(255, 99, 132, 0.2)',
-	        'rgba(54, 162, 235, 0.2)',
-	        'rgba(255, 206, 86, 0.2)',
-	        'rgba(75, 192, 192, 0.2)',
-	        'rgba(153, 102, 255, 0.2)',
-	        'rgba(255, 159, 64, 0.2)'
+	        'rgba(255, 99, 132, 0.5)',
+	        'rgba(54, 162, 235, 0.5)',
+	        'rgba(255, 206, 86, 0.5)',
+	        'rgba(75, 192, 192, 0.5)',
+	        'rgba(153, 102, 255, 0.5)',
+	        'rgba(255, 159, 64, 0.5)',
+
+	        'rgba(155, 99, 132, 0.5)',
+	        'rgba(154, 162, 235, 0.5)',
+	        'rgba(155, 206, 86, 0.5)',
+	        'rgba(175, 192, 192, 0.5)',
+	        'rgba(103, 102, 255, 0.5)',
+	        'rgba(155, 159, 64, 0.5)',
+
+	        'rgba(055, 99, 132, 0.5)',
+	        'rgba(054, 162, 235, 0.5)',
+	        'rgba(055, 206, 86, 0.5)',
+	        'rgba(075, 192, 192, 0.5)',
+	        'rgba(003, 102, 255, 0.5)',
+	        'rgba(055, 159, 64, 0.5)'
 	      ],
 	      borderColor: [
 	        'rgba(255,99,132,1)',
@@ -205,7 +235,21 @@ $(document).ready(function(){
 	        'rgba(255, 206, 86, 1)',
 	        'rgba(75, 192, 192, 1)',
 	        'rgba(153, 102, 255, 1)',
-	        'rgba(255, 159, 64, 1)'
+	        'rgba(255, 159, 64, 1)',
+
+	        'rgba(155, 99,132,1)',
+	        'rgba(154, 162, 235, 1)',
+	        'rgba(155, 206, 86, 1)',
+	        'rgba(175, 192, 192, 1)',
+	        'rgba(103, 102, 255, 1)',
+	        'rgba(155, 159, 64, 1)',
+
+	        'rgba(055, 99,132,1)',
+	        'rgba(054, 162, 235, 1)',
+	        'rgba(055, 206, 86, 1)',
+	        'rgba(075, 192, 192, 1)',
+	        'rgba(003, 102, 255, 1)',
+	        'rgba(055, 159, 64, 1)'
 	      ],
 	      borderWidth: 1,
 	      fill: false
@@ -273,7 +317,21 @@ $(document).ready(function(){
 	        'rgba(255, 206, 86, 0.5)',
 	        'rgba(75, 192, 192, 0.5)',
 	        'rgba(153, 102, 255, 0.5)',
-	        'rgba(255, 159, 64, 0.5)'
+	        'rgba(255, 159, 64, 0.5)',
+
+	        'rgba(155, 99, 132, 0.5)',
+	        'rgba(154, 162, 235, 0.5)',
+	        'rgba(155, 206, 86, 0.5)',
+	        'rgba(175, 192, 192, 0.5)',
+	        'rgba(103, 102, 255, 0.5)',
+	        'rgba(155, 159, 64, 0.5)',
+
+	        'rgba(055, 99, 132, 0.5)',
+	        'rgba(054, 162, 235, 0.5)',
+	        'rgba(055, 206, 86, 0.5)',
+	        'rgba(075, 192, 192, 0.5)',
+	        'rgba(003, 102, 255, 0.5)',
+	        'rgba(055, 159, 64, 0.5)'
 	      ],
 	      borderColor: [
 	        'rgba(255,99,132,1)',
@@ -281,7 +339,21 @@ $(document).ready(function(){
 	        'rgba(255, 206, 86, 1)',
 	        'rgba(75, 192, 192, 1)',
 	        'rgba(153, 102, 255, 1)',
-	        'rgba(255, 159, 64, 1)'
+	        'rgba(255, 159, 64, 1)',
+
+	        'rgba(155, 99,132,1)',
+	        'rgba(154, 162, 235, 1)',
+	        'rgba(155, 206, 86, 1)',
+	        'rgba(175, 192, 192, 1)',
+	        'rgba(103, 102, 255, 1)',
+	        'rgba(155, 159, 64, 1)',
+
+	        'rgba(055, 99,132,1)',
+	        'rgba(054, 162, 235, 1)',
+	        'rgba(055, 206, 86, 1)',
+	        'rgba(075, 192, 192, 1)',
+	        'rgba(003, 102, 255, 1)',
+	        'rgba(055, 159, 64, 1)'
 	      ],
 	    }],
 

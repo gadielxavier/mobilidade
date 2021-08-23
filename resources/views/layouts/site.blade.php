@@ -160,7 +160,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/estudantes/uefs">
+            <a class="nav-link" href="{{ route('estudantes.uefs') }}">
              <i class="ti-shift-right menu-icon"></i>
               <span class="menu-title">Estudantes Out</span>
             </a>
