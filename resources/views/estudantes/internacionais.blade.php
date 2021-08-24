@@ -197,7 +197,7 @@
 											                <label>Final</label>
 											                <input type="date" value="{{ $estudante->final }}" id="final" name="final" class="form-control" required>
 											            </div>
-											            <div class="form-group" id="auth-rows_{{ $estudante->id }}">
+											            <div class="form-group" id="auth-rows_{{ $estudante->id }}" style="display: none;">
 											            	<div class="dropdown">
 																<label>Vínculo</label>
 																<select name="vinculo" id="vinculo_{{ $estudante->id }}" class="form-control custom-select" required>
@@ -485,11 +485,18 @@ $(document).ready(function(){
 		document.getElementById("InicioFormGroup_"+index).style.display = "none";
 		document.getElementById("FinalFormGroup_"+index).style.display = "none";
 
+		document.getElementById("auth-rows_"+index).style.display = "block";
 		document.getElementById("voltar_"+index).style.display = "block";
 		document.getElementById("gerar_"+index).style.display = "block";
 	}
 
 	function voltarFunction(index) {
+
+		var select = document.getElementById("vinculo_"+index);
+		var length = select.options.length;
+		for (i = length-1; i >= 1; i--) {
+		  select.options[i] = null;
+		}
 
 		document.getElementById("add_"+index).style.display = "block";
 		document.getElementById("NomeFormGroup_"+index).style.display = "block";
@@ -500,6 +507,7 @@ $(document).ready(function(){
 		document.getElementById("InicioFormGroup_"+index).style.display = "block";
 		document.getElementById("FinalFormGroup_"+index).style.display = "block";
 		
+		document.getElementById("auth-rows_"+index).style.display = "none";
 		document.getElementById("voltar_"+index).style.display = "none";
 		document.getElementById("gerar_"+index).style.display = "none";
 	}
