@@ -247,7 +247,7 @@ class EstudanteController extends Controller
                 'edital_id' => $edital->id,
                 'primeira_opcao_universidade'=> $request->universidade,
                 'primeira_opcao_curso' => $request->curso,
-                'primeira_opcao_pais' => $convenio->universidade,
+                'primeira_opcao_pais' => $convenio->pais,
                 'segunda_opcao_universidade' => $request->universidade,
                 'segunda_opcao_curso' => $request->curso,
                 'segunda_opcao_pais'=> $convenio->pais,
