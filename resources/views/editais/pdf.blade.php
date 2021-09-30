@@ -9,7 +9,7 @@
 		<div class="container-fluid">
 			<div class="card">
 				<div class="card-body table-responsive">
-					<img src="theme/images/cabecalho.png" alt="cabecalho" width="100%" height="100%">
+					<!-- <img src="theme/images/cabecalho.png" alt="cabecalho" width="100%" height="100%"> -->
 
 					<h3 align="center">EDITAL {{$edital->nome.' '.$edital->numero}}</h3> 
 					<h3 align="center">{{ $edital->status->titulo }}</h3> 
