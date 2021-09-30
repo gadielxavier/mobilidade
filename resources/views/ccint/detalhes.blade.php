@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="ccontainer-fluid">
+<div class="container-fluid">
 	<form class="form-prevent-multiple-submits" method="POST" action="/ccint/store/{{ $candidatura->id }}" enctype="multipart/form-data" id="myForm">
 		{!! csrf_field() !!}
 		<div class="row">
@@ -72,26 +72,42 @@
 			        	</div>
 			        </div>
 			    </div>
-			    <div class="col-md-6">
-			    	<div class="card-body">
-			    		<h4 class="card-title">Arquivos</h4>
-			    		<p class="card-description">Baixo os planos de trabalho abaixo. Faça a média dos três e preencha o formulário ao lado.</p>
-			    		<div class="template-demo">
-			    			<a href="{{ route('ccint.trabalho1', $candidatura->id) }}" target="_blank"  type="button" class="btn btn-info btn-lg btn-block">
-			    				Plano de Trabalho 1
-			    				<i class="ti-printer float-right"></i>
-		                    </a>
-		                    <a href="{{ route('ccint.trabalho2', $candidatura->id) }}" target="_blank" type="button" class="btn btn-dark btn-lg btn-block">
-		                    	Plano de Trabalho 2
-		                    	<i class="ti-printer float-right"></i>
-		                    </a>
-		                    <a href="{{ route('ccint.trabalho3', $candidatura->id) }}" target="_blank" type="button" class="btn btn-primary btn-lg btn-block">                     
-		                    	Plano de Trabalho 3
-		                    	<i class="ti-printer float-right"></i>
-		                    </a>
-			        	</div>
-			        </div>
-			    </div>
+			    @if($editalAeri->nome == $edital->nome)
+				    <div class="col-md-6">
+				    	<div class="card-body">
+				    		<h4 class="card-title">Arquivos</h4>
+				    		<p class="card-description">Baixo os planos de trabalho abaixo. Faça a média dos três e preencha o formulário ao lado.</p>
+				    		<div class="template-demo">
+				    			<a href="{{ route('ccint.trabalho1', $candidatura->id) }}" target="_blank"  type="button" class="btn btn-info btn-lg btn-block">
+				    				Plano de Trabalho 1
+				    				<i class="ti-printer float-right"></i>
+			                    </a>
+			                    <a href="{{ route('ccint.trabalho2', $candidatura->id) }}" target="_blank" type="button" class="btn btn-dark btn-lg btn-block">
+			                    	Plano de Trabalho 2
+			                    	<i class="ti-printer float-right"></i>
+			                    </a>
+			                    <a href="{{ route('ccint.trabalho3', $candidatura->id) }}" target="_blank" type="button" class="btn btn-primary btn-lg btn-block">                     
+			                    	Plano de Trabalho 3
+			                    	<i class="ti-printer float-right"></i>
+			                    </a>
+				        	</div>
+				        </div>
+				    </div>
+			    @else
+			    	<div class="col-md-6">
+				    	<div class="card-body">
+				    		<h4 class="card-title">Arquivos</h4>
+				    		@foreach($documentos as $documento)
+					    		<div class="template-demo">
+					    			<a href="{{ route('ccint.documento', $documento->id) }}" target="_blank"  type="button" class="btn btn-info btn-lg btn-block">
+					    				Plano de Trabalho
+					    				<i class="ti-printer float-right"></i>
+				                    </a>
+					        	</div>
+				        	@endforeach
+				        </div>
+				    </div>
+			    @endif
 			</div>
 		</div>
 

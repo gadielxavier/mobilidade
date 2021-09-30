@@ -2,88 +2,99 @@
 
 @section('content')
 
-<div class="ccontainer-fluid">
+<div class="container-fluid">
 	<div class="row">
 	    <div class="col-md-12 grid-margin">
 	      <div class="d-flex justify-content-between align-items-center">
 	        <div>
 	          <h4 class="font-weight-bold mb-0">Equipe</h4>
 	        </div>
+	        <div>
+        		<button type="submit" data-toggle="modal" data-target="#funcionarioModal" class="btn btn-primary btn-icon-text btn-rounded">
+        			<i class="ti-user btn-icon-prepend"></i>
+                 	Adicionar Equipe
+                </button>
+      		</div>
 	      </div>
 	    </div>
 	</div>
 
-	<div class="row table-responsive">
-		<div class="input-group">
-                <button type="submit" data-toggle="modal" data-target="#funcionarioModal" class="btn btn-primary ml-auto">
-                  {{ __('Adicionar') }}
-                </button>
-              </div>
+	<div class="row">
+	    <div class="col-md-12 grid-margin">
+	    	<div class="card">
+            	<div class="card-body">
+					<div class="table-responsive">
+						<div class="input-group">
+				                
+				              </div>
 
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					 <th>Nome</th>
-					 <th>Tipo</th>
-				</tr>
-	    </thead>
-	    <tbody>
-	      @foreach ($equipe as $funcionario)
-		      <tr>
-		        <td>
-		          @isset($funcionario->name)
-		            {{ $funcionario->name }}
-		          @endif
-		        </td>
-		        <td>
-		          @isset($funcionario->privilegio)
-		          	@if($funcionario->privilegio == 2)
-		          		Servidor Aeri
-		          	@elseif($funcionario->privilegio == 3)
-				    	Participante CCint
-		          	@endif
-		          @endif
-		        </td>
-		        <td>
-		          	<a href="#deleteModal_{{ $funcionario->id }}" data-toggle="modal" class="btn btn-danger btn-sm"> Excluir</a>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									 <th>Nome</th>
+									 <th>Tipo</th>
+								</tr>
+					    </thead>
+					    <tbody>
+					      @foreach ($equipe as $funcionario)
+						      <tr>
+						        <td>
+						          @isset($funcionario->name)
+						            {{ $funcionario->name }}
+						          @endif
+						        </td>
+						        <td>
+						          @isset($funcionario->privilegio)
+						          	@if($funcionario->privilegio == 2)
+						          		Servidor Aeri
+						          	@elseif($funcionario->privilegio == 3)
+								    	Participante CCint
+						          	@endif
+						          @endif
+						        </td>
+						        <td>
+						          	<a href="#deleteModal_{{ $funcionario->id }}" data-toggle="modal" class="btn btn-danger btn-sm"> Excluir</a>
 
-		          	<div id="deleteModal_{{ $funcionario->id }}" class="modal fade">
-		          		<div class="modal-dialog">
-		          			<div class="modal-content">
-		          				<div class="modal-header">
-		          					<h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
-		          					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-		          						<span aria-hidden="true">×</span>
-		          					</button>
-		          				</div>
-		          				<div class="modal-body">
-		          					<form class="form-horizontal" method="POST" action="equipe/delete/{{ $funcionario->id }}">
-				                      {{ csrf_field() }}
-				                      <input type="hidden" name="_method" value="DELETE">
-				                      <h6>Você tem certeza que deseja excluir esta funcionário?</h6>
+						          	<div id="deleteModal_{{ $funcionario->id }}" class="modal fade">
+						          		<div class="modal-dialog">
+						          			<div class="modal-content">
+						          				<div class="modal-header">
+						          					<h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
+						          					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						          						<span aria-hidden="true">×</span>
+						          					</button>
+						          				</div>
+						          				<div class="modal-body">
+						          					<form class="form-horizontal" method="POST" action="equipe/delete/{{ $funcionario->id }}">
+								                      {{ csrf_field() }}
+								                      <input type="hidden" name="_method" value="DELETE">
+								                      <h6>Você tem certeza que deseja excluir esta funcionário?</h6>
 
-				                    	<div class="modal-footer">
-				                      		<div class="form-group">
-				                        		<button type="submit" class="btn btn-primary">
-				                          			Sim
-				                        		</button>
-				                        		<button type="button" data-dismiss="modal" class="btn btn-outline-primary">
-				                          			Não
-				                        		</button>
-				                      		</div>
-				                    	</div>
-				      				</form>
-				      			</div>
-				      		</div>
-				      	</div>
-				    </div>
-		        </td>
-		      </tr>
-	      @endforeach
-	    </tbody>
-	  </table>
+								                    	<div class="modal-footer">
+								                      		<div class="form-group">
+								                        		<button type="submit" class="btn btn-primary">
+								                          			Sim
+								                        		</button>
+								                        		<button type="button" data-dismiss="modal" class="btn btn-outline-primary">
+								                          			Não
+								                        		</button>
+								                      		</div>
+								                    	</div>
+								      				</form>
+								      			</div>
+								      		</div>
+								      	</div>
+								    </div>
+						        </td>
+						      </tr>
+					      @endforeach
+					    </tbody>
+					  </table>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-
 </div>
 
 <!-- Modal-->

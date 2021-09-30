@@ -48,6 +48,7 @@ Route::group(['prefix' => 'editais',  'middleware' => ['auth','staff']], functio
     Route::get('detalhes/candidatura/estudo3/{id}', 'CandidaturasController@estudo3')->name('editais.estudo3');
     Route::get('detalhes/candidatura/estudo4/{id}', 'CandidaturasController@estudo4')->name('editais.estudo4');
     Route::get('detalhes/candidatura/foto/{id}', 'CandidaturasController@foto')->name('editais.foto');
+    Route::get('detalhes/candidatura/documento/{id}', 'CandidaturasController@documento')->name('editais.documento');
     Route::get('detalhes/candidatura/comprovacao/{id}', 'CandidaturasController@comprovacao')->name('editais.comprovacao');
     Route::get('detalhes/candidatura/certificado_proficiencia1/{id}', 'CandidaturasController@certificado_proficiencia1')->name('editais.certificado_proficiencia1');
     Route::get('detalhes/candidatura/certificado_proficiencia2/{id}', 'CandidaturasController@certificado_proficiencia2')->name('editais.certificado_proficiencia2');
@@ -79,6 +80,7 @@ Route::group(['prefix' => 'candidaturas',  'middleware' => ['auth','candidato']]
     Route::get('detalhes/{id}', 'CandidaturasController@details');
     Route::get('inscricao/{id}', 'CandidaturasController@inscricao');
     Route::get('atualizacao/candidaturas/comprovacao/{id}', 'CandidaturasController@comprovacao');
+    Route::get('atualizacao/candidaturas/documento/{id}', 'CandidaturasController@documento');
     Route::get('atualizacao/{id}', 'CandidaturasController@atualizacao');
     Route::get('certificado1/{id}', 'CandidaturasController@certificado_proficiencia1')->name('candidaturas.certificado1');
     Route::get('certificado2/{id}', 'CandidaturasController@certificado_proficiencia2')->name('candidaturas.certificado2');
@@ -130,6 +132,7 @@ Route::group(['prefix' => 'ccint',  'middleware' => ['auth','ccint']], function(
     Route::get('detalhes/candidatura/comprovacao/{id}', 'CandidaturasController@comprovacao')->name('ccint.comprovacao');
     Route::get('detalhes/candidatura/certificado/{id}', 'CandidaturasController@certificado')->name('ccint.certificado');
     Route::get('detalhes/candidatura/carta/{id}', 'CandidaturasController@carta')->name('ccint.carta');
+    Route::get('detalhes/candidatura/documento/{id}', 'CandidaturasController@documento')->name('ccint.documento');
 
     Route::get('avaliacoesFinalizadas', 'CcintController@avaliacoesFinalizadas')->name('ccint.avaliacoesFinalizadas');
     Route::get('/', 'CcintController@index');
@@ -165,6 +168,13 @@ Route::group(['prefix' => 'estudantes',  'middleware' => ['auth','staff']], func
     Route::post('addEstudanteUefs', 'EstudanteController@addEstudanteUefs');
     Route::post('update/uefs/{id}', 'EstudanteController@updateEstudanteUefs')->name('estudantes.updateUefs');
 });
+
+Route::group(['prefix' => 'documentos',  'middleware' => ['auth','staff']], function() {
+    Route::post('store', 'DocumentoController@store')->name('documentos.store');
+    Route::post('update/{id}','DocumentoController@update');
+    Route::get('/', 'DocumentoController@index');
+});
+
 
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('config:clear');

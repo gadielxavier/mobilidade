@@ -4,116 +4,124 @@
 
 
 
-<div class="ccontainer-fluid">
+<div class="container-fluid">
 	<div class="row">
 	    <div class="col-md-12 grid-margin">
 	      <div class="d-flex justify-content-between align-items-center">
 	        <div>
 	          <h4 class="font-weight-bold mb-0">Editais</h4>
 	        </div>
+	        <div>
+        		<button type="submit" data-toggle="modal" data-target="#editalModal" class="btn btn-primary btn-icon-text btn-rounded">
+        			<i class="ti-clipboard btn-icon-prepend"></i>
+                	Adicionar Edital
+                </button>
+      		</div>
 	      </div>
 	    </div>
 	</div>
 
-	<div class="row table-responsive">
-		@if(session()->has('message'))
-		    <div class="alert alert-success alert-dismissible fade show">
-		        {{ session()->get('message') }}
-		        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    <span aria-hidden="true">&times;</span>
-				</button>
-		    </div>
-		@endif
-		<div class="input-group">
-                <button type="submit" data-toggle="modal" data-target="#editalModal" class="btn btn-primary ml-auto">
-                  {{ __('Adicionar') }}
-                </button>
-              </div>
+	@if(session()->has('message'))
+	    <div class="alert alert-success alert-dismissible fade show">
+	        {{ session()->get('message') }}
+	        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			</button>
+	    </div>
+	@endif
 
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					 <th>Nome</th>
-                      <th>Número</th>
-                      <th>Bolsas</th>
-                      <th>Encerramento Inscrição</th>
-                      <th>Status</th>
-				</tr>
-	    </thead>
-	    <tbody>
-	    	<div class="scrolling-pagination">
-		      @foreach ($editais as $edital)
-			      <tr>
-			        <td>
-			          @isset($edital->nome)
-			            {{ $edital->nome }}</td>
-			          @endif
-			        <td> 
-			          @isset($edital->numero)
-			            {{ $edital->numero }}
-			          @endif
-			        </td>
-			        <td>
-			          @isset($edital->qtd_bolsas)
-			            {{ $edital->qtd_bolsas }}</td>
-			          @endif
-			        <td> 
-			          @isset($edital->fim_inscricao)
-			            {{ $edital->fim_inscricao->format('d/m/Y') }}
-			          @endif
-			        </td>
-			        <td> 
-			          @isset($edital->status->titulo)
-			            {{ $edital->status->titulo }}
-			          @endif
-			        </td>
-			        <td>
-			          <a href="/editais/detalhes/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Detalhes</a>
-			        </td>
-			        
-			        <td>
-			          	<!-- <a href="#deleteModal_{{ $edital->id }}" data-toggle="modal" class="btn btn-danger btn-sm"> Excluir</a> -->
+	<div class="row">
+		<div class="col-lg-12 grid-margin stretch-card">
+        	<div class="card">
+        		<div class="card-body">
+        			<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									 <th>Nome</th>
+				                      <th>Número</th>
+				                      <th>Bolsas</th>
+				                      <th>Encerramento Inscrição</th>
+				                      <th>Status</th>
+								</tr>
+					    </thead>
+					    <tbody>
+					    	<div class="scrolling-pagination">
+						      @foreach ($editais as $edital)
+							      <tr>
+							        <td>
+							          @isset($edital->nome)
+							            {{ $edital->nome }}</td>
+							          @endif
+							        <td> 
+							          @isset($edital->numero)
+							            {{ $edital->numero }}
+							          @endif
+							        </td>
+							        <td>
+							          @isset($edital->qtd_bolsas)
+							            {{ $edital->qtd_bolsas }}</td>
+							          @endif
+							        <td> 
+							          @isset($edital->fim_inscricao)
+							            {{ $edital->fim_inscricao->format('d/m/Y') }}
+							          @endif
+							        </td>
+							        <td> 
+							          @isset($edital->status->titulo)
+							            {{ $edital->status->titulo }}
+							          @endif
+							        </td>
+							        <td>
+							          <a href="/editais/detalhes/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Detalhes</a>
+							        </td>
+							        
+							        <td>
+							          	<!-- <a href="#deleteModal_{{ $edital->id }}" data-toggle="modal" class="btn btn-danger btn-sm"> Excluir</a> -->
 
-			          	<div id="deleteModal_{{ $edital->id }}" class="modal fade">
-			          		<div class="modal-dialog">
-			          			<div class="modal-content">
-			          				<div class="modal-header">
-			          					<h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
-			          					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-			          						<span aria-hidden="true">×</span>
-			          					</button>
-			          				</div>
-			          				<div class="modal-body">
-			          					<form class="form-horizontal" method="POST" action="editais/detalhes/delete/{{ $edital->id }}">
-					                      {{ csrf_field() }}
-					                      <input type="hidden" name="_method" value="DELETE">
-					                      <h6>Você tem certeza que deseja excluir esta edital?</h6>
+							          	<div id="deleteModal_{{ $edital->id }}" class="modal fade">
+							          		<div class="modal-dialog">
+							          			<div class="modal-content">
+							          				<div class="modal-header">
+							          					<h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
+							          					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							          						<span aria-hidden="true">×</span>
+							          					</button>
+							          				</div>
+							          				<div class="modal-body">
+							          					<form class="form-horizontal" method="POST" action="editais/detalhes/delete/{{ $edital->id }}">
+									                      {{ csrf_field() }}
+									                      <input type="hidden" name="_method" value="DELETE">
+									                      <h6>Você tem certeza que deseja excluir esta edital?</h6>
 
-					                    	<div class="modal-footer">
-					                      		<div class="form-group">
-					                        		<button type="submit" class="btn btn-primary">
-					                          			Sim
-					                        		</button>
-					                        		<button type="button" data-dismiss="modal" class="btn btn-outline-primary">
-					                          			Não
-					                        		</button>
-					                      		</div>
-					                    	</div>
-					      				</form>
-					      			</div>
-					      		</div>
-					      	</div>
-					    </div>
-					</td>
-					
-			      </tr>
-		      @endforeach
-		    </div>
-	    </tbody>
-	  </table>
-	  {{ $editais->links("pagination::bootstrap-4") }}
-	</div>
-
+									                    	<div class="modal-footer">
+									                      		<div class="form-group">
+									                        		<button type="submit" class="btn btn-primary">
+									                          			Sim
+									                        		</button>
+									                        		<button type="button" data-dismiss="modal" class="btn btn-outline-primary">
+									                          			Não
+									                        		</button>
+									                      		</div>
+									                    	</div>
+									      				</form>
+									      			</div>
+									      		</div>
+									      	</div>
+									    </div>
+									</td>
+									
+							      </tr>
+						      @endforeach
+						    </div>
+					    </tbody>
+					  </table>
+					  {{ $editais->links("pagination::bootstrap-4") }}
+					</div>
+          		</div>
+      		</div>
+      	</div>
+    </div>	
 </div>
 
 <!-- Modal-->
@@ -292,7 +300,7 @@
 			               <thead>
 			                <tr>
 			                  <th width="35%">Universidade</th>
-			                  <th width="35%">Bolsas</th>
+			                  <th width="35%">Vagas</th>
 			                  <th width="30%">Ação</th>
 			                </tr>
 			              </thead>

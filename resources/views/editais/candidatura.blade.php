@@ -2,105 +2,118 @@
 
 @section('content')
 
-<div class="ccontainer-fluid">
+<div class="container-fluid">
+	<div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h4 class="font-weight-bold mb-0">Detalhes do Candidato</h4>
+          </div>
+        </div>
+      </div>
+    </div>
 
-	<div class="card">
-		<div class="card-body">
-	          <p class="card-title">Dados candidato</p>
-	    </div>
-	    <div class="card-body">
-	    	<div class="row">
-    			<div class="col-md-4">
-    				@if(isset($candidatura->candidato->nome))
-                	<p>
-                		<b>Nome:</b>
-				        {{ $candidatura->candidato->nome }}
-				    </p>
-				    @endif
+	<div class="row">
+	    <div class="col-md-12 grid-margin">
+			<div class="card">
+				<div class="card-body">
+			          <p class="card-title">Dados candidato</p>
+			    </div>
+			    <div class="card-body">
+			    	<div class="row">
+		    			<div class="col-md-4">
+		    				@if(isset($candidatura->candidato->nome))
+		                	<p>
+		                		<b>Nome:</b>
+						        {{ $candidatura->candidato->nome }}
+						    </p>
+						    @endif
 
-				    @if(isset($candidatura->candidato->curso))
-				    <p>
-				    	<b>Curso:</b>
-				        {{ $candidatura->candidato->curso }}
-				    </p>
-				    @endif
+						    @if(isset($candidatura->candidato->curso))
+						    <p>
+						    	<b>Curso:</b>
+						        {{ $candidatura->candidato->curso }}
+						    </p>
+						    @endif
 
-				    @if(isset($candidatura->candidato->matricula))
-				    <p>
-			      		<b>Matrícula</b>
-			      		{{ $candidatura->candidato->matricula }}
-			      	</p>
-			      	@endif
+						    @if(isset($candidatura->candidato->matricula))
+						    <p>
+					      		<b>Matrícula</b>
+					      		{{ $candidatura->candidato->matricula }}
+					      	</p>
+					      	@endif
 
-			      	@if(isset($candidatura->nome_professor_carta))
-			      	<p>
-			      		<b>Nome do Professor</b>
-			      		{{ $candidatura->nome_professor_carta }}
-			      	</p>
-			      	@endif
+					      	@if(isset($candidatura->nome_professor_carta))
+					      	<p>
+					      		<b>Nome do Professor</b>
+					      		{{ $candidatura->nome_professor_carta }}
+					      	</p>
+					      	@endif
 
-			      	@if(isset($candidatura->professor_departamento_id))
-			      	<p>
-			      		<b>Professor Departamento</b>
-			      		{{ $candidatura->departamento->nome }}
-			      	</p>
-			      	@endif                  
-			    </div>  
-            	<div class="col-md-4">
-              		@if(isset($candidatura->primeira_opcao_universidade))
-                	<p>
-			      		<b>1˚ Opção Universidade</b>
-			      		{{ $candidatura->primeira_opcao_universidade }}
-			      	</p>
-			      	@endif
+					      	@if(isset($candidatura->professor_departamento_id))
+					      	<p>
+					      		<b>Professor Departamento</b>
+					      		{{ $candidatura->departamento->nome }}
+					      	</p>
+					      	@endif                  
+					    </div>  
+		            	<div class="col-md-4">
+		              		@if(isset($candidatura->primeira_opcao_universidade))
+		                	<p>
+					      		<b>1˚ Opção Universidade</b>
+					      		{{ $candidatura->primeira_opcao_universidade }}
+					      	</p>
+					      	@endif
 
-			      	@if(isset($candidatura->segunda_opcao_universidade))
-			      	<p>
-			      		<b>2˚ Opção Universidade</b>
-			      		{{ $candidatura->segunda_opcao_universidade }}
-			      	</p>
-			      	@endif
+					      	@if(isset($candidatura->segunda_opcao_universidade))
+					      	<p>
+					      		<b>2˚ Opção Universidade</b>
+					      		{{ $candidatura->segunda_opcao_universidade }}
+					      	</p>
+					      	@endif
 
-			      	@if(isset($candidatura->terceira_opcao_universidade))
-			      	<p>
-			      		<b>3˚ Opção Universidade</b>
-			      		{{ $candidatura->terceira_opcao_universidade }}
-			      	</p>
-			      	@endif
+					      	@if(isset($candidatura->terceira_opcao_universidade))
+					      	<p>
+					      		<b>3˚ Opção Universidade</b>
+					      		{{ $candidatura->terceira_opcao_universidade }}
+					      	</p>
+					      	@endif
 
-			      	@if(isset($candidatura->quarta_opcao_universidade))
-			      	<p>
-			      		<b>4˚ Opção Universidade</b>
-			      		{{ $candidatura->quarta_opcao_universidade }}
-			      	</p>
-			      	@endif
-			    </div>  
-            	<div class="col-md-4">
-            		<form class="form-prevent-multiple-submits" method="POST" action="atualizar/{{ $candidatura->id }}" enctype="multipart/form-data">
-       				{!! csrf_field() !!}
-						<div class="form-group">
-							<label>Status Inscrição:</label>
-						    <div class="dropdown">
-					    		<select id="status" name="status" class="form-control custom-select">
-					                    @foreach($status as $estado)
-					                    	@if( $estado->id == $candidatura->status_id )
-						                     	<option selected>{{ $candidatura->status->titulo }}</option>
-						                    @else
-					                    		<option value="{{  $estado->titulo }}">{{ $estado->titulo }}</option>
-					                    	@endif
-					                    @endforeach
-					            </select>
-						        <div class="mt-3">
-						        	<button id="btnFetch" style="float: right;" type="submit" class="btn btn-primary btn-sm button-prevent-multiple-submits">
-					                  {{ __('Atuaizar') }}
-					                </button>
-						        </div>
-						    </div>
-					    </div>
-					</form>
-			    </div>  
-	    	</div>
-	    </div>		
+					      	@if(isset($candidatura->quarta_opcao_universidade))
+					      	<p>
+					      		<b>4˚ Opção Universidade</b>
+					      		{{ $candidatura->quarta_opcao_universidade }}
+					      	</p>
+					      	@endif
+					    </div>  
+		            	<div class="col-md-4">
+		            		<form class="form-prevent-multiple-submits" method="POST" action="atualizar/{{ $candidatura->id }}" enctype="multipart/form-data">
+		       				{!! csrf_field() !!}
+								<div class="form-group">
+									<label>Status Inscrição:</label>
+								    <div class="dropdown">
+							    		<select id="status" name="status" class="form-control custom-select">
+							                    @foreach($status as $estado)
+							                    	@if( $estado->id == $candidatura->status_id )
+								                     	<option selected>{{ $candidatura->status->titulo }}</option>
+								                    @else
+							                    		<option value="{{  $estado->titulo }}">{{ $estado->titulo }}</option>
+							                    	@endif
+							                    @endforeach
+							            </select>
+								        <div class="mt-3">
+								        	<button id="btnFetch" style="float: right;" type="submit" class="btn btn-primary btn-sm button-prevent-multiple-submits">
+							                  {{ __('Atuaizar') }}
+							                </button>
+								        </div>
+								    </div>
+							    </div>
+							</form>
+					    </div>  
+			    	</div>
+			    </div>		
+			</div>
+		</div>
 	</div>
 
 	<div class="row">
@@ -315,7 +328,7 @@
 				          <div class="form-group">
 				            <div class="input-group">
 				              <button type="submit" class="btn btn-primary ml-auto utton-prevent-multiple-submits">
-				                {{ __('Enviar') }}
+				                {{ __('Atualizar') }}
 				              </button>
 				            </div>
 				          </div>
@@ -376,6 +389,41 @@
 				    	</table>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	@endif
+
+	@if($documentos->isNotEmpty())
+	<div class="row">
+		<div class="col-md-12 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+              		<p class="card-title mb-0">Documentos Editais Genéricos</p>
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+									<tr>
+										 <th>Tipo de Documento</th>
+									</tr>
+						    </thead>
+			                <tbody>
+			                	@foreach($documentos as $documento)
+			                	<tr>
+			                    	<td>
+			                    		{{ $documento->titulo }}
+			                    	</td>
+			                        <td> 
+			                        	<a  href="documento/{{ $documento->id }}" class="btn btn-primary btn-sm" target="_blank">
+					                    		Visualizar
+					                    </a>
+			                        </td>
+			                    </tr>
+			                    @endforeach
+			                </tbody>
+			            </table>
+			        </div>
+			    </div>
 			</div>
 		</div>
 	</div>
@@ -444,6 +492,7 @@
 			                            </a>
 			                        </td>
 			                    </tr>
+			                    @if($candidatura->plano_trabalho1 != '0')
 			                    <tr>
 			                    	<td>
 			                    		Plano de Trabalho 1
@@ -454,6 +503,8 @@
 			                            </a>
 			                        </td>
 			                    </tr>
+			                    @endif
+			                    @if($candidatura->plano_trabalho2 != '0')
 			                    <tr>
 			                    	<td>
 			                    		Plano de Trabalho 2
@@ -464,6 +515,8 @@
 			                            </a>
 			                        </td>
 			                    </tr>
+			                    @endif
+			                    @if($candidatura->plano_trabalho3 != '0')
 			                    <tr>
 			                    	<td>
 			                    		Plano de Trabalho 3
@@ -474,7 +527,8 @@
 			                            </a>
 			                        </td>
 			                    </tr>
-			                    @if(isset($candidatura->plano_estudo4))
+			                    @endif
+			                    @if(isset($candidatura->plano_trabalho4))
 			                    <tr>
 			                    	<td>
 			                    		Plano de Trabalho 4
@@ -487,6 +541,7 @@
 			                    </tr>
 			                    @endif
 			                    <tr>
+			                    @if($candidatura->plano_estudo1 != '0')
 			                    	<td>
 			                    		Plano de Estudos 1
 			                    	</td>
@@ -496,7 +551,9 @@
 			                            </a>
 			                        </td>
 			                    </tr>
+			                    @endif
 			                    <tr>
+			                    @if($candidatura->plano_estudo2 != '0')
 			                    	<td>
 			                    		Plano de Estudos 2
 			                    	</td>
@@ -506,7 +563,9 @@
 			                            </a>
 			                        </td>
 			                    </tr>
+			                    @endif
 			                    <tr>
+			                    @if($candidatura->plano_estudo3 != '0')
 			                    	<td>
 			                    		Plano de Estudos 3
 			                    	</td>
@@ -516,6 +575,7 @@
 			                            </a>
 			                        </td>
 			                    </tr>
+			                    @endif
 			                    @if(isset($candidatura->plano_estudo4))
 			                    <tr>
 			                    	<td>

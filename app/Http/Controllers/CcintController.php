@@ -68,13 +68,24 @@ class CcintController extends Controller
             }
         }
 
+        $editalAeri = DB::table('programas')->where('id', 1)->first();
+
+        $edital = Editais::where('id', $candidatura->edital_id)->first();
+
+        $documentos = DB::table('documento_arquivo')
+        ->where('documento_id', 1)
+        ->where('candidatura_id', $candidatura->id)->get();
+
         $data = [
-            'candidatura' => $candidatura,
-            'comprovacoes' => $comprovacoes,
+            'candidatura'          => $candidatura,
+            'comprovacoes'         => $comprovacoes,
             'arquivoParticipacoes' => $arquivoParticipacoes,
-            'arquivoIndicadores' => $arquivoIndicadores,
+            'arquivoIndicadores'   => $arquivoIndicadores,
             'arquivoRepresentacao' => $arquivoRepresentacao,
-            'arquivoInstitucional' => $arquivoInstitucional
+            'arquivoInstitucional' => $arquivoInstitucional,
+            'editalAeri'           => $editalAeri,
+            'edital'               => $edital,
+            'documentos'           => $documentos
         ]; 
        
           return view('ccint.detalhes')->with($data);

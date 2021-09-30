@@ -5,7 +5,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="ccontainer-fluid">
+		<div class="container-fluid">
 			<div class="card">
 				<div class="card-body table-responsive">
 					<h3 align="center">Estatística da Mobilidade Estudantil - UEFS - Por {{ $tipo }}</h3>

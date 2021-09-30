@@ -7,78 +7,86 @@
 <div class="ccontainer-fluid">
 	<div class="row">
 	    <div class="col-md-12 grid-margin">
-	      <div class="d-flex justify-content-between align-items-center">
-	        <div>
-	          <h4 class="font-weight-bold mb-0">Convênios</h4>
+	      	<div class="d-flex justify-content-between align-items-center">
+	        	<div>
+	          	<h4 class="font-weight-bold mb-0">Convênios</h4>
 	        </div>
+	        <div>
+        		<button type="submit" data-toggle="modal" data-target="#convenioModal" class="btn btn-primary btn-icon-text btn-rounded">
+        			<i class="ti-world btn-icon-prepend"></i>
+                 	Adicionar Convênio
+                </button>
+      		</div>
 	      </div>
 	    </div>
 	</div>
 
-	<div class="row table-responsive">
-		@if(session()->has('message'))
-		    <div class="alert alert-success alert-dismissible fade show">
-		        {{ session()->get('message') }}
-		        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    <span aria-hidden="true">&times;</span>
-				</button>
-		    </div>
-		@endif
-		<div class="input-group">
-                <button type="submit" data-toggle="modal" data-target="#convenioModal" class="btn btn-primary ml-auto">
-                  {{ __('Adicionar') }}
-                </button>
-              </div>
+	@if(session()->has('message'))
+	    <div class="alert alert-success alert-dismissible fade show">
+	        {{ session()->get('message') }}
+	        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			</button>
+	    </div>
+	@endif
 
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					 <th>Universidade</th>
-                      <th>País</th>
-                      <th>Proficiência</th>
-                      <th>Status</th>
-				</tr>
-	    </thead>
-	    <tbody>
-	    	<div class="scrolling-pagination">
-		      @foreach ($convenios as $convenio)
-			      <tr>
-			        <td>
-			        @isset($convenio->universidade)
-			          	@if(strlen($convenio->universidade) > 35 )
-			          		<label data-toggle="tooltip" title="{{ $convenio->universidade  }}">{{ substr($convenio->universidade,0,35).('...')}}</label>
-                            
-                         @else
-                            {{ $convenio->universidade }}
-                         @endif
-                    @endif
-			        </td>  
-			        <td> 
-			          @isset($convenio->pais)
-			            {{ $convenio->pais }}
-			          @endif
-			        </td>
-			        <td>
-			          @isset($convenio->proeficiencia->lingua)
-			            {{ $convenio->proeficiencia->lingua.' '.$convenio->proeficiencia->nivel }}
-			          @endif
-			        </td>
-			        @if($convenio->status == '1')
-			        	<td>Ativado</td>
-			        @else
-			        	<td>Desativado</td>
-			        	@endif
-			        <td> 
-			          <a href="/convenios/detalhes/{{ $convenio->id }}"  class="btn btn-primary btn-sm"> Editar</a>
-			        </td>
-			      </tr>
-		      @endforeach
-		    </div>
-	    </tbody>
-	  </table>
-	  {{ $convenios->links("pagination::bootstrap-4") }}
-	</div>
-
+	<div class="row">
+		<div class="col-lg-12 grid-margin stretch-card">
+         	<div class="card">
+        		<div class="card-body">
+        			<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									 <th>Universidade</th>
+				                      <th>País</th>
+				                      <th>Proficiência</th>
+				                      <th>Status</th>
+								</tr>
+					    </thead>
+					    <tbody>
+					    	<div class="scrolling-pagination">
+						      @foreach ($convenios as $convenio)
+							      <tr>
+							        <td>
+							        @isset($convenio->universidade)
+							          	@if(strlen($convenio->universidade) > 35 )
+							          		<label data-toggle="tooltip" title="{{ $convenio->universidade  }}">{{ substr($convenio->universidade,0,35).('...')}}</label>
+				                            
+				                         @else
+				                            {{ $convenio->universidade }}
+				                         @endif
+				                    @endif
+							        </td>  
+							        <td> 
+							          @isset($convenio->pais)
+							            {{ $convenio->pais }}
+							          @endif
+							        </td>
+							        <td>
+							          @isset($convenio->proeficiencia->lingua)
+							            {{ $convenio->proeficiencia->lingua.' '.$convenio->proeficiencia->nivel }}
+							          @endif
+							        </td>
+							        @if($convenio->status == '1')
+							        	<td>Ativado</td>
+							        @else
+							        	<td>Desativado</td>
+							        	@endif
+							        <td> 
+							          <a href="/convenios/detalhes/{{ $convenio->id }}"  class="btn btn-primary btn-sm"> Editar</a>
+							        </td>
+							      </tr>
+						      @endforeach
+						    </div>
+					    </tbody>
+					  </table>
+					  {{ $convenios->links("pagination::bootstrap-4") }}
+					</div>
+            	</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal-->

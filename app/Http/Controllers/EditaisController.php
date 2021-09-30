@@ -227,63 +227,44 @@ class EditaisController extends Controller
         }
 
         $universidades_nome_array = [];
+        $lista_principal = [];
+        $lista_reserva = [];
 
         foreach ($universidades as $universidade) {
             $universidades_nome_array = array_add($universidades_nome_array, $universidade->nome, array());    
         }
 
-        foreach ($avaliacoes as $avaliacao) {
+        if($request->alocar == '1'){
 
-            $opcao1 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->primeira_opcao_universidade)->first();
-            $opcao2 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->segunda_opcao_universidade)->first();
-            $opcao3 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->terceira_opcao_universidade)->first();
+            foreach ($avaliacoes as $avaliacao) {
 
-            $convenio = Convenios::where('universidade', $avaliacao->candidatura->primeira_opcao_universidade)->first();
+                $opcao1 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->primeira_opcao_universidade)->first();
+                $opcao2 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->segunda_opcao_universidade)->first();
+                $opcao3 = Universidade_Edital::where('edital_id', $edital->id)->where('nome', $avaliacao->candidatura->terceira_opcao_universidade)->first();
 
-            $proficiencia_universidade = Proeficiencia::where('id', $convenio->proeficiencia_id)->first();
-
-            $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id1)->first();
-
-            $candidatura = Candidaturas::where('id', $avaliacao->candidatura->id)->first();
-
-
-            /* Se a universidade ainda tem vagas disponiveis. Se tiver, verifica se a universidade
-            exige proeficiencia. Se exigir, verifica se o aluno tem proeficiencia maior ou igual da universidade
-            */
-            if((count($universidades_nome_array[$opcao1->nome]) <  $opcao1->vagas)
-            &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
-
-                $universidades_nome_array[$opcao1->nome][] = $avaliacao->candidatura->candidato->nome;
-
-                try{
-                    $candidatura->ies_anfitria = $opcao1->nome;
-                    $candidatura->save();
-
-                }
-                catch(\Exception $e) {
-                    DB::rollback();
-                    Log::error($e);
-                    return $this->error($e->getMessage(), 500, $e);
-                }
-
-
-            }else{
-
-                //atualiza a proeficiencia da universidade
-                $convenio = Convenios::where('universidade', $avaliacao->candidatura->segunda_opcao_universidade)->first();
+                $convenio = Convenios::where('universidade', $avaliacao->candidatura->primeira_opcao_universidade)->first();
 
                 $proficiencia_universidade = Proeficiencia::where('id', $convenio->proeficiencia_id)->first();
 
-                $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id2)->first();
+                $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id1)->first();
 
-                //Caso candidato não tenha conseguido primeira opção verifica 2
-                if( (count($universidades_nome_array[$opcao2->nome]) <  $opcao2->vagas )
+                $candidatura = Candidaturas::where('id', $avaliacao->candidatura->id)->first();
+
+                /* Se a universidade ainda tem vagas disponiveis. Se tiver, verifica se a universidade
+                exige proeficiencia. Se exigir, verifica se o aluno tem proeficiencia maior ou igual da universidade
+                */
+                if((count($universidades_nome_array[$opcao1->nome]) <  $opcao1->vagas)
                 &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
 
-                    $universidades_nome_array[$opcao2->nome][] = $avaliacao->candidatura->candidato->nome;
+                    $universidades_nome_array[$opcao1->nome][] = $avaliacao->candidatura->candidato->nome;
+
+                    if(count($lista_principal) < $edital->qtd_bolsas)
+                        array_push($lista_principal, $avaliacao);
+                    else
+                        array_push($lista_reserva, $avaliacao);
 
                     try{
-                        $candidatura->ies_anfitria = $opcao2->nome;
+                        $candidatura->ies_anfitria = $opcao1->nome;
                         $candidatura->save();
 
                     }
@@ -292,25 +273,31 @@ class EditaisController extends Controller
                         Log::error($e);
                         return $this->error($e->getMessage(), 500, $e);
                     }
-                    
+
 
                 }else{
 
                     //atualiza a proeficiencia da universidade
-                    $convenio = Convenios::where('universidade', $avaliacao->candidatura->terceira_opcao_universidade)->first();
+                    $convenio = Convenios::where('universidade', $avaliacao->candidatura->segunda_opcao_universidade)->first();
 
                     $proficiencia_universidade = Proeficiencia::where('id', $convenio->proeficiencia_id)->first();
 
-                    $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id3)->first();
+                    $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id2)->first();
 
-                    //Caso candidato não tenha conseguido segunda opção verifica 3
-                    if((count($universidades_nome_array[$opcao3->nome]) <  $opcao3->vagas )
+                    //Caso candidato não tenha conseguido primeira opção verifica 2
+                    if( (count($universidades_nome_array[$opcao2->nome]) <  $opcao2->vagas )
                     &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
 
-                        $universidades_nome_array[$opcao3->nome][] = $avaliacao->candidatura->candidato->nome;
+                        $universidades_nome_array[$opcao2->nome][] = $avaliacao->candidatura->candidato->nome;
+
+                        if(count($lista_principal) < $edital->qtd_bolsas)
+                            array_push($lista_principal, $avaliacao);
+                        else
+                            array_push($lista_reserva, $avaliacao);
+
 
                         try{
-                            $candidatura->ies_anfitria = $opcao3->nome;
+                            $candidatura->ies_anfitria = $opcao2->nome;
                             $candidatura->save();
 
                         }
@@ -319,19 +306,87 @@ class EditaisController extends Controller
                             Log::error($e);
                             return $this->error($e->getMessage(), 500, $e);
                         }
+                        
+
+                    }else{
+
+                        //atualiza a proeficiencia da universidade
+                        $convenio = Convenios::where('universidade', $avaliacao->candidatura->terceira_opcao_universidade)->first();
+
+                        $proficiencia_universidade = Proeficiencia::where('id', $convenio->proeficiencia_id)->first();
+
+                        $proficiencia_aluno = Proeficiencia::where('id', $avaliacao->candidatura->proficiencia_id3)->first();
+
+                        //Caso candidato não tenha conseguido segunda opção verifica 3
+                        if((count($universidades_nome_array[$opcao3->nome]) <  $opcao3->vagas )
+                        &&  ( ($proficiencia_universidade->id == 1) || ($proficiencia_aluno->nota >= $proficiencia_universidade->nota) && ($proficiencia_universidade->lingua == $proficiencia_aluno->lingua) ) ){
+
+                            $universidades_nome_array[$opcao3->nome][] = $avaliacao->candidatura->candidato->nome;
+
+                            if(count($lista_principal) < $edital->qtd_bolsas)
+                                array_push($lista_principal, $avaliacao);
+                            else
+                                array_push($lista_reserva, $avaliacao);
+
+                            try{
+                                $candidatura->ies_anfitria = $opcao3->nome;
+                                $candidatura->save();
+
+                            }
+                            catch(\Exception $e) {
+                                DB::rollback();
+                                Log::error($e);
+                                return $this->error($e->getMessage(), 500, $e);
+                            }
+                        }
+                        //Caso candidato não tenha conseguido a terceira opção colocar mudança de ies
+                        else{
+
+                            if(count($lista_principal) < $edital->qtd_bolsas)
+                                array_push($lista_principal, $avaliacao);
+                            else
+                                array_push($lista_reserva, $avaliacao);
+
+                            try{
+                                $candidatura->ies_anfitria = "Contactar AERI - Mudança de IES";
+                                $candidatura->save();
+
+                            }
+                            catch(\Exception $e) {
+                                DB::rollback();
+                                Log::error($e);
+                                return $this->error($e->getMessage(), 500, $e);
+                            }
+
+                        }
                     }
                 }
             }
         }
+        else{
+
+            foreach ($avaliacoes as $avaliacao) {
+
+                if(count($lista_principal) < $edital->qtd_bolsas)
+                    array_push($lista_principal, $avaliacao);
+                else
+                    array_push($lista_reserva, $avaliacao);
+            }
+
+        }
 
         $data = [
-            'edital' => $edital,
-            'avaliacoes' => $avaliacoes,
-            'candidaturas' => $candidaturas,
-            'status' => $status,
-            'classificacoes' => array_divide($universidades_nome_array),
-            'universidades' => $universidades,
-            'instrucoes'    => $request->instrucoes
+            'edital'          => $edital,
+            'avaliacoes'      => $avaliacoes,
+            'candidaturas'    => $candidaturas,
+            'status'          => $status,
+            'classificacoes'  => array_divide($universidades_nome_array),
+            'universidades'   => $universidades,
+            'instrucoes'      => $request->instrucoes,
+            'assinatura'      => $request->assinatura,
+            'cargo'           => $request->cargo,
+            'lista_principal' => $lista_principal,
+            'lista_reserva'   => $lista_reserva
         ]; 
 
         // share data to view
@@ -463,6 +518,10 @@ class EditaisController extends Controller
     {
         $edital = Editais::where('id', $id)->first();
 
+        $editalAeri = DB::table('programas')->where('id', 1)->first();
+
+        $assessor = User::where('privilegio', 4)->first();
+
         if($edital->status->id > 9){
 
             $avaliacoes = Avaliacao_Ccint::where('edital_id', $edital->id)
@@ -482,10 +541,12 @@ class EditaisController extends Controller
             $universidades = Universidade_Edital::where('edital_id', $edital->id)->get();
 
             $data = [
-                'edital'              => $edital,
-                'universidades'       => $universidades,
-                'candidaturas'       => $candidaturas,
-                'avaliacoes'          => $avaliacoes
+                'edital'        => $edital,
+                'editalAeri'    => $editalAeri,
+                'universidades' => $universidades,
+                'candidaturas'  => $candidaturas,
+                'avaliacoes'    => $avaliacoes,
+                'assessor'      => $assessor
             ]; 
            
             return view('editais.resultado')->with($data);
@@ -498,7 +559,9 @@ class EditaisController extends Controller
 
             $data = [
                 'edital'       => $edital,
-                'avaliacoes'   => $avaliacoes
+                'editalAeri'   => $editalAeri,
+                'avaliacoes'   => $avaliacoes,
+                'assessor'     => $assessor
             ]; 
            
             return view('editais.resultado')->with($data);
@@ -520,7 +583,9 @@ class EditaisController extends Controller
 
             $data = [
                 'edital'       => $edital,
-                'candidaturas' => $candidaturas
+                'editalAeri'   => $editalAeri,
+                'candidaturas' => $candidaturas,
+                'assessor'     => $assessor
             ]; 
            
             return view('editais.resultado')->with($data);
@@ -588,7 +653,11 @@ class EditaisController extends Controller
             
         }
 
-        $this->alocarIesAnfitria($edital->id);
+        $editalAeri = DB::table('programas')->where('id', 1)->first();
+
+        if($editalAeri->nome == $edital->nome){
+            $this->alocarIesAnfitria($edital->id);
+        }
 
         return Redirect::back()->with('message', 'RESULTADO ATUALIZADOS COM SUCESSO!');
 
@@ -721,12 +790,17 @@ class EditaisController extends Controller
         $universidades = Universidade_Edital::where('edital_id', $candidatura->edital_id)->get();
         $avaliacao = Avaliacao_Ccint::where('candidatura_id', $candidatura->id)->first();
 
+        $documentos = DB::table('documento_arquivo')->where('candidatura_id', $candidatura->id)
+        ->join('documento', 'documento.id', '=', 'documento_arquivo.documento_id')
+        ->get();
+
         $data = [
             'candidatura'    => $candidatura,
             'status'         => $status,
             'proeficiencias' => $proeficiencias,
             'universidades'  => $universidades,
-            'avaliacao'      => $avaliacao
+            'avaliacao'      => $avaliacao,
+            'documentos'     => $documentos
         ]; 
 
         return view('editais.candidatura')->with($data);

@@ -154,6 +154,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/documentos">
+             <i class="ti-file menu-icon"></i>
+              <span class="menu-title">Documentos</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{{ route('estudantes.internacionais') }}">
              <i class="ti-shift-left menu-icon"></i>
               <span class="menu-title">Estudantes In</span>

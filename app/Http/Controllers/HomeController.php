@@ -53,14 +53,20 @@ class HomeController extends Controller
 
     public function configuracoes()
     {
-        return view('configuracoes/configuracoes');
+        $user = Auth::user();
+
+        $data = [
+            'user'      => $user
+        ];
+
+        return view('configuracoes/configuracoes')->with($data);
     }
 
     public function update(Request $request, $id)
     {
 
         $this->validate($request, [
-            'email' => 'required|string|max:255',
+            'email'    => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
         ]);
 

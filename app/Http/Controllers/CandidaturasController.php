@@ -8,6 +8,7 @@ use App\Editais;
 use App\Candidato;
 use App\Candidaturas;
 use App\Convenios;
+use App\Documento;
 use App\Recursos;
 use App\Resposta_Recurso;
 use App\Status_Inscricao;
@@ -56,6 +57,7 @@ class CandidaturasController extends Controller
 
         $edital = Editais::find($id);
         $comprovacoes =  Comprovacao_Lattes::all();
+        $documentos =  Documento::all();
 
         $universidades = Universidade_Edital::where('edital_id', $edital->id)
         ->select('universidade_edital.*')
@@ -66,11 +68,16 @@ class CandidaturasController extends Controller
 
         $departamentos = DB::table('departamento')->get();
 
+        $editalAeri = DB::table('programas')->where('id', 1)->first();
+
         $data = [
             'edital'        => $edital,
             'comprovacoes'  => $comprovacoes,
             'universidades' => $universidades,
-            'departamentos' => $departamentos
+            'departamentos' => $departamentos,
+            'editalAeri'    => $editalAeri,
+            'documentos'    => $documentos
+
         ]; 
         
         return view('candidaturas.inscricao')->with($data);
@@ -82,8 +89,15 @@ class CandidaturasController extends Controller
        $candidato = Candidato::where('user_id', Auth::user()->id)->first();
 
        $candidatura =  Candidaturas::where('candidato_id', $candidato->id)->where('edital_id', $id)->first();
+
        $comprovacoes =  Comprovacao_Lattes::all();
+
+       $documentos =  Documento::all();
+
        $arquivos = Comprovacao_Lattes_Arquivos::where('candidatura_id', $candidatura->id)->get();
+
+       $arquivos_documentos = DB::table('documento_arquivo')->where('candidatura_id', $candidatura->id)->get();
+
        $departamentos = DB::table('departamento')->get();
 
        $universidades = Universidade_Edital::where('edital_id', $candidatura->edital_id)
@@ -132,19 +146,164 @@ class CandidaturasController extends Controller
         if($candidatura->nome_professor_carta == null)
             $count++;
 
+        $editalAeri = DB::table('programas')->where('id', 1)->first();
+
+        $edital = Editais::where('id', $candidatura->edital_id)->first();
+
         $data = [
-            'candidatura'   => $candidatura,
-            'arquivos'      => $arquivos,
-            'comprovacoes'  => $comprovacoes,
-            'departamentos' => $departamentos,
-            'universidades' => $universidades,
-            'count'         => $count
+            'candidatura'         => $candidatura,
+            'arquivos'            => $arquivos,
+            'comprovacoes'        => $comprovacoes,
+            'documentos'          => $documentos,
+            'arquivos_documentos' => $arquivos_documentos,
+            'departamentos'       => $departamentos,
+            'universidades'       => $universidades,
+            'count'               => $count,
+            'editalAeri'          => $editalAeri,
+            'edital'              => $edital
         ]; 
        
         return view('candidaturas.atualizacao')->with($data);
     }
 
     public function update(Request $request, $id)
+    {
+        $editalAeri = DB::table('programas')->where('id', 1)->first();
+
+        $candidatura = Candidaturas::find($id);
+
+        $edital = Editais::where('id', $candidatura->edital_id)->first();
+
+        if($edital->nome == $editalAeri){
+            $isFinished = $this->updateInscicaoEditalUefs($request, $id);
+        }
+        else{
+            $isFinished = $this->updateInscicaEditalGenerico($request, $id);
+        }
+
+        return redirect('/home')->with('message', 'INSCRIÇÃO ATUALIZADA COM SUCESSO!');
+    }
+
+    public function updateInscicaEditalGenerico(Request $request, $id){
+
+        $this->validate($request, [
+            'matricula' => 'file|max:5000',
+            'historico' => 'file|max:5000',
+            'percentual' => 'file|max:5000',
+            'curriculum' => 'file|max:5000'
+        ]);
+
+        $candidaturas = Candidaturas::find($id);
+
+        $edital = Editais::where('id', $candidaturas->edital_id)->first();
+
+
+        if ($request->hasFile('matricula') && $request->file('matricula')->isValid()){
+            $matricula = $request->file('matricula')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'matricula');
+        }else{
+             $matricula =  $candidaturas->matricula;
+        }
+
+
+        if ($request->hasFile('historico') && $request->file('historico')->isValid()){
+            $historico = $request->file('historico')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'historico');
+        }else{
+             $historico =  $candidaturas->historico;
+        }
+
+        if ($request->hasFile('percentual') && $request->file('percentual')->isValid()){
+            $percentual = $request->file('percentual')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'percentual');
+        }else{
+             $percentual =  $candidaturas->percentual;
+        }
+
+        if ($request->hasFile('curriculum') && $request->file('curriculum')->isValid()){
+            $curriculum = $request->file('curriculum')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'curriculum');
+        }else{
+             $curriculum =  $candidaturas->curriculum;
+        }
+
+        $candidato = Candidato::where('user_id', Auth::user()->id)->first();
+
+        try{
+            $candidaturas->matricula = $matricula;
+            $candidaturas->historico = $historico;
+            $candidaturas->percentual = $percentual;
+            $candidaturas->curriculum = $curriculum;
+            $candidaturas->nome_professor_carta = $request->nome_professor_carta;
+            $candidaturas->professor_departamento_id = $request->professor_departamento_id;
+            $candidaturas->status_id = 1;
+            $candidaturas->save();
+        }
+        catch(\Exception $e) {
+            DB::rollback();
+            Log::error($e);
+            return $this->error($e->getMessage(), 500, $e);
+        }
+
+
+        $comprovacao = $request->comprovacao;
+        $categoria = $request->categoria;
+
+        for($count = 0; $count < count($comprovacao); $count++)
+        {
+
+            if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
+
+                $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+
+                DB::beginTransaction();
+                    try{
+                        $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
+                        'candidatura_id' => $id,
+                        'arquivo' => $arquivo,
+                        'comprovacao_lattes_id' => $request->categoria[$count]
+                    ]);
+                        
+                        DB::commit();
+                    }
+                     catch(\Exception $e) {
+                        DB::rollback();
+                        Log::error($e);
+                        return $this->error($e->getMessage(), 500, $e);
+                    }
+            }
+        }
+
+        $documento = $request->documento;
+        $anexos = $request->anexos;
+
+
+        for($count = 0; $count < count($documento); $count++)
+        {
+
+            if ($request->hasFile('documento.' . $count) && $request->file('documento.' . $count)->isValid()){
+
+                $arquivo = $request->file('documento.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+
+                DB::beginTransaction();
+                    try{
+                        $documento_arquivo = DB::table('documento_arquivo')->insert([
+                        'candidatura_id' => $id,
+                        'arquivo' => $arquivo,
+                        'documento_id' => $request->anexos[$count]
+                    ]);
+                        
+                        DB::commit();
+                    }
+                     catch(\Exception $e) {
+                        DB::rollback();
+                        Log::error($e);
+                        return $this->error($e->getMessage(), 500, $e);
+                    }
+            }
+        }
+
+        return true;
+
+    }
+
+    public function updateInscicaoEditalUefs(Request $request, $id)
     {
 
         $this->validate($request, [
@@ -320,9 +479,7 @@ class CandidaturasController extends Controller
             }
         }
 
-        $isFinished = $this->checkIsFinished($candidaturas);
-
-        return redirect('/home')->with('message', 'INSCRIÇÃO ATUALIZADA COM SUCESSO!');
+        return $this->checkIsFinished($candidaturas);
     }
 
     public function details(Request $request, $id)
@@ -355,11 +512,209 @@ class CandidaturasController extends Controller
      */
     protected function store(Request $request, $id)
     {
+        $editalAeri = DB::table('programas')->where('id', 1)->first();
 
         $edital = Editais::where('id', $id)->first();
 
-        switch ($request->input('action')) {
-            case 'subscribe':
+        if($edital->nome == $editalAeri->nome){
+            $isFinished = $this->storeEditalUefs($request, $id);
+        }
+        else{
+            $isFinished = $this->storeEditalGenerico($request, $id);
+        }
+
+        if($isFinished)
+            return redirect('/candidaturas')->with('message', "INSCRIÇÃO REALIZADA COM SUCESSO!");
+        else
+            return redirect('/candidaturas')->with('message', "INSCRIÇÃO SALVA COM SUCESSO!");
+    }
+
+    protected function storeEditalGenerico(Request $request, $id)
+    {
+
+        $edital = Editais::where('id', $id)->first();
+
+        $universidade = Universidade_Edital::where('edital_id', $edital->id)
+        ->select('universidade_edital.*')
+        ->join('convenios', 'convenios.universidade', '=', 'universidade_edital.nome')
+        ->orderBy('convenios.pais')
+        ->orderBy('convenios.universidade')
+        ->first();
+
+        switch ($request->input('submitbutton')) {
+            case 'Inscrever':
+
+                $status = 1;
+                $finalizado = true;
+
+                $this->validate($request, [
+                    'matricula' => 'required|file|max:5000',
+                    'historico' => 'required|file|max:5000',
+                    'percentual' => 'required|file|max:5000',
+                    'curriculum' => 'required|file|max:5000',
+                ]);
+
+            break;
+
+            case 'Salvar':
+
+                $status = 17;
+                $finalizado = false;
+
+            break;
+        }
+
+        if ($request->hasFile('matricula') && $request->file('matricula')->isValid()){
+            $matricula = $request->file('matricula')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'matricula');
+        }else{
+             $matricula = 0;
+        }
+
+        if ($request->hasFile('historico') && $request->file('historico')->isValid()){
+            $historico = $request->file('historico')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'historico');
+        }else{
+             $historico = 0;
+        }
+
+        if ($request->hasFile('percentual') && $request->file('percentual')->isValid()){
+            $percentual = $request->file('percentual')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'percentual');
+        }else{
+             $percentual = 0;
+        }
+
+        if ($request->hasFile('curriculum') && $request->file('curriculum')->isValid()){
+            $curriculum = $request->file('curriculum')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, 'curriculum');
+        }else{
+             $curriculum = 0;
+        }
+
+        $candidato = Candidato::where('user_id', Auth::user()->id)->first();
+
+        DB::beginTransaction();
+        try{
+            $candidatura = Candidaturas::create([
+            'candidato_id' => $candidato->id,
+            'edital_id' => $id,
+            'primeira_opcao_universidade'=> null,
+            'primeira_opcao_curso' => null,
+            'primeira_opcao_pais' => null,
+            'segunda_opcao_universidade' => null,
+            'segunda_opcao_curso' => null,
+            'segunda_opcao_pais'=> null,
+            'terceira_opcao_universidade'=> null,
+            'terceira_opcao_curso'=> null,
+            'terceira_opcao_pais'=> null,
+            'matricula'=> $matricula,
+            'historico'=> $historico,
+            'percentual'=> $percentual,
+            'curriculum'=> $curriculum,
+            'plano_trabalho1'=> 0,
+            'plano_trabalho2'=> 0,
+            'plano_trabalho3'=> 0,
+            'plano_estudo1'=> 0,
+            'plano_estudo2'=> 0,
+            'plano_estudo3'=> 0,
+            'certificado_proficiencia1'=> 0,
+            'certificado_proficiencia2'=> 0,
+            'certificado_proficiencia3'=> 0,
+            'status_id'=> $status,
+            'carta'=> 0,
+            'desempenho' => 0,
+            'proficiencia_id1' => 0,
+            'proficiencia_id2' => 0,
+            'proficiencia_id3' => 0,
+            'quarta_opcao_universidade' => null,
+            'quarta_opcao_curso' => null,
+            'quarta_opcao_pais' => null,
+            'nome_professor_carta' => $request->nome_professor_carta,
+            'professor_departamento_id' => $request->professor_departamento_id,
+            'plano_trabalho4' => null,
+            'plano_estudo4' => null,
+            'ies_anfitria' => null,
+            'finalizado' => $finalizado
+
+        ]);
+            
+            DB::commit();
+        }
+         catch(\Exception $e) {
+            DB::rollback();
+            Log::error($e);
+            return $this->error($e->getMessage(), 500, $e);
+        }
+
+        $comprovacao = $request->comprovacao;
+        $categoria = $request->categoria;
+
+
+        for($count = 0; $count < count($comprovacao); $count++)
+        {
+
+            if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
+
+                $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+
+                DB::beginTransaction();
+                    try{
+                        $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
+                        'candidatura_id' => $candidatura->id,
+                        'arquivo' => $arquivo,
+                        'comprovacao_lattes_id' => $request->categoria[$count]
+                    ]);
+                        
+                        DB::commit();
+                    }
+                     catch(\Exception $e) {
+                        DB::rollback();
+                        Log::error($e);
+                        return $this->error($e->getMessage(), 500, $e);
+                    }
+            }
+        }
+
+        $documento = $request->documento;
+        $anexos = $request->anexos;
+
+
+        for($count = 0; $count < count($documento); $count++)
+        {
+
+            if ($request->hasFile('documento.' . $count) && $request->file('documento.' . $count)->isValid()){
+
+                $arquivo = $request->file('documento.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+
+                DB::beginTransaction();
+                    try{
+                        $documento_arquivo = DB::table('documento_arquivo')->insert([
+                        'candidatura_id' => $candidatura->id,
+                        'arquivo' => $arquivo,
+                        'documento_id' => $request->anexos[$count]
+                    ]);
+                        
+                        DB::commit();
+                    }
+                     catch(\Exception $e) {
+                        DB::rollback();
+                        Log::error($e);
+                        return $this->error($e->getMessage(), 500, $e);
+                    }
+            }
+        }
+
+        if($finalizado)
+            return true;
+        else
+            return false;
+
+    }
+
+    protected function storeEditalUefs(Request $request, $id)
+    {
+
+        $edital = Editais::where('id', $id)->first();
+
+        switch ($request->input('submitbutton')) {
+            case 'Inscrever':
 
                 $this->validate($request, [
                     'matricula' => 'required|file|max:5000',
@@ -550,13 +905,7 @@ class CandidaturasController extends Controller
             }
         }
 
-        $isFinished = $this->checkIsFinished($candidatura);
-
-
-        if($candidatura->status_id == 1)
-            return redirect('/candidaturas')->with('message', "INSCRIÇÃO REALIZADA COM SUCESSO!");
-        else
-            return redirect('/candidaturas')->with('message', "INSCRIÇÃO SALVA COM SUCESSO!");
+        return $this->checkIsFinished($candidatura);
     }
 
     public function deleteComprovante($id)
@@ -762,6 +1111,17 @@ class CandidaturasController extends Controller
         $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
 
         $path = $storagePath.$comprovacao->arquivo;
+
+        return response()->file($path); 
+    }
+
+    public function documento(Request $request, $id)
+    {
+        $documento = DB::table('documento_arquivo')->where('id', $id)->first();
+
+        $storagePath  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+        $path = $storagePath.$documento->arquivo;
 
         return response()->file($path); 
     }

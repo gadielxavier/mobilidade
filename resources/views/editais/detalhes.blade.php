@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="ccontainer-fluid">
+<div class="container-fluid">
 	<form class="form-prevent-multiple-submits" method="POST" action="{{ route('editais.ccint') }}" enctype="multipart/form-data">
 		{!! csrf_field() !!}
 		<div class="row">
@@ -15,55 +15,61 @@
 		    </div>
 		</div>
 
-		<div class="card">
-			@if(session()->has('message'))
-                <div class="alert alert-success alert-dismissible fade show">
-                    {{ session()->get('message') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            @endif
-	    	<div class="card-body">
-	    		<h4 class="card-title">Informações do Edital</h4>
-	      			<div class="row table-responsive">
-	      				<table class="table table-striped">
-	      					<thead>
-	      						<tr>
-	      							<th>Nome</th>
-				                     <th>Número</th>
-				                     <th>Bolsas</th>
-				                     <th>Encerramento Inscrição</th>
-				                 </tr>
-				             </thead>
-				             <tbody>
-			             		<tr>
-						        	<td>
-						            	{{ $edital->nome }}
-						            </td>
-							        <td> 
-							            {{ $edital->numero }}
-							        </td>
-							        <td>
-							        	{{ $edital->qtd_bolsas }}
-							        </td>
-							        <td>
-							        	{{ $edital->fim_inscricao->format('d/m/Y') }}
-							        </td>
-							        <td>
-							          	<a href="/editais/atualizar/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Editar</a>
-							        </td>
-							       	@if($edital->status->id > 1)
-							        <td>
-							          	<a href="/editais/resultado/{{ $edital->id }}"  class="btn btn-success btn-sm"> Resultado</a>
-							        </td>
-							        @endif
-						      	</tr>
-				             </tbody>
-				         </table>
-	      			</div>
-	      	</div>
-	     </div>
+		@if(session()->has('message'))
+            <div class="alert alert-success alert-dismissible fade show">
+                {{ session()->get('message') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                	<span aria-hidden="true">&times;</span>
+            	</button>
+            </div>
+        @endif
+
+		<div class="row">
+			<div class="col-lg-12 grid-margin stretch-card">
+				<div class="card">
+			    	<div class="card-body">
+			    		<h4 class="card-title">Informações do Edital</h4>
+		      			<div class="table-responsive">
+		      				<table class="table table-striped">
+		      					<thead>
+		      						<tr>
+		      							<th>Nome</th>
+					                     <th>Número</th>
+					                     <th>Bolsas</th>
+					                     <th>Encerramento Inscrição</th>
+					                 </tr>
+					             </thead>
+					             <tbody>
+				             		<tr>
+							        	<td>
+							            	{{ $edital->nome }}
+							            </td>
+								        <td> 
+								            {{ $edital->numero }}
+								        </td>
+								        <td>
+								        	{{ $edital->qtd_bolsas }}
+								        </td>
+								        <td>
+								        	{{ $edital->fim_inscricao->format('d/m/Y') }}
+								        </td>
+								        <td>
+								          	<a href="/editais/atualizar/{{ $edital->id }}"  class="btn btn-primary btn-sm"> Editar</a>
+								        </td>
+								       	@if($edital->status->id > 1)
+								        <td>
+								          	<a href="/editais/resultado/{{ $edital->id }}"  class="btn btn-success btn-sm"> Resultado</a>
+								        </td>
+								        @endif
+							      	</tr>
+					             </tbody>
+					        </table>
+		      			</div>
+			      	</div>
+			     </div>
+			</div>
+		</div>
+
 
 		<div class="card">
 	    	<div class="card-body">
@@ -75,7 +81,7 @@
 				</div>
 				<input class="form-control" id="myInput" type="text" placeholder="Pesquisar..">
 
-      			<div class="row table-responsive">
+      			<div class="table-responsive">
       				<table class="table table-striped">
       					<thead>
       						<tr>

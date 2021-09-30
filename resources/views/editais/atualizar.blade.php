@@ -2,14 +2,19 @@
 
   @section('content')
 
-  <div class="ccontainer-fluid">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h4 class="font-weight-bold mb-0">Atualizar Edital</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
   	<div class="card">
   		<div class="card-body">
-        <h4 class="card-title">Atualizar Edital</h4>
-        <p class="card-description">
-          Atualizar os  dados do edital
-        </p>
-
         <form class="form-prevent-multiple-submits" method="POST" action="{{ route('editais.update', $edital->id) }}" enctype="multipart/form-data">
           {{ csrf_field() }}
           <div class="row">
@@ -265,7 +270,7 @@
               <thead>
                 <tr>
                   <th width="35%">Universidade</th>
-                  <th width="35%">Bolsas</th>
+                  <th width="35%">Vagas</th>
                   <th width="30%">Ação</th>
                 </tr>
               </thead>

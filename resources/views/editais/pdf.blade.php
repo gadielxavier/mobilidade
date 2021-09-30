@@ -6,7 +6,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="ccontainer-fluid">
+		<div class="container-fluid">
 			<div class="card">
 				<div class="card-body table-responsive">
 					<img src="theme/images/cabecalho.png" alt="cabecalho" width="100%" height="100%">
@@ -29,7 +29,7 @@
 									</tr>
 						    	</thead>
 						    	<tbody>
-							    	@foreach ($avaliacoes as $avaliacao)
+							    	@foreach ($lista_principal as $avaliacao)
 								     	<tr>
 								     		<td>
 								    			<input type="checkbox" value="{{ $avaliacao->id }}" style="display:none" name="avaliacoes[]" checked="checked" />
@@ -62,6 +62,53 @@
 							      	@endforeach
 							    </tbody>
 							</table>
+							@if(!empty($lista_reserva))
+							<h4 class="card-title">Lista Reserva:</h4>
+				            <table  border="0.3px">
+				            	<thead>
+									<tr>
+										<th>#</th>
+										<th>Estudante</th>
+										<th>Matrícula</th>
+										<th>Curso</th>
+										<th>Ies Anfitriã</th>
+									</tr>
+						    	</thead>
+						    	<tbody>
+							    	@foreach ($lista_reserva as $avaliacao)
+								     	<tr>
+								     		<td>
+								    			<input type="checkbox" value="{{ $avaliacao->id }}" style="display:none" name="avaliacoes[]" checked="checked" />
+
+								          	@isset($avaliacao->id)
+								            	{{ $avaliacao->posicao }}
+								          	@endif
+								          	</td>
+								    		<td>
+								          	@isset($avaliacao->id)
+								            	{{ $avaliacao->candidatura->candidato->nome }}
+								          	@endif
+								          	</td>	
+								   			<td>
+								          	@isset($avaliacao->id)
+								            	{{ $avaliacao->candidatura->candidato->matricula }}
+								            @endif
+								        	</td>
+								        	<td>
+								          	@isset($avaliacao->id)
+								            	{{ $avaliacao->candidatura->candidato->curso }}
+								            @endif
+								        	</td>
+								        	<td>
+								          	@isset($avaliacao->id)
+								            	{{ $avaliacao->candidatura->ies_anfitria }}
+								            @endif
+								        	</td>
+								      	</tr>
+							      	@endforeach
+							    </tbody>
+							</table>
+							@endif
 				        </form>
 				    @else
 						<form method="POST" action="{{ route('resultado.update', $edital->id) }}" enctype="multipart/form-data">
@@ -71,6 +118,7 @@
 									<tr>
 										<th>Nome</th>
 										<th>Matrícula</th>
+										<th>Curso</th>
 										<th>Status</th>
 									</tr>
 						    	</thead>
@@ -88,6 +136,11 @@
 								          	@endif
 								          	</td>
 								          	<td>
+								          	@isset($candidatura->candidato->curso)
+								            	{{ $candidatura->candidato->curso }}
+								          	@endif
+								          	</td>
+								          	<td>
 								            @isset($candidatura->status->titulo)
 								            	{{ $candidatura->status->titulo }}
 								            @endif
@@ -102,8 +155,8 @@
 			</div>
 			<h4 align="center">{{ $instrucoes }}</h4>
 			<h4 align="right" >Feira de Santana, {{ \Carbon\Carbon::now()->format('d/m/Y')  }}</h4>
-			<h4 align="center">Eneida Soanne Matos Campos de Oliveira</h4>
-			<h4 align="center">Assessora Especial de Relações Institucionais</h4>
+			<h4 align="center">{{ $assinatura }}</h4>
+			<h4 align="center">{{ $cargo }}</h4>
 		</div>
 	</body>
 </html>

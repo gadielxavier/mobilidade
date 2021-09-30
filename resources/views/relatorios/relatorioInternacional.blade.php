@@ -5,7 +5,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="ccontainer-fluid">
+		<div class="container-fluid">
 			<div class="card">
 				<div class="card-body table-responsive">
 					<h3 align="center">Estudantes Internacionais - UEFS - {{ $programa }}</h3>
