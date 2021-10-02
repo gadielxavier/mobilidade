@@ -32,7 +32,7 @@ class EstudanteController extends Controller
          }
 
          $estudantes = $estudantes->paginate(50);
-         $paises = DB::table('pais')->get();
+         $paises = DB::table('pais')->orderBy('pais_nome')->get();
          $programas = Programa::where('tipo', '1')->get();
          $cursos = Cursos::all();
          $departamentos = DB::table('departamento')->get(); 

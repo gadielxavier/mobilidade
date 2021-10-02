@@ -13,8 +13,7 @@ class ConveniosController extends Controller
 {
     public function index()
     {
-        $paises = DB::table('pais')
-            ->get();
+        $paises = DB::table('pais')->orderBy('pais_nome')->get();
         $convenios = Convenios::orderBy('pais')->orderBy('universidade')->paginate(30);
         $proeficiencias = Proeficiencia::all();
 
