@@ -102,7 +102,14 @@
 						        	<td>
 						          		@isset($candidatura->candidato->nome)
 										  <label class="form-check-label" for="defaultCheck1">
-										    {{ $candidatura->candidato->nome }}
+										    
+
+										    @if(strlen($candidatura->candidato->nome) > 30 )
+								          		<label data-toggle="tooltip" title="{{ $candidatura->candidato->nome  }}">{{ substr($candidatura->candidato->nome,0,30).('...')}}</label>
+					                            
+					                         @else
+					                            {{ $candidatura->candidato->nome }}
+					                         @endif
 										  </label>
 						          		@endif
 						          	</td>
@@ -195,6 +202,12 @@
 	    });
 	  });
 	});
+	</script>
+
+	<script>
+	  $(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})
 	</script>
 
 	<script src="js/submit.js"></script>

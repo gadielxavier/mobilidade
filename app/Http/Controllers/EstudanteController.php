@@ -298,6 +298,60 @@ class EstudanteController extends Controller
 
     function updateEstudanteUefs(Request $request, $id){
 
+        $edital = Editais::where('nome', $request->programa)
+                        ->where('numero', $request->numero)->first();
+
+        if(empty($edital)){
+            DB::beginTransaction();
+            try{
+
+                $edital = Editais::create([
+                    'fim_inscricao' => $request->data_edital,
+                    'nome' => $request->programa,
+                    'numero' => $request->numero,
+                    'qtd_bolsas'=> 1,
+                    'status_edital_id'=> 20,
+                    'path_anexo'=> 'avatars/0/documento.pdf',
+                    'maior_pontuacao' => 0,
+                    'inicio_inscricao' => $request->data_edital,
+                    'homologacoes_inscricoes' => $request->data_edital,
+                    'inicio_recurso_inscricao' => $request->data_edital,
+                    'fim_recurso_inscricao' => $request->data_edital,
+                    'homologacao_final' => $request->data_edital,
+                    'inicio_proeficiencia' => $request->data_edital,
+                    'fim_proeficiencia' => $request->data_edital,
+                    'aprovados_primeira_fase' => $request->data_edital,
+                    'inicio_recurso_primeira_fase' => $request->data_edital,
+                    'fim_recurso_primeira_fase' => $request->data_edital,
+                    'resultado_final_primeira_fase' => $request->data_edital,
+                    'inicio_ccint' => $request->data_edital,
+                    'fim_ccint' => $request->data_edital,
+                    'resultado_segunda_fase' => $request->data_edital,
+                    'inicio_recurso_segunda_fase' => $request->data_edital,
+                    'fim_recurso_segunda_fase' => $request->data_edital,
+                    'resultado_final_segunda_fase' => $request->data_edital,
+                    'reuniao_esclarecimentos' => $request->data_edital,
+                    'inicio_entrega_documentos' => $request->data_edital,
+                    'fim_entrega_documentos' => $request->data_edital,
+                    'inicio_avaliacao_documentos' => $request->data_edital,
+                    'fim_avaliacao_documentos' => $request->data_edital,
+                    'envio_candidaturas' => $request->data_edital,
+                    'inicio_recepcao_carta' => $request->data_edital,
+                    'fim_recepcao_carta' => $request->data_edital,
+                    'divulgacao_resultado_terceira_fase' => $request->data_edital,
+                    'inicio_aquisicoes' => $request->data_edital,
+                    'inicio_mobilidade' => $request->data_edital
+                ]);
+                
+                DB::commit();
+            }
+             catch(\Exception $e) {
+                DB::rollback();
+                Log::error($e);
+                return $this->error($e->getMessage(), 500, $e);
+            }
+        }
+
         $candidatura = Candidaturas::find($id);
 
         $candidato = Candidato::where('id', $candidatura->candidato_id)->first();
@@ -318,6 +372,7 @@ class EstudanteController extends Controller
 
 
         try{
+            $candidatura->edital_id = $edital->id;
             $candidatura->ies_anfitria = $request->universidade;
             $candidatura->save();
         }

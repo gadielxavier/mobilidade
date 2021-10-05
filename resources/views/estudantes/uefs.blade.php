@@ -84,7 +84,12 @@
 							      	<tr>
 							        	<td>
 							        	@isset($estudante->candidato->nome)
-				                        	{{ $estudante->candidato->nome }}
+							        		@if(strlen($estudante->candidato->nome) > 35 )
+								          		<label data-toggle="tooltip" title="{{ $estudante->candidato->nome  }}">{{ substr($estudante->candidato->nome,0,35).('...')}}</label>
+					                            
+					                         @else
+					                            {{ $estudante->candidato->nome }}
+					                         @endif	
 				                    	@endif
 							        	</td> 
 							        	<td>
@@ -94,7 +99,12 @@
 							        	</td> 
 							        	<td>
 							        	@isset($estudante->ies_anfitria)
-				                        	{{ $estudante->ies_anfitria }}
+							        		@if(strlen($estudante->ies_anfitria) > 35 )
+								          		<label data-toggle="tooltip" title="{{ $estudante->ies_anfitria  }}">{{ substr($estudante->ies_anfitria,0,35).('...')}}</label>
+					                            
+					                         @else
+					                            {{ $estudante->ies_anfitria }}
+					                         @endif	
 				                    	@endif
 							        	</td>  
 							        	<td> 
@@ -114,6 +124,32 @@
 												<div class="modal-body">
 													<form class="form-horizontal" method="POST" action="{{ route('estudantes.updateUefs', $estudante->id) }}" enctype="multipart/form-data">
 														{{ csrf_field() }}
+														<div class="form-group">
+															<label>Programa</label>
+															<div class="input-group">
+																<select name="programa" class="form-control">
+												              		@foreach($programas as $programa)
+													                	@if($programa->nome == $estudante->edital->nome)
+													                		<option selected value='{{ $programa->nome }}'>{{ $programa->nome }}</option>
+													                    @else
+													                		<option value='{{ $programa->nome }}'>{{ $programa->nome }}</option>
+													                	@endif
+												                    @endforeach
+										               			 </select>
+															</div>
+														</div>
+														<div class="form-group">
+															<label>Número</label>
+															<div class="input-group">
+																<input type="text" placeholder="Número do Edital" class="form-control" value="{{ $estudante->edital->numero }}" name="numero" required>
+															</div>
+														</div>
+														<div class="form-group">
+															<label>Data do Edital</label>
+															<div class="input-group">
+																<input value="{{ $estudante->edital->inicio_inscricao->format('Y-m-d') }}" type="date" class="form-control" name="data_edital" required>
+															</div>
+														</div>
 														<div class="form-group">
 															<label>Aluno</label>
 															<div class="input-group">
@@ -337,6 +373,12 @@
 	@if (count($errors) > 0)
 	$('#estudanteModal ').modal('show');
 	@endif
+</script>
+
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>
 
 @endsection
