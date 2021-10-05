@@ -521,7 +521,7 @@
             </div>
 
             <div class="table-responsive">
-               <label>Outros Arquivos</label>
+               <label>Outros Documentos</label>
                <span id="result"></span>
                <table class="table table-bordered" id="user_table">
                  <thead>

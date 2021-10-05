@@ -399,7 +399,7 @@
 		<div class="col-md-12 grid-margin stretch-card">
 			<div class="card">
 				<div class="card-body">
-              		<p class="card-title mb-0">Documentos Editais Genéricos</p>
+              		<p class="card-title mb-0">Documentos Editais Específicos</p>
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
