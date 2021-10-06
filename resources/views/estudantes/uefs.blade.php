@@ -94,7 +94,13 @@
 							        	</td> 
 							        	<td>
 							        	@isset($estudante->candidato->curso)
-				                        	{{ $estudante->candidato->curso }}
+							        		@if(strlen($estudante->candidato->curso) > 28 )
+								          		<label data-toggle="tooltip" title="{{ $estudante->candidato->curso  }}">{{ substr($estudante->candidato->curso,0,28).('...')}}</label>
+					                            
+					                         @else
+					                            {{ $estudante->candidato->curso }}
+					                         @endif	
+				                        	
 				                    	@endif
 							        	</td> 
 							        	<td>
