@@ -36,7 +36,7 @@ class EditaisController extends Controller
     {
     	$editais = Editais::orderBy('id', 'desc')->paginate(30);
         $convenios = Convenios::where('status', '1')->get();
-        $programas = Programa::all();
+        $programas = Programa::where('tipo', 2)->orderBy('nome')->get();
 
     	$data = [
             'editais' => $editais,

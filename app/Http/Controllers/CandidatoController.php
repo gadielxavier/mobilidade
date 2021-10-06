@@ -45,10 +45,7 @@ class CandidatoController extends Controller
     {
         // Validate the request...
 
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'foto_perfil' => 'required|file|max:5000',
-        ]);
+        $this->validate($request, $this->validateRequest());
 
         if ($request->hasFile('foto_perfil') && $request->file('foto_perfil')->isValid()){
 
@@ -100,10 +97,7 @@ class CandidatoController extends Controller
 
     protected function update(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'foto_perfil' => 'file|max:5000',
-        ]);
+        $this->validate($request, $this->validateRequest());
         DB::beginTransaction();
 
 
@@ -163,5 +157,26 @@ class CandidatoController extends Controller
         $path = $storagePath.$candidato->foto_perfil;
 
         return response()->file($path); 
+    }
+
+    /**
+    * @return mixed
+    */
+    protected function validateRequest()
+    {
+        return [
+            'name'        => 'required|string|max:100',
+            'sexo'        => 'required',
+            'matricula'   => 'required|string|size:8',
+            'cpf'         => 'required|size:14',
+            'rg'          => 'required|size:13',
+            'emissor'     => 'required|string|max:50',
+            'data'        => 'required|date',
+            'curso'       => 'required|string',
+            'phone'       => 'required|string|size:15',
+            'foto_perfil' => 'file|max:5000',
+            'cotista'     => 'required',
+        ];
+
     }
 }

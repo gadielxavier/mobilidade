@@ -57,10 +57,14 @@ class RelatoriosController extends Controller
         ->get()
         ->groupBy('candidato.curso');
 
+        $candidaturasCurso = $candidaturasCurso->sort();
+
         $candidaturasPais = Candidaturas::where('status_id', 14)
         ->with('convenio')
         ->get()
         ->groupBy('convenio.pais');
+
+        $candidaturasPais =  $candidaturasPais->sort();
 
         $candidaturasAno = Candidaturas::where('status_id', 14)
         ->with('edital')

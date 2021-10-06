@@ -27,7 +27,7 @@
 	    </div>
 	@endif
 
-	<form method="get" action="{{ route('estudantes.uefs') }}">
+	<form class="form-prevent-multiple-submits" method="get" action="{{ route('estudantes.uefs') }}">
 		<div class="row">
 	        <div class="col-sm-4">
 	            <div class="form-group">
@@ -128,9 +128,9 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<form class="form-horizontal" method="POST" action="{{ route('estudantes.updateUefs', $estudante->id) }}" enctype="multipart/form-data">
+													<form class="form-prevent-multiple-submits" method="POST" action="{{ route('estudantes.updateUefs', $estudante->id) }}" enctype="multipart/form-data">
 														{{ csrf_field() }}
-														<div class="form-group">
+														<div class="form-group{{ $errors->has('programa') ? ' has-error' : '' }}">
 															<label>Programa</label>
 															<div class="input-group">
 																<select name="programa" class="form-control">
@@ -144,25 +144,25 @@
 										               			 </select>
 															</div>
 														</div>
-														<div class="form-group">
+														<div class="form-group{{ $errors->has('numero') ? ' has-error' : '' }}">
 															<label>Número</label>
 															<div class="input-group">
 																<input type="text" placeholder="Número do Edital" class="form-control" value="{{ $estudante->edital->numero }}" name="numero" required>
 															</div>
 														</div>
-														<div class="form-group">
+														<div class="form-group{{ $errors->has('data_edital') ? ' has-error' : '' }}">
 															<label>Data do Edital</label>
 															<div class="input-group">
 																<input value="{{ $estudante->edital->inicio_inscricao->format('Y-m-d') }}" type="date" class="form-control" name="data_edital" required>
 															</div>
 														</div>
-														<div class="form-group">
+														<div class="form-group{{ $errors->has('aluno') ? ' has-error' : '' }}">
 															<label>Aluno</label>
 															<div class="input-group">
 																<input type="text" placeholder="Nome do Aluno" value="{{ $estudante->candidato->nome }}" class="form-control" name="aluno" required>
 															</div>
 														</div>
-														<div class="form-group">
+														<div class="form-group{{ $errors->has('sexo') ? ' has-error' : '' }}">
 															<label>Sexo</label>
 															<div class="input-group">
 																<select id="sexo" name="sexo" class="form-control">
@@ -172,13 +172,13 @@
 												                </select>
 															</div>
 														</div>
-														<div class="form-group">
+														<div class="form-group{{ $errors->has('matricula') ? ' has-error' : '' }}">
 															<label>Matrícula</label>
 															<div class="input-group">
-																<input type="text" placeholder="Matrícula do Aluno" class="form-control" value="{{ $estudante->candidato->matricula }}" name="matricula" required>
+																<input type="text" placeholder="Matrícula do Aluno" class="form-control" value="{{ $estudante->candidato->matricula }}" name="matricula" id="Atualizaratricula" required>
 															</div>
 														</div>
-														<div class="form-group">
+														<div class="form-group{{ $errors->has('curso') ? ' has-error' : '' }}">
 															<label>Curso</label>
 															<div class="input-group">
 																<select id="curso" name="curso" class="form-control">
@@ -192,7 +192,7 @@
 												              	</select>
 															</div>
 														</div>
-														<div class="form-group">
+														<div class="form-group{{ $errors->has('universidade') ? ' has-error' : '' }}">
 															<label>Universidade</label>
 															<div class="input-group">
 																<select name="universidade" class="form-control">
@@ -206,7 +206,7 @@
 											                  </select>
 															</div>
 														</div>
-														<div class="form-group">
+														<div class="form-group{{ $errors->has('cotista') ? ' has-error' : '' }}">
 												          <label>Cotista</label>
 												          <div class="input-group">
 												            <div class="col-3">
@@ -268,61 +268,96 @@
 			<div class="modal-body">
 				<form class="form-horizontal" method="POST" action="addEstudanteUefs" enctype="multipart/form-data">
 					{{ csrf_field() }}
-					<div class="form-group">
+					<div class="form-group{{ $errors->has('programa') ? ' has-error' : '' }}">
 						<label>Programa</label>
 						<div class="input-group">
 							<select name="programa" class="form-control">
 			                    @foreach($programas as $programa)
-			                      <option value='{{ $programa->nome }}'>{{ $programa->nome }}</option>
+			                      <option value='{{ $programa->nome }}' @if( old('programa') == $programa->nome) {{'selected'}} @endif>{{ $programa->nome }}</option>
 			                    @endforeach
 	               			 </select>
+	               			@if ($errors->has('programa'))
+				                <span class="help-block">
+				                    <strong>{{ $errors->first('programa') }}</strong>
+				                </span>
+				            @endif
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group{{ $errors->has('numero') ? ' has-error' : '' }}">
 						<label>Número</label>
 						<div class="input-group">
-							<input type="text" placeholder="Número do Edital" class="form-control" name="numero" required>
+							<input type="text" placeholder="Número do Edital" class="form-control" name="numero" value="{{ old('numero') }}"  required>
 						</div>
+						@if ($errors->has('numero'))
+			                <span class="help-block">
+			                    <strong>{{ $errors->first('numero') }}</strong>
+			                </span>
+			            @endif
 					</div>
-					<div class="form-group">
+					<div class="form-group{{ $errors->has('data_edital') ? ' has-error' : '' }}">
 						<label>Data do Edital</label>
 						<div class="input-group">
-							<input type="date" class="form-control" name="data_edital" required>
+							<input type="date" class="form-control" name="data_edital" value="{{ old('data_edital') }}"  required>
 						</div>
+						@if ($errors->has('data_edital'))
+			                <span class="help-block">
+			                    <strong>{{ $errors->first('data_edital') }}</strong>
+			                </span>
+			            @endif
 					</div>
-					<div class="form-group">
+					<div class="form-group{{ $errors->has('aluno') ? ' has-error' : '' }}">
 						<label>Aluno</label>
 						<div class="input-group">
-							<input type="text" placeholder="Nome do Aluno" class="form-control" name="aluno" required>
+							<input type="text" placeholder="Nome do Aluno" class="form-control" name="aluno" value="{{ old('aluno') }}"  required>
 						</div>
+						@if ($errors->has('aluno'))
+			                <span class="help-block">
+			                    <strong>{{ $errors->first('aluno') }}</strong>
+			                </span>
+			            @endif
 					</div>
-					<div class="form-group">
+					<div class="form-group{{ $errors->has('sexo') ? ' has-error' : '' }}">
 						<label>Sexo</label>
 						<div class="input-group">
 							<select id="sexo" name="sexo" class="form-control">
-			                    <option value="Masculino">Masculino</option>
-			                    <option value="Feminino">Feminino</option>
-			                    <option value="Outro">Outro</option>
+			                    <option value="Masculino" @if( old('sexo') == 'Masculino') {{'selected'}} @endif>Masculino</option>
+				                <option value="Feminino" @if( old('sexo') == 'Feminino') {{'selected'}} @endif>Feminino</option>
+				                <option value="Outro" @if( old('sexo') == 'Outro') {{'selected'}} @endif>Outro</option>
 			                </select>
 						</div>
+						@if ($errors->has('sexo'))
+			                <span class="help-block">
+			                    <strong>{{ $errors->first('sexo') }}</strong>
+			                </span>
+			            @endif
 					</div>
-					<div class="form-group">
+					<div class="form-group{{ $errors->has('matricula') ? ' has-error' : '' }}">
 						<label>Matrícula</label>
 						<div class="input-group">
-							<input type="text" placeholder="Matrícula do Aluno" class="form-control" name="matricula" required>
+							<input type="text" placeholder="Matrícula do Aluno" class="form-control" name="matricula" id="AdicionarMatricula" value="{{ old('matricula') }}"  required>
 						</div>
+						@if ($errors->has('matricula'))
+			                <span class="help-block">
+			                    <strong>{{ $errors->first('matricula') }}</strong>
+			                </span>
+			            @endif
 					</div>
-					<div class="form-group">
+					<div class="form-group{{ $errors->has('curso') ? ' has-error' : '' }}">
 						<label>Curso</label>
 						<div class="input-group">
 							<select id="curso" name="curso" class="form-control">
 		                    	@foreach($cursos as $curso)
-		                        	<option value="{{ $curso->nome }}">{{ $curso->nome }}</option>
+		                        	<option value="{{ $curso->nome }}" @if( old('curso') == $curso->nome) {{'selected'}} @endif>{{ $curso->nome }}</option>
 		                    	@endforeach
 			              	</select>
+			              	@if ($errors->has('curso'))
+				                <span class="help-block">
+				                    <strong>{{ $errors->first('curso') }}</strong>
+				                </span>
+				            @endif
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group{{ $errors->has('cotista') ? ' has-error' : '' }}">
 			          <label>Cotista</label>
 			          <div class="input-group">
 			            <div class="col-3">
@@ -342,16 +377,26 @@
 			              </div>
 			            </div>
 			          </div>
+			          @if ($errors->has('cotista'))
+		                <span class="help-block">
+		                    <strong>{{ $errors->first('cotista') }}</strong>
+		              	</span>
+		              @endif
 			        </div>
 					<div class="form-group">
 						<label>Universidade de Destino</label>
 						<div class="input-group">
 							<select name="universidade" class="form-control">
 		                    @foreach($convenios as $convenio)
-		                      <option value='{{ $convenio->universidade }}'>{{ $convenio->universidade." (".$convenio->pais.") "}}</option>
+		                      <option value='{{ $convenio->universidade }}' @if( old('universidade') == $convenio->universidade) {{'selected'}} @endif>{{ $convenio->universidade." (".$convenio->pais.") "}}</option>
 		                    @endforeach
 		                  </select>
 						</div>
+						@if ($errors->has('universidade'))
+			                <span class="help-block">
+			                    <strong>{{ $errors->first('universidade') }}</strong>
+			                </span>
+			            @endif
 					</div>
 					<div class="modal-footer">
 				        <div class="mt-3">
@@ -374,6 +419,21 @@
 @endsection
 
 @section('scripts')
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+
+<script>
+  $(document).ready(function () { 
+      var $matricula = $("#Atualizaratricula");
+       $matricula.mask('99999999');
+  });
+  $(document).ready(function () { 
+      var $matricula = $("#AdicionarMatricula");
+       $matricula.mask('99999999');
+  });
+</script>
+
+<script src="js/submit.js"></script>
 
 <script type="text/javascript">
 	@if (count($errors) > 0)

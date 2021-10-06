@@ -93,6 +93,16 @@ class EstudanteController extends Controller
 
     function addEstudanteInternacional(Request $request){
 
+        $this->validate($request, [
+            'nome'       => 'required|string',
+            'sexo'       => 'required',
+            'pais'       => 'required',
+            'programa'   => 'required',
+            'modalidade' => 'required',
+            'inicio'     => 'required|date',
+            'final'      => 'required|date',
+        ]);
+
         $estudante = EstudantesInternacionais::where('nome', $request->nome)
                         ->where('pais', $request->pais)->first();
 
@@ -125,6 +135,16 @@ class EstudanteController extends Controller
 
     public function updateInternacionais(Request $request, $id)
     {
+        $this->validate($request, [
+            'nome'       => 'required|string',
+            'sexo'       => 'required',
+            'pais'       => 'required',
+            'programa'   => 'required',
+            'modalidade' => 'required',
+            'inicio'     => 'required|date',
+            'final'      => 'required|date',
+        ]);
+        
         $estudante = EstudantesInternacionais::find($id);
 
         try{
@@ -149,6 +169,18 @@ class EstudanteController extends Controller
     }
 
     function addEstudanteUefs(Request $request){
+
+        $this->validate($request, [
+            'programa'     => 'required',
+            'numero'       => 'required',
+            'data_edital'  => 'required|date',
+            'aluno'        => 'required',
+            'sexo'         => 'required',
+            'matricula'    => 'required|string|size:8',
+            'curso'        => 'required',
+            'cotista'      => 'required',
+            'universidade' => 'required',
+        ]);
 
         $edital = Editais::where('nome', $request->programa)
                         ->where('numero', $request->numero)->first();
@@ -204,8 +236,7 @@ class EstudanteController extends Controller
             }
         }
 
-        $candidato = Candidato::where('nome', $request->aluno)
-                                ->where('matricula', $request->matricula)->first();
+        $candidato = Candidato::where('matricula', $request->matricula)->first();
 
         if(empty($candidato)){
 
@@ -237,7 +268,8 @@ class EstudanteController extends Controller
         $convenio = Convenios::where('universidade', $request->universidade)->first();
 
         $candidatura = Candidaturas::where('candidato_id', $candidato->id)
-                                    ->where('ies_anfitria', $request->universidade)->first();
+                                    ->where('edital_id', $edital->id)
+                                    ->first();
         if(empty($candidatura)){
 
             DB::beginTransaction();
@@ -292,11 +324,27 @@ class EstudanteController extends Controller
                 Log::error($e);
                 return $this->error($e->getMessage(), 500, $e);
             }
+
+            return redirect('/estudantes/Uefs')->with('message', 'CANDIDATURA ADICIONADA COM SUCESSO!');
         }
-        return redirect('/estudantes/Uefs')->with('message', 'CANDIDATURA ADICIONADA COM SUCESSO!');
+        else{
+            return redirect('/estudantes/Uefs')->with('message', 'Essa Candidatura já tinha sido adicionada anteriormente.');
+        }
     }
 
     function updateEstudanteUefs(Request $request, $id){
+
+        $this->validate($request, [
+            'programa'     => 'required',
+            'numero'       => 'required',
+            'data_edital'  => 'required|date',
+            'aluno'        => 'required',
+            'sexo'         => 'required',
+            'matricula'    => 'required|string|size:8',
+            'curso'        => 'required',
+            'cotista'      => 'required',
+            'universidade' => 'required',
+        ]);
 
         $edital = Editais::where('nome', $request->programa)
                         ->where('numero', $request->numero)->first();
