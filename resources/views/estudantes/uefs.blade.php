@@ -84,8 +84,8 @@
 							      	<tr>
 							        	<td>
 							        	@isset($estudante->candidato->nome)
-							        		@if(strlen($estudante->candidato->nome) > 35 )
-								          		<label data-toggle="tooltip" title="{{ $estudante->candidato->nome  }}">{{ substr($estudante->candidato->nome,0,35).('...')}}</label>
+							        		@if(strlen($estudante->candidato->nome) > 30 )
+								          		<label data-toggle="tooltip" title="{{ $estudante->candidato->nome  }}">{{ substr($estudante->candidato->nome,0,30).('...')}}</label>
 					                            
 					                         @else
 					                            {{ $estudante->candidato->nome }}
@@ -99,8 +99,8 @@
 							        	</td> 
 							        	<td>
 							        	@isset($estudante->ies_anfitria)
-							        		@if(strlen($estudante->ies_anfitria) > 35 )
-								          		<label data-toggle="tooltip" title="{{ $estudante->ies_anfitria  }}">{{ substr($estudante->ies_anfitria,0,35).('...')}}</label>
+							        		@if(strlen($estudante->ies_anfitria) > 30 )
+								          		<label data-toggle="tooltip" title="{{ $estudante->ies_anfitria  }}">{{ substr($estudante->ies_anfitria,0,30).('...')}}</label>
 					                            
 					                         @else
 					                            {{ $estudante->ies_anfitria }}
