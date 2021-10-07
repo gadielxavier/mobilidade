@@ -80,7 +80,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="{{ route('relatorios.create') }}" enctype="multipart/form-data">
+				<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('relatorios.create') }}" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="form-group" id="tipoFormGroup">
 					  	<label>Tipo</label>
@@ -306,6 +306,7 @@ $(document).ready(function(){
 	  };
 	  var cursos = {
 	    datasets: [{
+	      label: '# Intercambistas',
 	      data: [
 	      	@foreach ($candidaturasCurso as $curso)
 	      		[ "{{ count($curso) }}", ],
@@ -617,7 +618,7 @@ $(document).ready(function(){
 	  if ($("#cursosChart").length) {
 	    var cursosChartCanvas = $("#cursosChart").get(0).getContext("2d");
 	    var cursosChart = new Chart(cursosChartCanvas, {
-	      type: 'pie',
+	      type: 'line',
 	      data: cursos,
 	      options: doughnutPieOptions
 	    });

@@ -89,7 +89,7 @@
 							          					</button>
 							          				</div>
 							          				<div class="modal-body">
-							          					<form class="form-horizontal" method="POST" action="editais/detalhes/delete/{{ $edital->id }}">
+							          					<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="editais/detalhes/delete/{{ $edital->id }}">
 									                      {{ csrf_field() }}
 									                      <input type="hidden" name="_method" value="DELETE">
 									                      <h6>Você tem certeza que deseja excluir esta edital?</h6>
@@ -135,7 +135,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="editais/store" enctype="multipart/form-data">
+				<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="editais/store" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<label>Programa</label>
 					<select name="nome" class="form-control">

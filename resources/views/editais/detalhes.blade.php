@@ -210,6 +210,4 @@
 	})
 	</script>
 
-	<script src="js/submit.js"></script>
-
 @endsection

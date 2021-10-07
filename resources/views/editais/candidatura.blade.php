@@ -611,6 +611,4 @@
 
 @section('scripts')
 
-	<script src="js/submit.js"></script>
-
 @endsection

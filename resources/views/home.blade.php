@@ -125,7 +125,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" method="GET" action="candidato" enctype="multipart/form-data">
+        <form class="form-horizontal form-prevent-multiple-submits" method="GET" action="candidato" enctype="multipart/form-data">
           {{ csrf_field() }}
             <div>
               <p>

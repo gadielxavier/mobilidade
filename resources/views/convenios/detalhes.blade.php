@@ -10,7 +10,7 @@
         		Atualizar os  dados do convênio
       		</p>
 
-			<form class="form-prevent-multiple-submits" method="POST" action="{{ route('convenios.update', $convenio->id) }}" enctype="multipart/form-data">
+			<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('convenios.update', $convenio->id) }}" enctype="multipart/form-data">
             {{ csrf_field() }}
            		<div class="form-group">
 			      	<label>Universidade</label>
@@ -78,7 +78,6 @@
 
 @section('scripts')
 
-	<script src="js/submit.js"></script>
 
 @endsection
 

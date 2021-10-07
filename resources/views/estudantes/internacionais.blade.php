@@ -27,7 +27,7 @@
 	    </div>
 	@endif
 
-	<form method="get" action="{{ route('estudantes.internacionais') }}">
+	<form class="form-horizontal form-prevent-multiple-submits" method="get" action="{{ route('estudantes.internacionais') }}">
 		<div class="row">
 	        <div class="col-sm-4">
 	            <div class="form-group">
@@ -118,7 +118,7 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<form class="form-horizontal" method="POST" action="{{ route('estudantes.updateInternacionais', $estudante->id) }}" enctype="multipart/form-data">
+													<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('estudantes.updateInternacionais', $estudante->id) }}" enctype="multipart/form-data">
 														{{ csrf_field() }}
 														<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}" id="NomeFormGroup_{{$estudante->id}}">
 												          <label>Nome</label>
@@ -249,7 +249,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="addEstudanteInternacional" enctype="multipart/form-data">
+				<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="addEstudanteInternacional" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="form-group" id="NomeFormGroup">
 						<label>Nome</label>

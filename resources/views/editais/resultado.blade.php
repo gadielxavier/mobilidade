@@ -34,7 +34,7 @@
 				<div class="card-body">
 					<div class="table-responsive"> 
 					@if($edital->status->id > 9)
-						<form method="POST" action="{{ route('resultado.segundafase', $edital->id) }}" enctype="multipart/form-data">
+						<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('resultado.segundafase', $edital->id) }}" enctype="multipart/form-data">
 				            {{ csrf_field() }}
 				            <table class="table table-striped">
 				            	<thead>
@@ -92,7 +92,7 @@
 							</div>
 				        </form>
 				    @elseif($edital->status->id == 9)
-						<form method="POST" action="{{ route('resultado.update', $edital->id) }}" enctype="multipart/form-data">
+						<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('resultado.update', $edital->id) }}" enctype="multipart/form-data">
 				            {{ csrf_field() }}
 				            <table class="table table-striped">
 				            	<thead>
@@ -220,7 +220,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="{{ route('resultado.pdf', $edital->id) }}" enctype="multipart/form-data">
+				<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('resultado.pdf', $edital->id) }}" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="form-group">
 						<label for="assinatura" class="col-form-label">Assinatura:</label>

@@ -31,7 +31,7 @@
 			@if(!$recurso->replied)
 		     <div class="card">
 		    	<div class="card-body">
-		    		<form class="form-horizontal" method="POST" action="{{ route('resposta', $recurso->id) }}">
+		    		<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('resposta', $recurso->id) }}">
 		    			{{ csrf_field() }}
 			    		<h4 class="card-title">Resposta</h4>
 

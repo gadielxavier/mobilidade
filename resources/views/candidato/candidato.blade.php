@@ -212,7 +212,7 @@
 
       @else
 
-      <form method="POST" action="{{url('candidato/store')}}" enctype="multipart/form-data">
+      <form class="form-prevent-multiple-submits" method="POST" action="{{url('candidato/store')}}" enctype="multipart/form-data">
         {!! csrf_field() !!}
 
         <div class="form-group{{ $errors->has('foto_perfil') ? ' has-error' : '' }}">
@@ -438,7 +438,5 @@
       });
   </script>
   
-  <script src="js/submit.js"></script>
-
 @endsection
 

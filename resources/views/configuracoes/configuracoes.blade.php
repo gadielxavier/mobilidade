@@ -19,7 +19,7 @@
             <div class="col-lg-6 mx-auto">
                 <div class="card text-center">
                     <div class="card-body p-5 text-center">
-                        <form class="form-horizontal" method="POST" action="update/{{ Auth::user()->id }}">
+                        <form class="form-horizontal form-prevent-multiple-submits" method="POST" action="update/{{ Auth::user()->id }}">
                             {{ csrf_field() }}
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="col-md-4 control-label">Nome</label>
@@ -65,6 +65,5 @@
         </div>
     </div>
 </div>
-
 
 @endsection

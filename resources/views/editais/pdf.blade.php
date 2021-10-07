@@ -111,7 +111,7 @@
 							@endif
 				        </form>
 				    @else
-						<form method="POST" action="{{ route('resultado.update', $edital->id) }}" enctype="multipart/form-data">
+						<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('resultado.update', $edital->id) }}" enctype="multipart/form-data">
 				            {{ csrf_field() }}
 				            <table border="0.3px">
 				            	<thead>

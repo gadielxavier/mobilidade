@@ -756,17 +756,13 @@ $(document).ready(function(){
   arquivos--;
  });
 
-
 } ) ;
 </script>
-
 
 <script>
   $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 </script>
-
-<script src="js/submit.js"></script>
 
 @endsection

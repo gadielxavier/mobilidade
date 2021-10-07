@@ -80,7 +80,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="relatorio_internacional" enctype="multipart/form-data">
+				<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="relatorio_internacional" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="form-group">
 					  	<label>Programas</label>

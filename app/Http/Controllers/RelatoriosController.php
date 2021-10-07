@@ -28,11 +28,17 @@ class RelatoriosController extends Controller
         $estudantesModalidade = EstudantesInternacionais::all()
                     ->groupBy('modalidade');
 
+        $estudantesModalidade = $estudantesModalidade->sort();
+
         $estudantesPais = EstudantesInternacionais::all()
                     ->groupBy('pais');
 
+        $estudantesPais = $estudantesPais->sort();
+
         $estudantesProgramas = EstudantesInternacionais::all()
                     ->groupBy('programa');
+
+        $estudantesProgramas = $estudantesProgramas->sort();
 
         $paises = DB::table('pais')->get();
 
@@ -57,14 +63,14 @@ class RelatoriosController extends Controller
         ->get()
         ->groupBy('candidato.curso');
 
-        $candidaturasCurso = $candidaturasCurso->sort()->slice(-10);
+        $candidaturasCurso = $candidaturasCurso->sort();
 
         $candidaturasPais = Candidaturas::where('status_id', 14)
         ->with('convenio')
         ->get()
         ->groupBy('convenio.pais');
 
-        $candidaturasPais = $candidaturasPais->sort()->slice(-10);
+        $candidaturasPais = $candidaturasPais->sort();
 
         $candidaturasAno = Candidaturas::where('status_id', 14)
         ->with('edital')
@@ -80,7 +86,7 @@ class RelatoriosController extends Controller
         ->get()
         ->groupBy('edital.nome');
 
-        $candidaturasEdital = $candidaturasEdital->sort()->slice(-10);
+        $candidaturasEdital = $candidaturasEdital->sort();
 
         $cursos = Cursos::all();
 

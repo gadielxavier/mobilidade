@@ -52,8 +52,6 @@
         }
     </style>
 
-
-
 </div>
 
 @endsection

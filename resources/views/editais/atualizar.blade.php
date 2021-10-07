@@ -344,8 +344,6 @@
 
   @section('scripts')
 
-    <script src="js/submit.js"></script>
-
     <script>
       $(document).ready( function() {
         $('#falseinput').click(function(){

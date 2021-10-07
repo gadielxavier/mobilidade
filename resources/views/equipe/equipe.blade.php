@@ -65,7 +65,7 @@
 						          					</button>
 						          				</div>
 						          				<div class="modal-body">
-						          					<form class="form-horizontal" method="POST" action="equipe/delete/{{ $funcionario->id }}">
+						          					<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="equipe/delete/{{ $funcionario->id }}">
 								                      {{ csrf_field() }}
 								                      <input type="hidden" name="_method" value="DELETE">
 								                      <h6>Você tem certeza que deseja excluir esta funcionário?</h6>
@@ -108,7 +108,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="equipe/store" enctype="multipart/form-data">
+				<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="equipe/store" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name">Login</label>

@@ -27,7 +27,7 @@
 	    </div>
 	@endif
 
-	<form class="form-prevent-multiple-submits" method="get" action="{{ route('estudantes.uefs') }}">
+	<form class="form-horizontal form-prevent-multiple-submits" method="get" action="{{ route('estudantes.uefs') }}">
 		<div class="row">
 	        <div class="col-sm-4">
 	            <div class="form-group">
@@ -128,7 +128,7 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<form class="form-prevent-multiple-submits" method="POST" action="{{ route('estudantes.updateUefs', $estudante->id) }}" enctype="multipart/form-data">
+													<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('estudantes.updateUefs', $estudante->id) }}" enctype="multipart/form-data">
 														{{ csrf_field() }}
 														<div class="form-group{{ $errors->has('programa') ? ' has-error' : '' }}">
 															<label>Programa</label>
@@ -266,7 +266,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="addEstudanteUefs" enctype="multipart/form-data">
+				<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="addEstudanteUefs" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="form-group{{ $errors->has('programa') ? ' has-error' : '' }}">
 						<label>Programa</label>
@@ -432,8 +432,6 @@
        $matricula.mask('99999999');
   });
 </script>
-
-<script src="js/submit.js"></script>
 
 <script type="text/javascript">
 	@if (count($errors) > 0)

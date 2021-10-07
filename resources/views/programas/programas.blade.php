@@ -63,7 +63,7 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<form class="form-horizontal" method="POST" action="programas/update/{{ $programa->id }}" enctype="multipart/form-data">
+													<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="programas/update/{{ $programa->id }}" enctype="multipart/form-data">
 														{{ csrf_field() }}
 														<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
 												          <label>Nome</label>
@@ -148,7 +148,7 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<form class="form-horizontal" method="POST" action="programas/update/{{ $programa->id }}" enctype="multipart/form-data">
+													<form class="form-horizontal form-prevent-multiple-submits"method="POST" action="programas/update/{{ $programa->id }}" enctype="multipart/form-data">
 														{{ csrf_field() }}
 														<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
 												          <label>Nome</label>
@@ -209,7 +209,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="programas/store" enctype="multipart/form-data">
+				<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="programas/store" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
 			          <label>Nome</label>

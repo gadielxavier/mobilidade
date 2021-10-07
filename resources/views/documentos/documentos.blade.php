@@ -62,7 +62,7 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<form class="form-horizontal" method="POST" action="documentos/update/{{ $documento->id }}" enctype="multipart/form-data">
+													<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="documentos/update/{{ $documento->id }}" enctype="multipart/form-data">
 														{{ csrf_field() }}
 														<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
 												          <label>Nome</label>
@@ -111,7 +111,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" method="POST" action="documentos/store" enctype="multipart/form-data">
+				<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="documentos/store" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
 			          <label>Nome</label>
