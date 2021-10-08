@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container-fluid">
-	<form class="form-prevent-multiple-submits" method="POST" action="{{ route('editais.ccint') }}" enctype="multipart/form-data">
+	<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{ route('editais.ccint') }}" enctype="multipart/form-data">
 		{!! csrf_field() !!}
 		<div class="row">
 		    <div class="col-md-12 grid-margin">

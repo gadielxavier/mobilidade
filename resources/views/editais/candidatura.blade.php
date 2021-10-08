@@ -87,7 +87,7 @@
 					      	@endif
 					    </div>  
 		            	<div class="col-md-4">
-		            		<form class="form-prevent-multiple-submits" method="POST" action="atualizar/{{ $candidatura->id }}" enctype="multipart/form-data">
+		            		<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="atualizar/{{ $candidatura->id }}" enctype="multipart/form-data">
 		       				{!! csrf_field() !!}
 								<div class="form-group">
 									<label>Status Inscrição:</label>
@@ -123,7 +123,7 @@
 			          <p class="card-title">Documentos extras do candidato</p>
 			    </div>
 				<div class="card-body">
-					<form method="POST" class="form-prevent-multiple-submits" action="atualizar/certificado/{{ $candidatura->id }}" enctype="multipart/form-data">
+					<form method="POST" class="form-horizontal form-prevent-multiple-submits" action="atualizar/certificado/{{ $candidatura->id }}" enctype="multipart/form-data">
 						{!! csrf_field() !!}
 						<div class="row">
 							<div class="col-md-6">

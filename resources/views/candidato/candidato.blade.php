@@ -11,7 +11,7 @@
       </p>
 
       @isset($candidato)
-        <form class="form-prevent-multiple-submits" method="POST" action="{{url('candidato/update')}}" enctype="multipart/form-data">
+        <form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{url('candidato/update')}}" enctype="multipart/form-data">
            {!! csrf_field() !!}
 
           <div class="form-group{{ $errors->has('foto_perfil') ? ' has-error' : '' }}">
@@ -212,7 +212,7 @@
 
       @else
 
-      <form class="form-prevent-multiple-submits" method="POST" action="{{url('candidato/store')}}" enctype="multipart/form-data">
+      <form class="form-horizontal form-prevent-multiple-submits" method="POST" action="{{url('candidato/store')}}" enctype="multipart/form-data">
         {!! csrf_field() !!}
 
         <div class="form-group{{ $errors->has('foto_perfil') ? ' has-error' : '' }}">

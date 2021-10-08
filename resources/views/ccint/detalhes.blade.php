@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container-fluid">
-	<form class="form-prevent-multiple-submits" method="POST" action="/ccint/store/{{ $candidatura->id }}" enctype="multipart/form-data" id="myForm">
+	<form class="form-horizontal form-prevent-multiple-submits" method="POST" action="/ccint/store/{{ $candidatura->id }}" enctype="multipart/form-data" id="myForm">
 		{!! csrf_field() !!}
 		<div class="row">
 		    <div class="col-md-12 grid-margin">
@@ -526,8 +526,6 @@
 @endsection
 
 @section('scripts')
-
-<script src="js/submit.js"></script>
 
 <script type="text/javascript">
 @if (count($errors) > 0){
