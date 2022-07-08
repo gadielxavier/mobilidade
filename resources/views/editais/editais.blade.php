@@ -77,7 +77,9 @@
 							        </td>
 							        
 							        <td>
-							          	<!-- <a href="#deleteModal_{{ $edital->id }}" data-toggle="modal" class="btn btn-danger btn-sm"> Excluir</a> -->
+										@if(Auth::user()->privilegio == 4)
+							          	<a href="#deleteModal_{{ $edital->id }}" data-toggle="modal" class="btn btn-danger btn-sm"> Excluir</a> 
+										@endif
 
 							          	<div id="deleteModal_{{ $edital->id }}" class="modal fade">
 							          		<div class="modal-dialog">
