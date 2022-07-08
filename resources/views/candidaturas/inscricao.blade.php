@@ -415,7 +415,7 @@
           <div class="modal-footer">
             <div class="form-group">
               <div class="input-group">
-                <input name="submitbutton" value="Salvar" type="submit" class="btn btn-light ml-auto button-prevent-multiple-submits">
+                <input name="submitbutton" value="Salvar" type="submit" class="btn btn-light">
               </div>
             </div>
             <div class="form-group">
