@@ -87,6 +87,7 @@ Route::group(['prefix' => 'candidaturas',  'middleware' => ['auth','candidato']]
     Route::get('certificado3/{id}', 'CandidaturasController@certificado_proficiencia3')->name('candidaturas.certificado3');
     Route::get('/', 'CandidaturasController@index')->middleware('candidato');
     Route::get('atualizacao/comprovante/delete/{id}','CandidaturasController@deleteComprovante');
+    Route::get('atualizacao/documento/delete/{id}','CandidaturasController@deleteDocumento');
     Route::get('atualizar/matricula/{id}', 'CandidaturasController@matricula')->name('candidaturas.matricula');
     Route::get('candidaturas/historico/{id}', 'CandidaturasController@historico')->name('candidaturas.historico');
     Route::get('candidaturas/percentual/{id}', 'CandidaturasController@percentual')->name('candidaturas.percentual');

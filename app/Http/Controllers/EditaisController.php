@@ -790,7 +790,9 @@ class EditaisController extends Controller
         $universidades = Universidade_Edital::where('edital_id', $candidatura->edital_id)->get();
         $avaliacao = Avaliacao_Ccint::where('candidatura_id', $candidatura->id)->first();
 
-        $documentos = DB::table('documento_arquivo')->where('candidatura_id', $candidatura->id)
+        $documentos = DB::table('documento_arquivo')
+        ->select('*', 'documento_arquivo.id as id')
+        ->where('candidatura_id', $candidatura->id)
         ->join('documento', 'documento.id', '=', 'documento_arquivo.documento_id')
         ->get();
 

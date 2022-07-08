@@ -563,7 +563,7 @@
                                   <h6>Você tem certeza que deseja excluir este comprovante?</h6>
                                   <div class="modal-footer">
                                     <div class="form-group">
-                                      <a class="btn btn-primary" href="comprovante/delete/{{ $arquivo->id }}">
+                                      <a class="btn btn-primary" href="documento/delete/{{ $arquivo->id }}">
                                         Sim
                                       </a>
                                       <button type="button" data-dismiss="modal" class="btn btn-outline-primary">

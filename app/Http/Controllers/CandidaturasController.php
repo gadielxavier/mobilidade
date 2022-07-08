@@ -984,6 +984,12 @@ class CandidaturasController extends Controller
         return Redirect::back();
     }
 
+    public function deleteDocumento($id)
+    {
+        $deleted = DB::table('documento_arquivo')->where('id', '=', $id)->delete();
+        return Redirect::back();
+    }
+
     public function matricula(Request $request, $id)
     {
         $candidatura = Candidaturas::where('id', $id)->first();
