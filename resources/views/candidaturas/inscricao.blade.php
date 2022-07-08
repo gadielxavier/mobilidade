@@ -362,17 +362,19 @@
               </div>
             </div>
 
-            <div class="table-responsive">
-               <label>Outros Documentos</label>
-               <span id="result"></span>
-               <table class="table table-bordered" id="user_table">
-                 <thead>
-                  <tr>
-                    <th width="35%">Tipo</th>
-                    <th width="35%">Anexo</th>
-                    <th width="30%">Ação</th>
-                  </tr>
-                </thead>
+        @endif
+        
+          <div class="table-responsive">
+            <label>Outros Documentos</label>
+            <span id="result"></span>
+            <table class="table table-bordered" id="user_table">
+              <thead>
+                <tr>
+                  <th width="35%">Tipo</th>
+                  <th width="35%">Anexo</th>
+                  <th width="30%">Ação</th>
+                </tr>
+              </thead>
                 <tbody id="tabela_arquivos">
                 </tbody>
                 <tfoot>
@@ -383,11 +385,9 @@
                     </td>
                   </tr>
                 </tfoot>
-              </table>
-           </div>
-           <br>
-
-        @endif
+            </table>
+          </div>
+          <br>
 
           <div class="table-responsive">
              <label>Comprovação Lattes</label>

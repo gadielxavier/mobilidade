@@ -519,8 +519,9 @@
                 </div>
               </div>
             </div>
+          @endif
 
-            <div class="table-responsive">
+          <div class="table-responsive">
                <label>Outros Documentos</label>
                <span id="result"></span>
                <table class="table table-bordered" id="user_table">
@@ -588,8 +589,6 @@
               </table>
            </div>
            <br>
-
-          @endif
 
           <div class="table-responsive">
               <label>Comprovação Lattes</label>

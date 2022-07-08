@@ -245,57 +245,60 @@ class CandidaturasController extends Controller
         $comprovacao = $request->comprovacao;
         $categoria = $request->categoria;
 
-        for($count = 0; $count < count($comprovacao); $count++)
-        {
+        if(!is_null($comprovacao)){
+            for($count = 0; $count < count($comprovacao); $count++)
+            {
 
-            if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
+                if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
 
-                $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+                    $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
 
-                DB::beginTransaction();
-                    try{
-                        $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
-                        'candidatura_id' => $id,
-                        'arquivo' => $arquivo,
-                        'comprovacao_lattes_id' => $request->categoria[$count]
-                    ]);
-                        
-                        DB::commit();
-                    }
-                     catch(\Exception $e) {
-                        DB::rollback();
-                        Log::error($e);
-                        return $this->error($e->getMessage(), 500, $e);
-                    }
+                    DB::beginTransaction();
+                        try{
+                            $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
+                            'candidatura_id' => $id,
+                            'arquivo' => $arquivo,
+                            'comprovacao_lattes_id' => $request->categoria[$count]
+                        ]);
+                            
+                            DB::commit();
+                        }
+                        catch(\Exception $e) {
+                            DB::rollback();
+                            Log::error($e);
+                            return $this->error($e->getMessage(), 500, $e);
+                        }
+                }
             }
         }
 
         $documento = $request->documento;
         $anexos = $request->anexos;
 
+        if(!is_null($documento)){
+            for($count = 0; $count < count($documento); $count++)
+            {
 
-        for($count = 0; $count < count($documento); $count++)
-        {
+                if ($request->hasFile('documento.' . $count) && $request->file('documento.' . $count)->isValid()){
 
-            if ($request->hasFile('documento.' . $count) && $request->file('documento.' . $count)->isValid()){
+                    $arquivo = $request->file('documento.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
 
-                $arquivo = $request->file('documento.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
-
-                DB::beginTransaction();
-                    try{
-                        $documento_arquivo = DB::table('documento_arquivo')->insert([
-                        'candidatura_id' => $id,
-                        'arquivo' => $arquivo,
-                        'documento_id' => $request->anexos[$count]
-                    ]);
-                        
-                        DB::commit();
-                    }
-                     catch(\Exception $e) {
-                        DB::rollback();
-                        Log::error($e);
-                        return $this->error($e->getMessage(), 500, $e);
-                    }
+                    DB::beginTransaction();
+                        try{
+                            $documento_arquivo = DB::table('documento_arquivo')->insert([
+                            'candidatura_id' => $id,
+                            'arquivo' => $arquivo,
+                            'documento_id' => $request->anexos[$count]
+                        ]);
+                            
+                            DB::commit();
+                        }
+                        catch(\Exception $e) {
+                            DB::rollback();
+                            Log::error($e);
+                            return $this->error($e->getMessage(), 500, $e);
+                        }
+                }
             }
         }
 
@@ -479,6 +482,35 @@ class CandidaturasController extends Controller
             }
         }
 
+        $documento = $request->documento;
+        $anexos = $request->anexos;
+
+
+        for($count = 0; $count < count($documento); $count++)
+        {
+
+            if ($request->hasFile('documento.' . $count) && $request->file('documento.' . $count)->isValid()){
+
+                $arquivo = $request->file('documento.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+
+                DB::beginTransaction();
+                    try{
+                        $documento_arquivo = DB::table('documento_arquivo')->insert([
+                        'candidatura_id' => $id,
+                        'arquivo' => $arquivo,
+                        'documento_id' => $request->anexos[$count]
+                    ]);
+                        
+                        DB::commit();
+                    }
+                     catch(\Exception $e) {
+                        DB::rollback();
+                        Log::error($e);
+                        return $this->error($e->getMessage(), 500, $e);
+                    }
+            }
+        }
+
         return $this->checkIsFinished($candidaturas);
     }
 
@@ -595,15 +627,15 @@ class CandidaturasController extends Controller
             $candidatura = Candidaturas::create([
             'candidato_id' => $candidato->id,
             'edital_id' => $id,
-            'primeira_opcao_universidade'=> null,
-            'primeira_opcao_curso' => null,
-            'primeira_opcao_pais' => null,
-            'segunda_opcao_universidade' => null,
-            'segunda_opcao_curso' => null,
-            'segunda_opcao_pais'=> null,
-            'terceira_opcao_universidade'=> null,
-            'terceira_opcao_curso'=> null,
-            'terceira_opcao_pais'=> null,
+            'primeira_opcao_universidade'=> 0,
+            'primeira_opcao_curso' => 0,
+            'primeira_opcao_pais' => 0,
+            'segunda_opcao_universidade' => 0,
+            'segunda_opcao_curso' => 0,
+            'segunda_opcao_pais'=> 0,
+            'terceira_opcao_universidade'=> 0,
+            'terceira_opcao_curso'=> 0,
+            'terceira_opcao_pais'=> 0,
             'matricula'=> $matricula,
             'historico'=> $historico,
             'percentual'=> $percentual,
@@ -623,14 +655,14 @@ class CandidaturasController extends Controller
             'proficiencia_id1' => 0,
             'proficiencia_id2' => 0,
             'proficiencia_id3' => 0,
-            'quarta_opcao_universidade' => null,
-            'quarta_opcao_curso' => null,
-            'quarta_opcao_pais' => null,
+            'quarta_opcao_universidade' => 0,
+            'quarta_opcao_curso' => 0,
+            'quarta_opcao_pais' => 0,
             'nome_professor_carta' => $request->nome_professor_carta,
             'professor_departamento_id' => $request->professor_departamento_id,
-            'plano_trabalho4' => null,
-            'plano_estudo4' => null,
-            'ies_anfitria' => null,
+            'plano_trabalho4' => 0,
+            'plano_estudo4' => 0,
+            'ies_anfitria' => 0,
             'finalizado' => $finalizado
 
         ]);
@@ -646,59 +678,63 @@ class CandidaturasController extends Controller
         $comprovacao = $request->comprovacao;
         $categoria = $request->categoria;
 
-
-        for($count = 0; $count < count($comprovacao); $count++)
-        {
-
-            if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
-
-                $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
-
-                DB::beginTransaction();
-                    try{
-                        $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
-                        'candidatura_id' => $candidatura->id,
-                        'arquivo' => $arquivo,
-                        'comprovacao_lattes_id' => $request->categoria[$count]
-                    ]);
-                        
-                        DB::commit();
-                    }
-                     catch(\Exception $e) {
-                        DB::rollback();
-                        Log::error($e);
-                        return $this->error($e->getMessage(), 500, $e);
-                    }
+        if(!is_null($comprovacao)){
+            for($count = 0; $count < count($comprovacao); $count++)
+            {
+    
+                if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
+    
+                    $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+    
+                    DB::beginTransaction();
+                        try{
+                            $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
+                            'candidatura_id' => $candidatura->id,
+                            'arquivo' => $arquivo,
+                            'comprovacao_lattes_id' => $request->categoria[$count]
+                        ]);
+                            
+                            DB::commit();
+                        }
+                         catch(\Exception $e) {
+                            DB::rollback();
+                            Log::error($e);
+                            return $this->error($e->getMessage(), 500, $e);
+                        }
+                }
             }
         }
 
         $documento = $request->documento;
         $anexos = $request->anexos;
 
+        if(!is_null($documento)){
 
-        for($count = 0; $count < count($documento); $count++)
-        {
+            for($count = 0; $count < count($documento); $count++)
+            {
 
-            if ($request->hasFile('documento.' . $count) && $request->file('documento.' . $count)->isValid()){
+                if ($request->hasFile('documento.' . $count) && $request->file('documento.' . $count)->isValid()){
 
-                $arquivo = $request->file('documento.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+                    $arquivo = $request->file('documento.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
 
-                DB::beginTransaction();
-                    try{
-                        $documento_arquivo = DB::table('documento_arquivo')->insert([
-                        'candidatura_id' => $candidatura->id,
-                        'arquivo' => $arquivo,
-                        'documento_id' => $request->anexos[$count]
-                    ]);
-                        
-                        DB::commit();
-                    }
-                     catch(\Exception $e) {
-                        DB::rollback();
-                        Log::error($e);
-                        return $this->error($e->getMessage(), 500, $e);
-                    }
+                    DB::beginTransaction();
+                        try{
+                            $documento_arquivo = DB::table('documento_arquivo')->insert([
+                            'candidatura_id' => $candidatura->id,
+                            'arquivo' => $arquivo,
+                            'documento_id' => $request->anexos[$count]
+                        ]);
+                            
+                            DB::commit();
+                        }
+                        catch(\Exception $e) {
+                            DB::rollback();
+                            Log::error($e);
+                            return $this->error($e->getMessage(), 500, $e);
+                        }
+                }
             }
+
         }
 
         if($finalizado)
@@ -879,30 +915,63 @@ class CandidaturasController extends Controller
         $comprovacao = $request->comprovacao;
         $categoria = $request->categoria;
 
+        if(!is_null($comprovacao)){
+            for($count = 0; $count < count($comprovacao); $count++)
+            {
 
-        for($count = 0; $count < count($comprovacao); $count++)
-        {
+                if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
 
-            if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
+                    $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
 
-                $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
-
-                DB::beginTransaction();
-                    try{
-                        $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
-                        'candidatura_id' => $candidatura->id,
-                        'arquivo' => $arquivo,
-                        'comprovacao_lattes_id' => $request->categoria[$count]
-                    ]);
-                        
-                        DB::commit();
-                    }
-                     catch(\Exception $e) {
-                        DB::rollback();
-                        Log::error($e);
-                        return $this->error($e->getMessage(), 500, $e);
-                    }
+                    DB::beginTransaction();
+                        try{
+                            $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
+                            'candidatura_id' => $candidatura->id,
+                            'arquivo' => $arquivo,
+                            'comprovacao_lattes_id' => $request->categoria[$count]
+                        ]);
+                            
+                            DB::commit();
+                        }
+                        catch(\Exception $e) {
+                            DB::rollback();
+                            Log::error($e);
+                            return $this->error($e->getMessage(), 500, $e);
+                        }
+                }
             }
+        }
+
+        $documento = $request->documento;
+        $anexos = $request->anexos;
+
+        if(!is_null($documento)){
+
+            for($count = 0; $count < count($documento); $count++)
+            {
+
+                if ($request->hasFile('documento.' . $count) && $request->file('documento.' . $count)->isValid()){
+
+                    $arquivo = $request->file('documento.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+
+                    DB::beginTransaction();
+                        try{
+                            $documento_arquivo = DB::table('documento_arquivo')->insert([
+                            'candidatura_id' => $candidatura->id,
+                            'arquivo' => $arquivo,
+                            'documento_id' => $request->anexos[$count]
+                        ]);
+                            
+                            DB::commit();
+                        }
+                        catch(\Exception $e) {
+                            DB::rollback();
+                            Log::error($e);
+                            return $this->error($e->getMessage(), 500, $e);
+                        }
+                }
+            }
+
         }
 
         return $this->checkIsFinished($candidatura);
