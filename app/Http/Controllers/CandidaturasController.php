@@ -174,7 +174,7 @@ class CandidaturasController extends Controller
 
         $edital = Editais::where('id', $candidatura->edital_id)->first();
 
-        if($edital->nome == $editalAeri){
+        if($edital->nome == $editalAeri->nome){
             $isFinished = $this->updateInscicaoEditalUefs($request, $id);
         }
         else{
@@ -418,15 +418,15 @@ class CandidaturasController extends Controller
         $convenio3 = Convenios::where('universidade', $request->opcao3universidade)->first();
 
         try{
-            $candidaturas->primeira_opcao_universidade = $request->opcao1universidade;
-            $candidaturas->primeira_opcao_curso = $request->opcao1curso;
-            $candidaturas->primeira_opcao_pais = $convenio1->pais;
-            $candidaturas->segunda_opcao_universidade = $request->opcao2universidade;
-            $candidaturas->segunda_opcao_curso = $request->opcao2curso;
-            $candidaturas->segunda_opcao_pais = $convenio2->pais;
-            $candidaturas->terceira_opcao_universidade = $request->opcao3universidade;
-            $candidaturas->terceira_opcao_curso = $request->opcao3curso;
-            $candidaturas->terceira_opcao_pais = $convenio3->pais;
+            $candidaturas->primeira_opcao_universidade = (!is_null($request->opcao1universidade)) ? $request->opcao1universidade : $candidaturas->primeira_opcao_universidade;
+            $candidaturas->primeira_opcao_curso = (!is_null($request->opcao1curso)) ? $request->opcao1curso : $candidaturas->primeira_opcao_curso;
+            $candidaturas->primeira_opcao_pais = (!is_null($convenio1->pais)) ?  $convenio1->pais : $candidaturas->primeira_opcao_pais;
+            $candidaturas->segunda_opcao_universidade = (!is_null($request->opcao2universidade)) ? $request->opcao2universidade : $candidaturas->segunda_opcao_universidade;
+            $candidaturas->segunda_opcao_curso = (!is_null($request->opcao2curso)) ? $request->opcao2curso : $candidaturas->segunda_opcao_curso;
+            $candidaturas->segunda_opcao_pais = (!is_null($convenio2->pais)) ? $convenio2->pais : $candidaturas->segunda_opcao_pais;
+            $candidaturas->terceira_opcao_universidade = (!is_null($request->opcao3universidade)) ? $request->opcao3universidade : $candidaturas->terceira_opcao_universidade;
+            $candidaturas->terceira_opcao_curso = (!is_null($request->opcao3curso)) ? $request->opcao3curso : $candidaturas->terceira_opcao_curso;
+            $candidaturas->terceira_opcao_pais = (!is_null($convenio3->pais)) ? $convenio3->pais : $candidaturas->terceira_opcao_pais;
             $candidaturas->matricula = $matricula;
             $candidaturas->historico = $historico;
             $candidaturas->percentual = $percentual;
