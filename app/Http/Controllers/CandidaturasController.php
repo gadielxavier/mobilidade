@@ -457,57 +457,61 @@ class CandidaturasController extends Controller
         $categoria = $request->categoria;
 
 
-        for($count = 0; $count < count($comprovacao); $count++)
-        {
+        if(!is_null($comprovacao)){
 
-            if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
+            for($count = 0; $count < count($comprovacao); $count++)
+            {
 
-                $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+                if ($request->hasFile('comprovacao.' . $count) && $request->file('comprovacao.' . $count)->isValid()){
 
-                DB::beginTransaction();
-                    try{
-                        $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
-                        'candidatura_id' => $id,
-                        'arquivo' => $arquivo,
-                        'comprovacao_lattes_id' => $request->categoria[$count]
-                    ]);
-                        
-                        DB::commit();
-                    }
-                     catch(\Exception $e) {
-                        DB::rollback();
-                        Log::error($e);
-                        return $this->error($e->getMessage(), 500, $e);
-                    }
+                    $arquivo = $request->file('comprovacao.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
+
+                    DB::beginTransaction();
+                        try{
+                            $comprovacao_arquivo = Comprovacao_Lattes_Arquivos::create([
+                            'candidatura_id' => $id,
+                            'arquivo' => $arquivo,
+                            'comprovacao_lattes_id' => $request->categoria[$count]
+                        ]);
+                            
+                            DB::commit();
+                        }
+                        catch(\Exception $e) {
+                            DB::rollback();
+                            Log::error($e);
+                            return $this->error($e->getMessage(), 500, $e);
+                        }
+                }
             }
         }
 
         $documento = $request->documento;
         $anexos = $request->anexos;
 
+        if(!is_null($documento)){
+            for($count = 0; $count < count($documento); $count++)
+            {
 
-        for($count = 0; $count < count($documento); $count++)
-        {
+                if ($request->hasFile('documento.' . $count) && $request->file('documento.' . $count)->isValid()){
 
-            if ($request->hasFile('documento.' . $count) && $request->file('documento.' . $count)->isValid()){
+                    $arquivo = $request->file('documento.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
 
-                $arquivo = $request->file('documento.' . $count)->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$request->user()->id, date('mdYHis') . uniqid());
-
-                DB::beginTransaction();
-                    try{
-                        $documento_arquivo = DB::table('documento_arquivo')->insert([
-                        'candidatura_id' => $id,
-                        'arquivo' => $arquivo,
-                        'documento_id' => $request->anexos[$count]
-                    ]);
-                        
-                        DB::commit();
-                    }
-                     catch(\Exception $e) {
-                        DB::rollback();
-                        Log::error($e);
-                        return $this->error($e->getMessage(), 500, $e);
-                    }
+                    DB::beginTransaction();
+                        try{
+                            $documento_arquivo = DB::table('documento_arquivo')->insert([
+                            'candidatura_id' => $id,
+                            'arquivo' => $arquivo,
+                            'documento_id' => $request->anexos[$count]
+                        ]);
+                            
+                            DB::commit();
+                        }
+                        catch(\Exception $e) {
+                            DB::rollback();
+                            Log::error($e);
+                            return $this->error($e->getMessage(), 500, $e);
+                        }
+                }
             }
         }
 
