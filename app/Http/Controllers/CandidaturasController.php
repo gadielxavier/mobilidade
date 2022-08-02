@@ -197,6 +197,17 @@ class CandidaturasController extends Controller
             'curriculum' => 'file|max:5000'
         ]);
 
+        if ($request->input('submitbutton') == 'Inscrever') {
+
+            $status = 1;
+            $finalizado = true;
+
+        } else {
+
+            $status = 17;
+            $finalizado = false;
+        }
+
         $candidaturas = Candidaturas::find($id);
 
         $edital = Editais::where('id', $candidaturas->edital_id)->first();
@@ -236,7 +247,8 @@ class CandidaturasController extends Controller
             $candidaturas->curriculum = $curriculum;
             $candidaturas->nome_professor_carta = $request->nome_professor_carta;
             $candidaturas->professor_departamento_id = $request->professor_departamento_id;
-            $candidaturas->status_id = 1;
+            $candidaturas->status_id = $status;
+            $candidaturas->finalizado = $finalizado;
             $candidaturas->save();
         }
         catch(\Exception $e) {
@@ -306,11 +318,11 @@ class CandidaturasController extends Controller
             }
         }
 
-        if($request->input('submitbutton') == 'Salvar'){
-            return false;
+        if($finalizado){
+            return true;
 
         } else {
-            return true;
+            return false;
         }
 
     }
@@ -592,27 +604,22 @@ class CandidaturasController extends Controller
         ->orderBy('convenios.universidade')
         ->first();
 
-        switch ($request->input('submitbutton')) {
-            case 'Inscrever':
+        if ($request->input('submitbutton') == 'Inscrever') {
 
-                $status = 1;
-                $finalizado = true;
+            $status = 1;
+            $finalizado = true;
 
-                $this->validate($request, [
-                    'matricula' => 'required|file|max:5000',
-                    'historico' => 'required|file|max:5000',
-                    'percentual' => 'required|file|max:5000',
-                    'curriculum' => 'required|file|max:5000',
-                ]);
+            $this->validate($request, [
+                'matricula' => 'required|file|max:5000',
+                'historico' => 'required|file|max:5000',
+                'percentual' => 'required|file|max:5000',
+                'curriculum' => 'required|file|max:5000',
+            ]);
 
-            break;
+        } else {
 
-            case 'Salvar':
-
-                $status = 17;
-                $finalizado = false;
-
-            break;
+            $status = 17;
+            $finalizado = false;
         }
 
         if ($request->hasFile('matricula') && $request->file('matricula')->isValid()){

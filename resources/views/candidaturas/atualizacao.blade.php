@@ -670,16 +670,15 @@
             </div>
             @else
             <div class="modal-footer">
-              <div class="row">
-                <div class="form-group">
-                  <div class="input-group">
-                    <input name="submitbutton" value="Salvar" type="submit" class="btn btn-light ml-auto button-prevent-multiple-submits">
-                  </div>
+              <input type="hidden" name="submitbutton" value="Salvar" id="submitbutton">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="submit" class="btn btn-light ml-auto button-prevent-multiple-submits" value="Salvar"  onclick="changeSubmitButtonValue('Salvar')">
                 </div>
-                <div class="form-group">
-                  <div class="input-group">
-                    <input type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits" value="Inscrever" name="submitbutton">
-                  </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits" value="Inscrever" onclick="changeSubmitButtonValue('Inscrever')">
                 </div>
               </div>
             </div>
@@ -777,8 +776,12 @@ $(document).ready(function(){
 
 <script>
   $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
+  function changeSubmitButtonValue(value){
+    $('#submitbutton').val(value);
+  }
 </script>
 
 @endsection
