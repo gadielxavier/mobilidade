@@ -658,15 +658,32 @@
                 </tfoot>
               </table>
             </div>
-            <div class="mt-3">
+            @if($candidatura->finalizado)
+            <div class="card-footer">
               <div class="form-group">
                 <div class="input-group">
-                  <button id="btnFetch" type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits">
+                  <button name="submitbutton" value="Salvar" id="btnFetch" type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits">
                     {{ __('Atualizar') }}
                   </button>
                 </div>
               </div>
             </div>
+            @else
+            <div class="modal-footer">
+              <div class="row">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input name="submitbutton" value="Salvar" type="submit" class="btn btn-light ml-auto button-prevent-multiple-submits">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits" value="Inscrever" name="submitbutton">
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endif
           </div>
         </form>
       </div>

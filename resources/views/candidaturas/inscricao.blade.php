@@ -415,12 +415,12 @@
           <div class="modal-footer">
             <div class="form-group">
               <div class="input-group">
-                <input name="submitbutton" value="Salvar" type="submit" class="btn btn-light">
+                <input name="submitbutton" value="Salvar" type="submit" class="btn btn-light ml-auto button-prevent-multiple-submits">
               </div>
             </div>
             <div class="form-group">
               <div class="input-group">
-                <input type="submit" class="btn btn-primary" value="Inscrever" name="submitbutton">
+                <input type="submit" class="btn btn-primary ml-auto button-prevent-multiple-submits" value="Inscrever" name="submitbutton">
               </div>
             </div>
           </div>

@@ -181,7 +181,11 @@ class CandidaturasController extends Controller
             $isFinished = $this->updateInscicaEditalGenerico($request, $id);
         }
 
-        return redirect('/home')->with('message', 'INSCRIÇÃO ATUALIZADA COM SUCESSO!');
+        if($isFinished)
+            return redirect('/candidaturas')->with('message', "INSCRIÇÃO ATUALIZADA COM SUCESSO!");
+        else
+            return redirect('/candidaturas')->with('message', "INSCRIÇÃO SALVA COM SUCESSO!");
+
     }
 
     public function updateInscicaEditalGenerico(Request $request, $id){
@@ -302,7 +306,12 @@ class CandidaturasController extends Controller
             }
         }
 
-        return true;
+        if($request->input('submitbutton') == 'Salvar'){
+            return false;
+
+        } else {
+            return true;
+        }
 
     }
 
@@ -515,7 +524,13 @@ class CandidaturasController extends Controller
             }
         }
 
-        return $this->checkIsFinished($candidaturas);
+        if($request->input('submitbutton') == 'Salvar'){
+            return false;
+
+        } else {
+            return $this->checkIsFinished($candidaturas);
+        }
+
     }
 
     public function details(Request $request, $id)
@@ -741,10 +756,12 @@ class CandidaturasController extends Controller
 
         }
 
-        if($finalizado)
-            return true;
-        else
+        if($request->input('submitbutton') == 'Salvar'){
             return false;
+
+        } else {
+            return $finalizado;
+        }
 
     }
 
@@ -978,7 +995,13 @@ class CandidaturasController extends Controller
 
         }
 
-        return $this->checkIsFinished($candidatura);
+        if($request->input('submitbutton') == 'Salvar'){
+            return false;
+
+        } else {
+            return $this->checkIsFinished($candidatura);
+        }
+        
     }
 
     public function deleteComprovante($id)
