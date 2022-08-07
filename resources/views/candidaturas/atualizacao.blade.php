@@ -714,7 +714,7 @@ $(document).ready(function(){
                       +"@endforeach"
                   +'</select></td>';
         html += '<td><input type="file" name="comprovacao[]" accept="application/pdf" class="form-control"></td>';
-        if(number > 1 && files < 50)
+        if(number > 1 && files < 5)
         {
             html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove</button></td></tr>';
             $('#tabela_lattes').append(html);
@@ -722,7 +722,7 @@ $(document).ready(function(){
         }
         else if(number > 1) 
         {
-          alert('Máximo de 50 comprovantes por envio. Para adicionar mais  comprovantes finalize a Inscrição e depois clique em Editar')
+          alert('Máximo de 5 comprovantes por envio. Para adicionar mais de 5 comprovantes finalize a Inscrição e depois clique em Editar')
 
         }
  }
