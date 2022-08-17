@@ -221,9 +221,19 @@ class EditaisController extends Controller
         $universidades = Universidade_Edital::where('edital_id', $edital->id)->get();
 
         if($edital->status_edital_id < 5 ){
-            $candidaturas = Candidaturas::where('edital_id', $edital->id)->get();
+            $candidaturas = Candidaturas::where('edital_id', $edital->id)
+            ->leftJoin('candidatos', 'candidaturas.candidato_id', '=', 'candidatos.id')
+            ->where('status_id', '!=' , 17)
+            ->orderBy('candidatos.nome')
+            ->get();
         }else{
-            $candidaturas = Candidaturas::where('edital_id', $edital->id)->where('status_id', '!=' , 3)->where('status_id', '!=', 5)->get();
+            $candidaturas = Candidaturas::where('edital_id', $edital->id)
+            ->leftJoin('candidatos', 'candidaturas.candidato_id', '=', 'candidatos.id')
+            ->where('status_id', '!=' , 17)
+            ->orderBy('candidatos.nome')
+            ->where('status_id', '!=' , 3)
+            ->where('status_id', '!=', 5)
+            ->get();
         }
 
         $universidades_nome_array = [];
