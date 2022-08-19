@@ -58,28 +58,28 @@
 					      	@endif                  
 					    </div>  
 		            	<div class="col-md-4">
-		              		@if(isset($candidatura->primeira_opcao_universidade))
+		              		@if(isset($candidatura->primeira_opcao_universidade) && $candidatura->primeira_opcao_universidade != '0' )
 		                	<p>
 					      		<b>1˚ Opção Universidade</b>
 					      		{{ $candidatura->primeira_opcao_universidade }}
 					      	</p>
 					      	@endif
 
-					      	@if(isset($candidatura->segunda_opcao_universidade))
+					      	@if(isset($candidatura->segunda_opcao_universidade) && $candidatura->segunda_opcao_universidade != '0' )
 					      	<p>
 					      		<b>2˚ Opção Universidade</b>
 					      		{{ $candidatura->segunda_opcao_universidade }}
 					      	</p>
 					      	@endif
 
-					      	@if(isset($candidatura->terceira_opcao_universidade))
+					      	@if(isset($candidatura->terceira_opcao_universidade) && $candidatura->terceira_opcao_universidade != '0')
 					      	<p>
 					      		<b>3˚ Opção Universidade</b>
 					      		{{ $candidatura->terceira_opcao_universidade }}
 					      	</p>
 					      	@endif
 
-					      	@if(isset($candidatura->quarta_opcao_universidade))
+					      	@if(isset($candidatura->quarta_opcao_universidade) && $candidatura->quarta_opcao_universidade != '0' )
 					      	<p>
 					      		<b>4˚ Opção Universidade</b>
 					      		{{ $candidatura->quarta_opcao_universidade }}

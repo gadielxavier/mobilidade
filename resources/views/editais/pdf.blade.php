@@ -120,6 +120,9 @@
 										<th>Matrícula</th>
 										<th>Curso</th>
 										<th>Status</th>
+										<th>Primeira Opção</th>
+										<th>Segunda Opção</th>
+										<th>Terceira Opção</th>
 									</tr>
 						    	</thead>
 						    	<tbody>
@@ -143,6 +146,21 @@
 								          	<td>
 								            @isset($candidatura->status->titulo)
 								            	{{ $candidatura->status->titulo }}
+								            @endif
+								        	</td>
+								          	<td>
+											@if(isset($candidatura->primeira_opcao_universidade) && $candidatura->primeira_opcao_universidade != '0')
+								            	{{ $candidatura->primeira_opcao_universidade }}
+								            @endif
+								        	</td>
+								          	<td>
+											@if(isset($candidatura->segunda_opcao_universidade) && $candidatura->segunda_opcao_universidade != '0')
+								            	{{ $candidatura->segunda_opcao_universidade }}
+								            @endif
+								        	</td>
+								          	<td>
+											@if(isset($candidatura->terceira_opcao_universidade) && $candidatura->terceira_opcao_universidade != '0' )
+								            	{{ $candidatura->terceira_opcao_universidade }}
 								            @endif
 								        	</td>
 								      	</tr>
