@@ -254,7 +254,6 @@
 								</div>
 							</div>
 						</div>
-
 						@if($candidatura->status_id == 18)
 						<div class="row">
 							<div class="col-md-6">
@@ -322,6 +321,25 @@
 							</div>
 						</div>
 						@endif
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group{{ $errors->has('certificado_proficiencia3') ? ' has-error' : '' }}">
+									<label>Percentual de carga horária concluída</label>
+									@if($candidatura->percentual != '0')
+									<a  href="percentual/{{ $candidatura->id }}" target="_blank">
+			                        	Visualizar
+			                        </a>
+								  	@endif
+									  
+									<input type="file" accept="application/pdf" id="percentual" name="percentual" class="form-control">
+									@if ($errors->has('percentual'))
+									<span class="help-block">
+										<strong>{{ $errors->first('percentual') }}</strong>
+									</span>
+									@endif
+								</div>
+							</div>
+						</div>
 						{{-- @if($candidatura->status_id == 1 || $candidatura->status_id == 6 ||
 																		$candidatura->status_id == 8 || $candidatura->status_id == 18) --}}
 						<div class="mt-3">
@@ -450,16 +468,6 @@
 			                        	<a  href="foto/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
 					                    		Visualizar
 					                    </a>
-			                        </td>
-			                    </tr>
-			                	<tr>
-			                    	<td>
-			                    		Percentual de carga horária concluída
-			                    	</td>
-			                        <td> 
-			                        	<a  href="percentual/{{ $candidatura->id }}" class="btn btn-primary btn-sm" target="_blank">
-			                        		Visualizar
-			                            </a>
 			                        </td>
 			                    </tr>
 			                    <tr>

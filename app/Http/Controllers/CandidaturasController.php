@@ -1365,6 +1365,12 @@ class CandidaturasController extends Controller
              $plano_estudo4 =  $candidaturas->plano_estudo4;
         }
 
+        if ($request->hasFile('percentual') && $request->file('percentual')->isValid()){
+            $percentual = $request->file('percentual')->storeAs('editais'.'/'.$edital->nome.'/'.$edital->numero.'/'.'users/'.$candidaturas->candidato->user_id, 'percentual');
+        }else{
+             $percentual =  $candidaturas->percentual;
+        }
+
         try{
             $candidaturas->carta = $carta;
             $candidaturas->desempenho = $desempenho;
@@ -1378,6 +1384,7 @@ class CandidaturasController extends Controller
             $candidaturas->quarta_opcao_curso = $opcao4curso;
             $candidaturas->plano_trabalho4 = $plano_trabalho4;
             $candidaturas->plano_estudo4 = $plano_estudo4;
+            $candidaturas->percentual = $percentual;
             $candidaturas->save();
         }
         catch(\Exception $e) {
