@@ -193,7 +193,6 @@ class CandidaturasController extends Controller
         $this->validate($request, [
             'matricula' => 'file|max:5000',
             'historico' => 'file|max:5000',
-            'percentual' => 'file|max:5000',
             'curriculum' => 'file|max:5000'
         ]);
 
@@ -333,7 +332,6 @@ class CandidaturasController extends Controller
         $this->validate($request, [
             'matricula' => 'file|max:5000',
             'historico' => 'file|max:5000',
-            'percentual' => 'file|max:5000',
             'curriculum' => 'file|max:5000',
             'trabalho1' => 'file|max:5000',
             'trabalho2' => 'file|max:5000',
@@ -612,7 +610,6 @@ class CandidaturasController extends Controller
             $this->validate($request, [
                 'matricula' => 'required|file|max:5000',
                 'historico' => 'required|file|max:5000',
-                'percentual' => 'required|file|max:5000',
                 'curriculum' => 'required|file|max:5000',
             ]);
 
@@ -783,7 +780,6 @@ class CandidaturasController extends Controller
                 $this->validate($request, [
                     'matricula' => 'required|file|max:5000',
                     'historico' => 'required|file|max:5000',
-                    'percentual' => 'required|file|max:5000',
                     'curriculum' => 'required|file|max:5000',
                     'trabalho1' => 'required|file|max:5000',
                     'trabalho2' => 'required|file|max:5000',

@@ -111,4 +111,10 @@ class HomeController extends Controller
 
         return redirect($link);
     }
+
+    public function teste(){
+        /*
+        Adicionar aqui codigo de teste
+        */
+    }
 }
