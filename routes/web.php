@@ -23,7 +23,7 @@ Route::get('/configuracoes', 'HomeController@configuracoes')->name('configuracoe
 Route::get('/markasread', 'HomeController@markAsRead')->name('markasread');
 Route::post('/update/{id}', 'HomeController@update')->name('update');
 Route::get('/notification/{id}', 'HomeController@notification')->name('notification');
-Route::get('/teste', 'RelatoriosController@indexRelatorioInternacional');
+Route::get('/teste', 'HomeController@teste');
 
 Route::group(['prefix' => 'candidato',  'middleware' => ['auth','candidato']], function() {
     Route::get('download/{id}', 'EditaisController@download')->name('candidato.edital');
@@ -108,6 +108,7 @@ Route::group(['prefix' => 'candidaturas',  'middleware' => ['auth','candidato']]
 
 Route::group(['prefix' => 'equipe',  'middleware' => ['auth','admin']], function() {
     Route::post('store', 'EquipeController@store');
+    Route::post('editar/{id}', 'EquipeController@update');
     Route::delete('delete/{id}','EquipeController@destroy');
     Route::get('/', 'EquipeController@index');
 });

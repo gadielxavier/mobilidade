@@ -48,6 +48,18 @@ class EquipeController extends Controller
         return redirect('/equipe');
     }
 
+    protected function update(Request $request, $id)
+    {
+    	$user = User::find($id);
+
+        $user->name = $request->name;
+        $user->privilegio = $request->tipo_usuario;
+        $user->save();
+
+
+        return redirect('/equipe');
+    }
+
     public function destroy($id)
     {
         $user = User::where('id', $id)->first();
