@@ -284,40 +284,6 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label><b>Percentual de carga horária concluída *</b></label>
-                  @if($candidatura->percentual != '0')
-                    <a  href="{{ route('candidaturas.percentual', $candidatura->id) }}"  target="_blank">
-                      Visualizar
-                    </a>
-                  @endif
-                  <input type="file" accept="application/pdf" id="percentual" name="percentual" class="form-control" >
-                  @if ($errors->has('percentual'))
-                  <span class="help-block">
-                    <strong>{{ $errors->first('percentual') }}</strong>
-                  </span>
-                  @endif
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label><b>Curriculum Lattes *</b></label>
-                  @if($candidatura->curriculum != '0')
-                    <a  href="{{ route('candidaturas.curriculum', $candidatura->id) }}"  target="_blank">
-                      Visualizar
-                    </a>
-                  @endif
-                  <input type="file" accept="application/pdf" id="curriculum" name="curriculum" class="form-control" >
-                  @if ($errors->has('curriculum'))
-                  <span class="help-block">
-                    <strong>{{ $errors->first('curriculum') }}</strong>
-                  </span>
-                  @endif
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
                   <label><b>Plano de trabalho 1 *</b></label>
                   @if($candidatura->plano_trabalho1 != '0')
                     <a  href="{{ route('candidaturas.trabalho1', $candidatura->id) }}"  target="_blank">
@@ -417,6 +383,42 @@
                 </div>
               </div>
             </div> 
+            <div class="row">
+              <!--
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label><b>Percentual de carga horária concluída *</b></label>
+                  @if($candidatura->percentual != '0')
+                    <a  href="{{ route('candidaturas.percentual', $candidatura->id) }}"  target="_blank">
+                      Visualizar
+                    </a>
+                  @endif
+                  <input type="file" accept="application/pdf" id="percentual" name="percentual" class="form-control" >
+                  @if ($errors->has('percentual'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('percentual') }}</strong>
+                  </span>
+                  @endif
+                </div>
+              </div>
+              -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label><b>Curriculum Lattes *</b></label>
+                  @if($candidatura->curriculum != '0')
+                    <a  href="{{ route('candidaturas.curriculum', $candidatura->id) }}"  target="_blank">
+                      Visualizar
+                    </a>
+                  @endif
+                  <input type="file" accept="application/pdf" id="curriculum" name="curriculum" class="form-control" >
+                  @if ($errors->has('curriculum'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('curriculum') }}</strong>
+                  </span>
+                  @endif
+                </div>
+              </div>
+            </div>
 
           @else
 

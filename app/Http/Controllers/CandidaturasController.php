@@ -125,8 +125,10 @@ class CandidaturasController extends Controller
             $count++;
         if($candidatura->historico == '0')
             $count++;
+        /*
         if($candidatura->percentual == '0')
             $count++;
+        */
         if($candidatura->curriculum == '0')
             $count++;
         if($candidatura->plano_trabalho1 == '0')
@@ -1435,9 +1437,11 @@ class CandidaturasController extends Controller
         if($candidatura->historico == '0'){
             $isFinished = false;
         }
+        /*
         if($candidatura->percentual == '0'){
             $isFinished = false;
         }
+        */
         if($candidatura->curriculum == '0'){
             $isFinished = false;
         }

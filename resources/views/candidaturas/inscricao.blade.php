@@ -190,30 +190,6 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label><b>Percentual de carga horária concluída *</b></label>
-                  <input type="file" accept="application/pdf" id="percentual" name="percentual" class="form-control" >
-                  @if ($errors->has('percentual'))
-                  <span class="help-block">
-                    <strong>{{ $errors->first('percentual') }}</strong>
-                  </span>
-                  @endif
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label><b>Curriculum Lattes *</b></label>
-                  <input type="file" accept="application/pdf" id="curriculum" name="curriculum" class="form-control" >
-                  @if ($errors->has('curriculum'))
-                  <span class="help-block">
-                    <strong>{{ $errors->first('curriculum') }}</strong>
-                  </span>
-                  @endif 
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
                   <label><b>Plano de trabalho 1 *</b></label>
                   <input type="file" accept="application/pdf" id="trabalho1" name="trabalho1" class="form-control" >
                   @if ($errors->has('trabalho1'))
@@ -283,6 +259,32 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <!--
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label><b>Percentual de carga horária concluída *</b></label>
+                  <input type="file" accept="application/pdf" id="percentual" name="percentual" class="form-control" >
+                  @if ($errors->has('percentual'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('percentual') }}</strong>
+                  </span>
+                  @endif
+                </div>
+              </div>
+              -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label><b>Curriculum Lattes *</b></label>
+                  <input type="file" accept="application/pdf" id="curriculum" name="curriculum" class="form-control" >
+                  @if ($errors->has('curriculum'))
+                  <span class="help-block">
+                    <strong>{{ $errors->first('curriculum') }}</strong>
+                  </span>
+                  @endif 
+                </div>
+              </div>
+            </div>
 
         @else
 
@@ -338,6 +340,7 @@
               </div>
             </div>
             <div class="row">
+              <!--
               <div class="col-md-6">
                 <div class="form-group">
                   <label><b>Percentual de carga horária concluída *</b></label>
@@ -349,6 +352,7 @@
                   @endif
                 </div>
               </div>
+              -->
               <div class="col-md-6">
                 <div class="form-group">
                   <label><b>Curriculum Lattes *</b></label>
