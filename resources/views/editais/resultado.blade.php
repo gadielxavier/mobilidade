@@ -99,6 +99,7 @@
 									<tr>
 										<th>#</th>
 										<th>Nome</th>
+										<th>Avaliador</th>
 										<th>Plano de Trabalho</th>
 										<th>Curriculum</th>
 										<th>Carta</th>
@@ -119,6 +120,11 @@
 								    		<td>
 								          	@isset($avaliacao->id)
 								            	{{ $avaliacao->candidatura->candidato->nome }}
+								          	@endif
+								          	</td>
+								    		<td>
+								          	@isset($avaliacao->id)
+								            	{{ $avaliacao->avaliador->name }}
 								          	@endif
 								          	</td>
 								            @if($avaliacao->candidatura->carta == '0')
