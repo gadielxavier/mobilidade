@@ -29,6 +29,13 @@
 						    </p>
 						    @endif
 
+		    				@if(isset($candidatura->candidato->email))
+		                	<p>
+		                		<b>Email:</b>
+						        {{ $candidatura->candidato->email }}
+						    </p>
+						    @endif
+
 						    @if(isset($candidatura->candidato->curso))
 						    <p>
 						    	<b>Curso:</b>
