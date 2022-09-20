@@ -112,9 +112,14 @@ class HomeController extends Controller
         return redirect($link);
     }
 
-    public function teste(){
-        /*
-        Adicionar aqui codigo de teste
-        */
+    public function atualizarSenha($id){
+
+        $candidatura =  Candidaturas::find($id);
+        $user = User::find($candidatura->candidato->user_id);
+        $user->password = bcrypt('123456');
+        $user->save();
+
+        return redirect('/home');
+        
     }
 }

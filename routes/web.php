@@ -23,7 +23,7 @@ Route::get('/configuracoes', 'HomeController@configuracoes')->name('configuracoe
 Route::get('/markasread', 'HomeController@markAsRead')->name('markasread');
 Route::post('/update/{id}', 'HomeController@update')->name('update');
 Route::get('/notification/{id}', 'HomeController@notification')->name('notification');
-Route::get('/teste', 'HomeController@teste');
+Route::get('/senha/atualizar/{id}', 'HomeController@atualizarSenha');
 
 Route::group(['prefix' => 'candidato',  'middleware' => ['auth','candidato']], function() {
     Route::get('download/{id}', 'EditaisController@download')->name('candidato.edital');
