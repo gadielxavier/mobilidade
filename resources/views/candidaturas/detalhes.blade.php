@@ -423,7 +423,7 @@
       <div class="form-group">
         <p>{{ $candidatura->status->titulo }}</p>
 
-        @if( $candidatura->edital->status->id ==  7 || $candidatura->edital->status->id == 11 )
+        @if( $candidatura->edital->status->id ==  3 || $candidatura->edital->status->id ==  7 || $candidatura->edital->status->id == 11 )
         <p class="card-description">Entrar com Recurso</p>
           <button type="submit" data-toggle="modal" data-target="#editalModal"  class="btn btn-primary btn-sm">
             {{ __('Recurso') }}
