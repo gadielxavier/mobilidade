@@ -233,6 +233,12 @@ class EditaisController extends Controller
             ->orderBy('candidatos.nome')
             ->where('status_id', '!=' , 3)
             ->where('status_id', '!=', 5)
+            ->where('status_id', '!=', 7)
+            ->where('status_id', '!=', 9)
+            ->where('status_id', '!=', 11)
+            ->where('status_id', '!=', 13)
+            ->where('status_id', '!=', 15)
+            ->where('status_id', '!=', 17)
             ->get();
         }
 
