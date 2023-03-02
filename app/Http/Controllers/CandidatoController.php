@@ -165,17 +165,8 @@ class CandidatoController extends Controller
     protected function validateRequest()
     {
         return [
-            'name'        => 'required|string|max:100',
-            'sexo'        => 'required',
-            'matricula'   => 'required|string|size:8',
-            'cpf'         => 'required|size:14',
-            'rg'          => 'required|size:13',
-            'emissor'     => 'required|string|max:50',
-            'data'        => 'required|date',
-            'curso'       => 'required|string',
-            'phone'       => 'required|string|size:15',
-            'foto_perfil' => 'file|max:5000',
-            'cotista'     => 'required',
+            'name' => 'required|string|max:255',
+            'foto_perfil' => 'required|file|max:5000'
         ];
 
     }
