@@ -15,7 +15,9 @@ class EquipeController extends Controller
      */
     public function index()
     {
-    	$equipe = User::where('privilegio', 2)->orWhere('privilegio', 3)->get(); 
+    	$equipe = User::where('privilegio', 2)->orWhere('privilegio', 3)
+        ->orderBy('name')
+        ->paginate(30); 
 
     	 $data = [
             'equipe'  => $equipe

@@ -41,7 +41,7 @@
 									 <th>Nome</th>
 				                      <th>Número</th>
 				                      <th>Bolsas</th>
-				                      <th>Encerramento Inscrição</th>
+				                      <th>Encerramento</th>
 				                      <th>Status</th>
 								</tr>
 					    </thead>
@@ -51,7 +51,12 @@
 							      <tr>
 							        <td>
 							          @isset($edital->nome)
-							            {{ $edital->nome }}</td>
+										@if(strlen($edital->nome) > 30 )
+							          		<label data-toggle="tooltip" title="{{ $edital->nome  }}">{{ substr($edital->nome,0,30).('...')}}</label>
+				                            
+				                         @else
+				                            {{ $edital->nome }}
+				                         @endif
 							          @endif
 							        <td> 
 							          @isset($edital->numero)
@@ -396,6 +401,12 @@ $(document).ready(function(){
  });
 
 } ) ;
+</script>
+
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>
 
 @endsection
